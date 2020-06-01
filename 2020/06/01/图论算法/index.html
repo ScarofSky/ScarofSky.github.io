@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">天の痕的博客</title>
+  <title itemprop="name">图论算法 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -38,7 +38,7 @@
   mashiro_option.site_url = "https://scarofsky.github.io";
   mashiro_option.v_appId = "GyC3NzMvd0hT9Yyd2hYIC0MN-gzGzoHsz";
   mashiro_option.v_appKey = "mgOpfzbkHYqU92CV4IDlAUHQ";
-  mashiro_option.mathjax = "0";
+  mashiro_option.mathjax = "1";
   mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/"; 
   mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
 
@@ -398,19 +398,36 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
 <div class="pattern-center-blank"></div>
 
+  <div class="pattern-center single-center">
+    <!-- 有配图默认渲染第一张 -->
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.0/img/custom/avatar.jpg);" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.0/img/custom/avatar.jpg">
+    </div>
+    <header class="pattern-header single-header">
+      <h1 class="entry-title">
+      图论算法</h1>
+      <p class="entry-census">
+        <span>
+          <a href="https://scarofsky.github.io">
+            <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.0/img/custom/avatar.jpg">
+          </a>
+        </span>
+        <span>
+          <a href="https://scarofsky.github.io">天痕</a>
+        </span>
+        <span class="bull">
+        ·</span>
+        2020-6-1<span class="bull">
+        ·</span>
+      <span id="busuanzi_value_page_pv"></span>次阅读</p>
+    </header>
+  </div>
+
 <div id="content" class="site-content">
   <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
       <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
         <div class="toc"></div>
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
-        
-          <header class="entry-header">
-            <h1 class="entry-title"></h1>
-            <p class="entry-census">&nbsp;·&nbsp;2020-6-1&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
-
-            <hr>
-          </header>
         
         <div class="entry-content">
           <h1 id="图论算法"><a href="#图论算法" class="headerlink" title="图论算法"></a>图论算法</h1><h2 id="最短路径算法"><a href="#最短路径算法" class="headerlink" title="最短路径算法"></a>最短路径算法</h2><h3 id="Floyd"><a href="#Floyd" class="headerlink" title="Floyd"></a>Floyd</h3><p>使用邻接矩阵存储图更为合理，因为floyd算法要求每两个点之间的最短路径。循环顺序是kij其中k是阶段，从ik到kj点的最短路径由松弛操作<br>$$<br>g[i][j] = min(g[i][j], g[i][k] + g[k][j])<br>$$<br>给出。当有重边和自环时，每两个点之间存储的<code>g[i][j]</code>只存储最短的一条即可。</p>
@@ -422,7 +439,6 @@
 <h3 id="SPFA判断负环"><a href="#SPFA判断负环" class="headerlink" title="SPFA判断负环"></a>SPFA判断负环</h3><p>SPFA算法当队列不空的时候就会不断的更新图中路径的最短值，每次更新相当于多走一条边，当有负环的时候，某些节点一定会被无限次更新到负无穷，因此用cnt数组来记录每一个点的被更新次数，当某个点更新次数大于n – 1时，说明存在一条路径当我更新n – 1次之后，还可以更小，这样就是存在负环了。开始时一定要把所有点都加入到队列中，否则只更新某一个点，也许去其他点的路径可以不经过负环，也就不会无限更新，就找不到负环来判断。</p>
 <h2 id="最小生成树算法"><a href="#最小生成树算法" class="headerlink" title="最小生成树算法"></a>最小生成树算法</h2><h3 id="Prim"><a href="#Prim" class="headerlink" title="Prim"></a>Prim</h3><p>用st数组维护一个集合，最开始为空，每次扩充一个距离当前集合最近的点进入集合，并且更新其他点到集合的最近距离。所有点到集合的初始最近距离为INF，将所有点均加入到集合时算法结束。如果某一次扩充的点到集合的最近距离为正无穷，则说明不存在最小生成树。</p>
 <h3 id="Kruskal"><a href="#Kruskal" class="headerlink" title="Kruskal"></a>Kruskal</h3><p>通过排序得到所有边的序列，从最小的边开始扩展，贪心的思路。维护一个并查集来确定两个点是否属于同一个集合，如果属于同一个集合的两个点还需要增加一条边，则该条边增加后则成环。因此维护一个计数器cnt，当算法结束之后，cnt如果小于n – 1则说明不存在有效的生成树，否则并查集维护的点就是当前生成树。</p>
-<p><img src="C:\Users\Scar\AppData\Roaming\Typora\typora-user-images\image-20200601204958706.png" alt="image-20200601204958706"></p>
 
         </div>
         <!-- .entry-content -->
@@ -487,16 +503,16 @@
 
       <section class="author-profile">
         <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
-          <a href="" class="profile gravatar"><img src="" itemprop="image" alt="" height="70" width="70"></a>
+          <a href="https://scarofsky.github.io" class="profile gravatar"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.0/img/custom/avatar.jpg" itemprop="image" alt="天痕" height="70" width="70"></a>
           <div class="meta">
             <span class="title">Author</span>
             <h3 itemprop="name">
-            <a href="" itemprop="url" rel="author"></a>
+            <a href="https://scarofsky.github.io" itemprop="url" rel="author">天痕</a>
             </h3>
           </div>
         </div>
         <hr>
-        <p><i class="iconfont icon-write"></i></p>
+        <p><i class="iconfont icon-write"></i>一个好奇的人</p>
       </section>
     </main><!-- #main -->
   </div><!-- #primary -->
