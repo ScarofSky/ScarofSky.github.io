@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">读书笔记 | 天の痕的博客</title>
+  <title itemprop="name">离散化 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -309,11 +309,11 @@
 
   <div class="pattern-center single-center">
     <!-- 有配图默认渲染第一张 -->
-    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg">
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/04/S6bvKVChn3gYdxX.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/S6bvKVChn3gYdxX.jpg">
     </div>
     <header class="pattern-header single-header">
       <h1 class="entry-title">
-      读书笔记</h1>
+      离散化</h1>
       <p class="entry-census">
         <span>
           <a href="https://scarofsky.github.io">
@@ -325,7 +325,7 @@
         </span>
         <span class="bull">
         ·</span>
-        2020-6-1<span class="bull">
+        2020-6-4<span class="bull">
         ·</span>
       <span id="busuanzi_value_page_pv"></span>次阅读</p>
     </header>
@@ -339,7 +339,29 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h1 id="读书笔记"><a href="#读书笔记" class="headerlink" title="读书笔记"></a>读书笔记</h1><p>近期更新，敬请期待~</p>
+          <h1 id="离散化"><a href="#离散化" class="headerlink" title="离散化"></a>离散化</h1><h3 id="通过哈希表进行离散化"><a href="#通过哈希表进行离散化" class="headerlink" title="通过哈希表进行离散化"></a>通过哈希表进行离散化</h3><p>&emsp;&emsp;建立一个哈希表，通过每次将新的值映射为一个递增的n来达到离散化的目的。这种离散化不要求顺序，只需要值的对应即可。</p>
+<pre><code class="c++">int find(int x)
+{
+    if (S.count(x) == 0) S[x] = ++ n;
+    return S[x];
+}
+</code></pre>
+<h3 id="排序-去重-二分查找进行离散化"><a href="#排序-去重-二分查找进行离散化" class="headerlink" title="排序+去重+二分查找进行离散化"></a>排序+去重+二分查找进行离散化</h3><p>&emsp;&emsp;当要求有序的离散化时，需要将需要离散化的坐标排序，之后去重，最后使用二分查找来通过下标映射的递增值为多少。</p>
+<pre><code class="c++">int find(int x)
+{
+    int l = 0, r = n - 1;
+    while (l &lt; r)
+    {
+        int mid = l + r &gt;&gt; 1;
+        if (a[mid] &gt;= x) r = mid;
+        else l = mid + 1;
+    }
+    return r;
+}
+//排序+去重
+sort(pts.begin(), pts.end());
+pts.erase(unique(pts.begin(), pts.end()), pts.end());
+</code></pre>
 
         </div>
         <!-- .entry-content -->
@@ -371,15 +393,15 @@
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/01/生活/" rel="prev">
+            <a href="/2020/06/04/高级数据结构/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dwOKa7ZPDfsYCjI.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/dwOKa7ZPDfsYCjI.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                生活</h3>
+                数据结构</h3>
                 <hr>
               </div>
             </a>
@@ -389,15 +411,15 @@
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/01/随笔/" rel="next">
+            <a href="/2020/06/04/KMP算法/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/GIcMFKRCEjnqxy5.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/GIcMFKRCEjnqxy5.jpg">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                随笔</h3>
+                KMP算法</h3>
                 <hr>
               </div>
             </a>

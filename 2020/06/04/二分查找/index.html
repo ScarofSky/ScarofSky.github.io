@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">读书笔记 | 天の痕的博客</title>
+  <title itemprop="name">二分查找 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -309,11 +309,11 @@
 
   <div class="pattern-center single-center">
     <!-- 有配图默认渲染第一张 -->
-    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg">
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/04/BUkJ5s7SDhxmzAI.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/BUkJ5s7SDhxmzAI.jpg">
     </div>
     <header class="pattern-header single-header">
       <h1 class="entry-title">
-      读书笔记</h1>
+      二分查找</h1>
       <p class="entry-census">
         <span>
           <a href="https://scarofsky.github.io">
@@ -325,7 +325,7 @@
         </span>
         <span class="bull">
         ·</span>
-        2020-6-1<span class="bull">
+        2020-6-4<span class="bull">
         ·</span>
       <span id="busuanzi_value_page_pv"></span>次阅读</p>
     </header>
@@ -339,7 +339,15 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h1 id="读书笔记"><a href="#读书笔记" class="headerlink" title="读书笔记"></a>读书笔记</h1><p>近期更新，敬请期待~</p>
+          <h1 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h1><h3 id="二分查找元素"><a href="#二分查找元素" class="headerlink" title="二分查找元素"></a>二分查找元素</h3><p>&emsp;&emsp;就使用以下万能模板，本质是将问题抽象化为找一个分界面，分界面左边不满足某一性质，而右边满足某一个性质，这时候左边边界缩减时需要多缩减一个，右边边界缩减到当前mid即可。当搜素结束时，左右边界重合，即l == r。如果有l = mid的情况，需要l + r + 1 &gt;&gt; 1才能够避免到最后两个数相邻时，mid永远更新为左边界的死循环。</p>
+<pre><code class="c++">while (l &lt; r)
+{
+    int mid = l + r &gt;&gt; 1;
+    if (check(mid)) r = mid;
+    else l = mid + 1;
+}
+</code></pre>
+<h3 id="二分搜索答案"><a href="#二分搜索答案" class="headerlink" title="二分搜索答案"></a>二分搜索答案</h3><p>&emsp;&emsp;二分搜索答案的套路是当某一个问题验证某一个答案正确或者计算某一个阈值下的答案的时间复杂度乘以二分区间范围的log时，可以考虑搜索答案。一般都是整数答案，浮点数想直接二分搜索答案比较困难，因为在精度比较高的情况下，二分次数会比较多。</p>
 
         </div>
         <!-- .entry-content -->
@@ -371,15 +379,15 @@
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/01/生活/" rel="prev">
+            <a href="/2020/06/04/图论算法/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/aPU54kjQGVon2Hg.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/aPU54kjQGVon2Hg.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                生活</h3>
+                图论算法</h3>
                 <hr>
               </div>
             </a>
@@ -389,15 +397,15 @@
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/01/随笔/" rel="next">
+            <a href="/2020/06/04/单调栈与单调队列/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dptoeG2n78wNqS1.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/dptoeG2n78wNqS1.jpg">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                随笔</h3>
+                单调栈与单调队列</h3>
                 <hr>
               </div>
             </a>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">读书笔记 | 天の痕的博客</title>
+  <title itemprop="name">KMP算法 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -309,11 +309,11 @@
 
   <div class="pattern-center single-center">
     <!-- 有配图默认渲染第一张 -->
-    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg">
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/04/GIcMFKRCEjnqxy5.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/GIcMFKRCEjnqxy5.jpg">
     </div>
     <header class="pattern-header single-header">
       <h1 class="entry-title">
-      读书笔记</h1>
+      KMP算法</h1>
       <p class="entry-census">
         <span>
           <a href="https://scarofsky.github.io">
@@ -325,7 +325,7 @@
         </span>
         <span class="bull">
         ·</span>
-        2020-6-1<span class="bull">
+        2020-6-4<span class="bull">
         ·</span>
       <span id="busuanzi_value_page_pv"></span>次阅读</p>
     </header>
@@ -339,7 +339,12 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h1 id="读书笔记"><a href="#读书笔记" class="headerlink" title="读书笔记"></a>读书笔记</h1><p>近期更新，敬请期待~</p>
+          <h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><h3 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h3><p>&emsp;&emsp;KMP算法核心是ne数组，其定义是：从0到第i个模板串字符的子串为止，子串中前缀和后缀相等的最大长度，其中前缀和后缀不包括子串本身。</p>
+<p>&emsp;&emsp;对于字符串ababab，ne[0]总是0的原因是空串最长前缀也是0。ne[1] = 0的原因是长度为1的子串前缀如果不包括子串本身，也只有长度为0的空串。ne[2] = 0，(ab)abab此时子串ab的前缀没有和后缀相等的可能性。ne[3] = 1，(aba)bab的前缀可以看到0号a和3号a相等。ne[4] = 2，(abab)ab的前缀可以看到ab和ab相等，这里由于只增加了一个字母，且当前最长前缀用到了长度为3子串时的最长前缀，所以不可能最长前缀长度增加2。ne[5] = 3，(ababa)b，可以看到aba和aba相等。ne[6] = 4。</p>
+<p>&emsp;&emsp;通过ne数组的定义，我们可以知道，当两个字符不匹配的时候，此时匹配位置就不必向后错一个位置继续从头匹配，而是从下一个前缀已经匹配完全的位置开始。</p>
+<p>&emsp;&emsp;这里通过将开始下标设置为1，之前定义的ne数组是前后缀的最大长度，正好也是当不匹配时，模板串应该移动到的下标位置。</p>
+<p>&emsp;&emsp;KMP算法求模板串ne数组的方法实际上是一种动态规划。每次使用了之前模板串中相同的长度，并且每次最长前缀最多+1，来计算下一次的最长前缀。</p>
+<p>&emsp;&emsp;当无法匹配的时候，正好通过定义j = ne[j]来跳到最大匹配位置继续。</p>
 
         </div>
         <!-- .entry-content -->
@@ -371,15 +376,15 @@
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/01/生活/" rel="prev">
+            <a href="/2020/06/04/离散化/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/S6bvKVChn3gYdxX.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/S6bvKVChn3gYdxX.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                生活</h3>
+                离散化</h3>
                 <hr>
               </div>
             </a>
@@ -389,15 +394,15 @@
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/01/随笔/" rel="next">
+            <a href="/2020/06/04/动态规划（一）背包专题/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dXYnAwRcQ6qi8xh.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/dXYnAwRcQ6qi8xh.jpg">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                随笔</h3>
+                动态规划（一）背包专题</h3>
                 <hr>
               </div>
             </a>

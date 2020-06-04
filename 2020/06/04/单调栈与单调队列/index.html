@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">读书笔记 | 天の痕的博客</title>
+  <title itemprop="name">单调栈与单调队列 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -309,11 +309,11 @@
 
   <div class="pattern-center single-center">
     <!-- 有配图默认渲染第一张 -->
-    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg">
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/04/dptoeG2n78wNqS1.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dptoeG2n78wNqS1.jpg">
     </div>
     <header class="pattern-header single-header">
       <h1 class="entry-title">
-      读书笔记</h1>
+      单调栈与单调队列</h1>
       <p class="entry-census">
         <span>
           <a href="https://scarofsky.github.io">
@@ -325,7 +325,7 @@
         </span>
         <span class="bull">
         ·</span>
-        2020-6-1<span class="bull">
+        2020-6-4<span class="bull">
         ·</span>
       <span id="busuanzi_value_page_pv"></span>次阅读</p>
     </header>
@@ -339,7 +339,18 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h1 id="读书笔记"><a href="#读书笔记" class="headerlink" title="读书笔记"></a>读书笔记</h1><p>近期更新，敬请期待~</p>
+          <h1 id="单调栈与单调队列"><a href="#单调栈与单调队列" class="headerlink" title="单调栈与单调队列"></a>单调栈与单调队列</h1><h3 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h3><p>&emsp;&emsp;单调栈使用范围比较小，已知有两种用法。</p>
+<p>&emsp;&emsp;第一种，寻找数组中某一个数左边、右边第一个比它大、小的数。如果要寻找数列中每一个数左边比他小的数，那么有一个性质就是当a b c序列时，如果b小于a，则c的左边更小的数，是无论如何也不可能是a的。因此如果使用一个栈来存储所有的可能的数，则只需要存储比a大的数即可，因此是单调递增栈。栈的特点是后进先出，在这里其实利用了“后”即“最近”的思想，而单调性能够确保与栈顶比较时，相当于比较了所有之前的数据，降低了时间复杂度。</p>
+<p>&emsp;&emsp;第二种，寻找数组中两个数之间满足i &lt; j 且 A[i] &lt;= A[j]的情况下，下标之间的最大距离。这种可以看做全局的单调性和“最近”性质的应用。方法是从左向右初始化单调递减栈，之后从右向左每次元素和栈顶元素比较，利用单调性，可以得到如果当前元素小于栈顶（最小值），则其他元素均不满足A[i] &lt;= A[j]的要求；如果当前元素大于栈顶，则栈顶元素右边的元素最大距离一定更小，因此栈顶元素右边的元素不做考虑，同时通过出栈每次确认当前最小的元素是否更新了答案，直到栈顶元素大于当前遍历元素。出栈的原因是，右侧当前元素每次都在减少，因此贪心的认为，之后即便有满足要求的元素，也不会更新最大距离。</p>
+<h3 id="单调队列"><a href="#单调队列" class="headerlink" title="单调队列"></a>单调队列</h3><p>&emsp;&emsp;单调队列是队头维护的是整个队列中最大或者最小的元素，每次有新元素入队时，如果不满足当前队列维护的单调性，则将所有不满足的元素全部出队。单调队列本质是一个双端队列，每次出队时是从队尾出队，而不是从队头出队。</p>
+<p>&emsp;&emsp;单调队列操作顺序也比较重要，在不同需要的时候有不同的操作顺序。</p>
+<ol>
+<li>计算是否当前元素和队头元素距离之差大于规定值，如果大于则队头出队。</li>
+<li>计算答案，此时是计算的[0, r - 1]范围内的最值，因此放在第二步。</li>
+<li>保持队列单调性，while循环从队尾出队。</li>
+<li>将当前元素入队。</li>
+<li>*若计算答案在这里，则是求的[0, r]范围内的最值。</li>
+</ol>
 
         </div>
         <!-- .entry-content -->
@@ -371,15 +382,15 @@
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/01/生活/" rel="prev">
+            <a href="/2020/06/04/二分查找/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/BUkJ5s7SDhxmzAI.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/BUkJ5s7SDhxmzAI.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                生活</h3>
+                二分查找</h3>
                 <hr>
               </div>
             </a>
@@ -389,15 +400,15 @@
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/01/随笔/" rel="next">
+            <a href="/2020/06/04/高级数据结构/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dwOKa7ZPDfsYCjI.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/dwOKa7ZPDfsYCjI.jpg">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                随笔</h3>
+                数据结构</h3>
                 <hr>
               </div>
             </a>
