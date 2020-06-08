@@ -33,8 +33,8 @@
   mashiro_option.email_name = "";
   mashiro_option.cookie_version_control = "";
   mashiro_option.qzone_autocomplete = false;
-  mashiro_option.site_name = "さくらと天痕";
-  mashiro_option.author_name = "天痕";
+  mashiro_option.site_name = "天痕の轨迹线";
+  mashiro_option.author_name = "の轨迹线";
   mashiro_option.site_url = "https://scarofsky.github.io";
   mashiro_option.v_appId = "Eg4LiBqPfNMfvhhF7RBt3YdV-gzGzoHsz";
   mashiro_option.v_appKey = "f5OCYpX4S5HM1oOfq90Yo91S";
@@ -135,8 +135,8 @@
       <span class="site-title">
         <span class="logolink moe-mashiro">
           <a href="/">
-            <span class="sakurasono">さくらと</span>
-            <span class="shironeko">天痕</span>
+            <span class="sakurasono">天痕</span>
+            <span class="shironeko">の轨迹线</span>
           </a>
         </span>
       </span>
@@ -352,6 +352,15 @@
     for (int j = v[i]; j &lt;= m; j ++ )
         f[j] = max(f[j], f[j - v[i]] + w[i]);
 </code></pre>
+<h2 id="多重背包"><a href="#多重背包" class="headerlink" title="多重背包"></a>多重背包</h2><p>多重背包问题可以使用三重循环直接暴力求解，也可以使用二进制优化。暴力求解：</p>
+<pre><code class="c++">for (int i = 1; i &lt;= n; i ++ )
+    for (int j = 0; j &lt;= m; j ++ )
+        for (int t = 0; t &lt;= s[i]; t ++ )
+            if (j - s * v[i] &gt;= 0)
+                f[i][j] = max(f[i][j], f[i - 1][j - s * v[i]] + s * w[i]);
+</code></pre>
+<p>二进制优化的原理是将多个物品打包成一个物品来看，将最多选s个物品的问题转化成logs个物品的 01背包问题，从而降低复杂度。可以证明每次选取1,2,4,8,16…(s- 2^k - 1)个物品打包之后，每个物品选与不选的组合可以得到s种结果。</p>
+<h2 id="分组背包"><a href="#分组背包" class="headerlink" title="分组背包"></a>分组背包</h2><p>分组背包问题指有很多物品组，从每组中只能挑选一个物品，求最大价值。分组背包是有依赖的背包问题的前序问题。</p>
 
         </div>
         <!-- .entry-content -->
@@ -383,15 +392,15 @@
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/04/单调栈与单调队列/" rel="prev">
+            <a href="/2020/06/04/二分查找/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dptoeG2n78wNqS1.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/dptoeG2n78wNqS1.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/BUkJ5s7SDhxmzAI.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/BUkJ5s7SDhxmzAI.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                单调栈与单调队列</h3>
+                二分查找</h3>
                 <hr>
               </div>
             </a>
@@ -401,15 +410,15 @@
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/04/高级数据结构/" rel="next">
+            <a href="/2020/06/04/位运算/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dwOKa7ZPDfsYCjI.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/dwOKa7ZPDfsYCjI.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                数据结构</h3>
+                位运算</h3>
                 <hr>
               </div>
             </a>
@@ -584,7 +593,7 @@ $(document).ready(function() {
   <div class="m-avatar">
     <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/avatar.jpg">
   </div>
-  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">さくらと天痕</p>
+  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">天痕の轨迹线</p>
   <p style="text-align: center; word-spacing: 20px;">
     
       
