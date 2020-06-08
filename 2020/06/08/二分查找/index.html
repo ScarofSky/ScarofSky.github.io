@@ -325,7 +325,7 @@
         </span>
         <span class="bull">
         ·</span>
-        2020-6-4<span class="bull">
+        2020-6-8<span class="bull">
         ·</span>
       <span id="busuanzi_value_page_pv"></span>次阅读</p>
     </header>
@@ -339,15 +339,41 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h1 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h1><h3 id="二分查找元素"><a href="#二分查找元素" class="headerlink" title="二分查找元素"></a>二分查找元素</h3><p>&emsp;&emsp;就使用以下万能模板，本质是将问题抽象化为找一个分界面，分界面左边不满足某一性质，而右边满足某一个性质，这时候左边边界缩减时需要多缩减一个，右边边界缩减到当前mid即可。当搜素结束时，左右边界重合，即l == r。如果有l = mid的情况，需要l + r + 1 &gt;&gt; 1才能够避免到最后两个数相邻时，mid永远更新为左边界的死循环。</p>
-<pre><code class="c++">while (l &lt; r)
+          <h1 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h1><h2 id="二分查找元素"><a href="#二分查找元素" class="headerlink" title="二分查找元素"></a>二分查找元素</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;二分使用的条件是有<strong>单调性</strong>，比如有序的序列，事实上二分是<strong>分治算法</strong>思想。本质是将问题抽象化为<strong>找一个分界面</strong>，分界面左边不满足某一性质，而右边满足某一个性质。这时候左边边界缩减时需要多缩减一个，因为左边不满足性质；右边边界缩减到当前mid，不用多缩减。下边代码的check函数即是满足某种性质的判断函数，当满足性质时返回 true, 不满足时返回false。</p>
+<p>&emsp;&emsp;当搜素结束时，左右边界重合，即<code>l == r</code>。如果有<code>l = mid</code>的情况，需要<code>l + r + 1 &gt;&gt; 1</code>才能够避免最后两个数相邻时，mid永远更新为左边界的死循环。</p>
+<p>&emsp;&emsp;二分查找分为整数二分和浮点数二分，浮点数查找时原理相同，但是要求精度小于一定数时停止。浮点数二分比整数二分容易很多，不需要考虑很多边界条件的情况。</p>
+<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="c++">//每次右边界缩减为mid的情况
+while (l &lt; r)
 {
     int mid = l + r &gt;&gt; 1;
     if (check(mid)) r = mid;
     else l = mid + 1;
 }
+//每次左边界缩减为mid的情况
+while (l &lt; r)
+{
+    int mid = l + r + 1 &gt;&gt; 1;
+    if (check(mid)) l = mid;
+    else r = mid + 1;
+}
+//浮点数二分
+const double eps = 1e-8;
+
+while (r - l &gt; eps)
+{
+    int mid = l + r / 2.0;
+    if (check(mid)) l = mid;
+    else r = mid;
+}
+
 </code></pre>
-<h3 id="二分搜索答案"><a href="#二分搜索答案" class="headerlink" title="二分搜索答案"></a>二分搜索答案</h3><p>&emsp;&emsp;二分搜索答案的套路是当某一个问题验证某一个答案正确或者计算某一个阈值下的答案的时间复杂度乘以二分区间范围的log时，可以考虑搜索答案。一般都是整数答案，浮点数想直接二分搜索答案比较困难，因为在精度比较高的情况下，二分次数会比较多。</p>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://leetcode-cn.com/problems/binary-search/" target="_blank" rel="noopener">LC.704 二分查找（简单）</a></p>
+<p><a href="https://www.acwing.com/problem/content/792/" target="_blank" rel="noopener">AW.790 数的三次方根（简单）</a></p>
+<p><a href="https://www.acwing.com/problem/content/791/" target="_blank" rel="noopener">AW.789 数的范围（简单）</a></p>
+<h2 id="二分搜索答案"><a href="#二分搜索答案" class="headerlink" title="二分搜索答案"></a>二分搜索答案</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;答案很多时候是<strong>有范围的</strong>，当某一个问题<strong>验证某一个答案</strong>的时间复杂度乘以二分区间范围的log时，可以考虑搜索答案。通过不断的尝试排除错误答案，且是以指数速度排除，最终得到正确答案。这里一般在验证答案的时候，可以采用某种程度的贪心策略，并且将原问题中单调性质进行转化，能够通过一次的验证缩小答案范围。</p>
+<p>&emsp;&emsp;这类题往往不是简单的搜索答案，而是将问题某种程度的转化之后，再搜索答案。</p>
+<h3 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/104/" target="_blank" rel="noopener">AW.102 最佳牛围栏（简单）</a></p>
+<p><a href="https://leetcode-cn.com/problems/find-the-duplicate-number/" target="_blank" rel="noopener">LC.287 寻找重复数（中等）</a></p>
 
         </div>
         <!-- .entry-content -->
@@ -379,15 +405,15 @@
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/04/BFS/" rel="prev">
+            <a href="/2020/06/08/KMP算法/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/GIcMFKRCEjnqxy5.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/GIcMFKRCEjnqxy5.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                BFS</h3>
+                KMP算法</h3>
                 <hr>
               </div>
             </a>
@@ -397,15 +423,15 @@
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/04/KMP算法/" rel="next">
+            <a href="/2020/06/04/BFS/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/GIcMFKRCEjnqxy5.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/GIcMFKRCEjnqxy5.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                KMP算法</h3>
+                BFS</h3>
                 <hr>
               </div>
             </a>

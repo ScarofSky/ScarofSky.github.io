@@ -325,7 +325,7 @@
         </span>
         <span class="bull">
         ·</span>
-        2020-6-4<span class="bull">
+        2020-6-8<span class="bull">
         ·</span>
       <span id="busuanzi_value_page_pv"></span>次阅读</p>
     </header>
@@ -339,12 +339,44 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><h3 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h3><p>&emsp;&emsp;KMP算法核心是ne数组，其定义是：从0到第i个模板串字符的子串为止，子串中前缀和后缀相等的最大长度，其中前缀和后缀不包括子串本身。</p>
-<p>&emsp;&emsp;对于字符串ababab，ne[0]总是0的原因是空串最长前缀也是0。ne[1] = 0的原因是长度为1的子串前缀如果不包括子串本身，也只有长度为0的空串。ne[2] = 0，(ab)abab此时子串ab的前缀没有和后缀相等的可能性。ne[3] = 1，(aba)bab的前缀可以看到0号a和3号a相等。ne[4] = 2，(abab)ab的前缀可以看到ab和ab相等，这里由于只增加了一个字母，且当前最长前缀用到了长度为3子串时的最长前缀，所以不可能最长前缀长度增加2。ne[5] = 3，(ababa)b，可以看到aba和aba相等。ne[6] = 4。</p>
-<p>&emsp;&emsp;通过ne数组的定义，我们可以知道，当两个字符不匹配的时候，此时匹配位置就不必向后错一个位置继续从头匹配，而是从下一个前缀已经匹配完全的位置开始。</p>
+          <h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;KMP算法核心是ne数组，其定义是：<strong>从0（空串）到第i个模板串字符的子串为止，子串中前缀和后缀相等的最大长度，其中前缀和后缀不包括子串本身。</strong></p>
+<p>&emsp;&emsp;举例来说，对于字符串ababab（按照下标从1开始存储，更为方便）：</p>
+<ul>
+<li>ne[0]总是0的原因是空串最长前缀也是0。</li>
+<li>ne[1] = 0的原因是长度为1的子串前缀如果<strong>不包括子串本身</strong>，也只有长度为0的空串，因此也是0。</li>
+<li>ne[2] = 0，(ab)abab此时子串ab的前缀没有和后缀相等的匹配。</li>
+<li>ne[3] = 1，(aba)bab的前缀可以看到下s[1] = a和s[3] = a相等。</li>
+<li>ne[4] = 2，(abab)ab的前缀可以看到{s[1], s[2]} = ab和{s[3], s[4]} = ab相等，这里由于只增加了一个字母，且当前最长前缀用到了长度为3子串时的最长前缀，所以最长前缀长度<strong>最多增加1</strong>，这一点很重要，是<strong>动态规划的思想</strong>。</li>
+<li>ne[5] = 3，(ababa)b，可以看到{s[1], s[2], s[3]} = aba和{s[3], s[4], s[5]} = aba相等。</li>
+<li>ne[6] = 4，（ababab), abab = abab。</li>
+</ul>
+<p>&emsp;&emsp;通过ne数组的定义，我们可以知道，当模板串和匹配串两个字符不匹配的时候，此时模板串的匹配位置就不必向后错一个位置继续从头匹配，而是从下一个前缀已经匹配完全的位置开始。</p>
 <p>&emsp;&emsp;这里通过将开始下标设置为1，之前定义的ne数组是前后缀的最大长度，正好也是当不匹配时，模板串应该移动到的下标位置。</p>
-<p>&emsp;&emsp;KMP算法求模板串ne数组的方法实际上是一种动态规划。每次使用了之前模板串中相同的长度，并且每次最长前缀最多+1，来计算下一次的最长前缀。</p>
-<p>&emsp;&emsp;当无法匹配的时候，正好通过定义j = ne[j]来跳到最大匹配位置继续。</p>
+<p>&emsp;&emsp;KMP算法求模板串ne数组的方法实际上是一种动态规划。每次使用了之前模板串中相同的长度，并且每次最长前缀最多+1，来计算下一次的最长前缀。当无法匹配的时候，正好通过定义j = ne[j]来跳到最大匹配位置继续。</p>
+<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="c++">//n是模板串长度，m是匹配串长度
+//p存储模板串，s存储匹配串
+
+//产生ne数组的过程，模板串自己和自己匹配
+for (int i = 2, j = 0; i &lt;= n; i ++ )
+{
+    while (j &amp;&amp; p[i] != p[j + 1]) j = ne[j];
+    if (p[i] == p[j + 1]) j ++ ;
+    ne[i] = j;
+}
+
+//在匹配串中匹配的过程
+for (int i = 1, j = 0; i &lt;= m; i ++ )
+{
+    while (j &amp;&amp; s[i] != p[j + 1]) j = ne[j];
+    if (s[i] == p[j + 1]) j ++ ;
+    if (j == n)
+    {
+        //输出位置etc.
+        j = ne[j];
+    }
+}
+</code></pre>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/833/" target="_blank" rel="noopener">AW.831 KMP字符串（简单）</a></p>
 
         </div>
         <!-- .entry-content -->
@@ -373,36 +405,19 @@
       <div class="toc" style="background: none;"></div>
       <section class="post-squares nextprev">
         
+        
           
-            <div class="post-nepre half previous">
+            <div class="post-nepre full next">
           
-            <a href="/2020/06/04/二分查找/" rel="prev">
+            <a href="/2020/06/08/二分查找/" rel="next">
               <div class="background">
                 <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/BUkJ5s7SDhxmzAI.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/BUkJ5s7SDhxmzAI.jpg">
-              </div>
-              <span class="label">
-              Previous Post</span>
-              <div class="info">
-                <h3>
-                二分查找</h3>
-                <hr>
-              </div>
-            </a>
-          </div>
-        
-        
-          
-            <div class="post-nepre half next">
-          
-            <a href="/2020/06/04/位运算/" rel="next">
-              <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                位运算</h3>
+                二分查找</h3>
                 <hr>
               </div>
             </a>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="/"/>
-  <updated>2020-06-08T05:34:21.937Z</updated>
+  <updated>2020-06-08T14:02:23.660Z</updated>
   <id>/</id>
   
   <author>
@@ -17,53 +17,13 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>BFS</title>
-    <link href="/2020/06/04/BFS/"/>
-    <id>/2020/06/04/BFS/</id>
-    <published>2020-06-04T06:26:01.000Z</published>
-    <updated>2020-06-08T05:34:21.937Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="BFS"><a href="#BFS" class="headerlink" title="BFS"></a>BFS</h1><h2 id="采坑"><a href="#采坑" class="headerlink" title="采坑"></a>采坑</h2><pre><code class="c++">while (q.size()){    int len = q.size();    for (int i = 0; i &lt; len; i ++ )    {        auto t = q.front();        int x = t.first, y = t.second;        q.pop();        //如果是这里标记，队列里面有大量相同元素，虽然不影响最终得到正确结果，但是效率很低        //A[x][y] = -1;        for (int i = 0; i &lt; 4; i ++ )        {            int a = x + dx[i], b = y + dy[i];            if (a &lt; 0 || a &gt;= A.size() || b &lt; 0 || b &gt;= A[0].size()) continue;            if (A[a][b] == -1) continue;            if (A[a][b] == 1) return dis;            //就是这里要在入队之前将当前入队元素标记为已经遍历            A[a][b] = -1;            q.push({a, b});        }    }    dis ++ ;}</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      BFS
-    
-    </summary>
-    
-      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>二分查找</title>
-    <link href="/2020/06/04/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
-    <id>/2020/06/04/二分查找/</id>
-    <published>2020-06-04T06:26:01.000Z</published>
-    <updated>2020-06-04T06:27:23.602Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h1><h3 id="二分查找元素"><a href="#二分查找元素" class="headerlink" title="二分查找元素"></a>二分查找元素</h3><p>&emsp;&emsp;就使用以下万能模板，本质是将问题抽象化为找一个分界面，分界面左边不满足某一性质，而右边满足某一个性质，这时候左边边界缩减时需要多缩减一个，右边边界缩减到当前mid即可。当搜素结束时，左右边界重合，即l == r。如果有l = mid的情况，需要l + r + 1 &gt;&gt; 1才能够避免到最后两个数相邻时，mid永远更新为左边界的死循环。</p><pre><code class="c++">while (l &lt; r){    int mid = l + r &gt;&gt; 1;    if (check(mid)) r = mid;    else l = mid + 1;}</code></pre><h3 id="二分搜索答案"><a href="#二分搜索答案" class="headerlink" title="二分搜索答案"></a>二分搜索答案</h3><p>&emsp;&emsp;二分搜索答案的套路是当某一个问题验证某一个答案正确或者计算某一个阈值下的答案的时间复杂度乘以二分区间范围的log时，可以考虑搜索答案。一般都是整数答案，浮点数想直接二分搜索答案比较困难，因为在精度比较高的情况下，二分次数会比较多。</p>]]></content>
-    
-    <summary type="html">
-    
-      二分查找模板和常见套路
-    
-    </summary>
-    
-      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-  </entry>
-  
-  <entry>
     <title>KMP算法</title>
-    <link href="/2020/06/04/KMP%E7%AE%97%E6%B3%95/"/>
-    <id>/2020/06/04/KMP算法/</id>
-    <published>2020-06-04T06:26:01.000Z</published>
-    <updated>2020-06-04T06:27:39.800Z</updated>
+    <link href="/2020/06/08/KMP%E7%AE%97%E6%B3%95/"/>
+    <id>/2020/06/08/KMP算法/</id>
+    <published>2020-06-08T14:02:01.000Z</published>
+    <updated>2020-06-08T14:02:23.660Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><h3 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h3><p>&emsp;&emsp;KMP算法核心是ne数组，其定义是：从0到第i个模板串字符的子串为止，子串中前缀和后缀相等的最大长度，其中前缀和后缀不包括子串本身。</p><p>&emsp;&emsp;对于字符串ababab，ne[0]总是0的原因是空串最长前缀也是0。ne[1] = 0的原因是长度为1的子串前缀如果不包括子串本身，也只有长度为0的空串。ne[2] = 0，(ab)abab此时子串ab的前缀没有和后缀相等的可能性。ne[3] = 1，(aba)bab的前缀可以看到0号a和3号a相等。ne[4] = 2，(abab)ab的前缀可以看到ab和ab相等，这里由于只增加了一个字母，且当前最长前缀用到了长度为3子串时的最长前缀，所以不可能最长前缀长度增加2。ne[5] = 3，(ababa)b，可以看到aba和aba相等。ne[6] = 4。</p><p>&emsp;&emsp;通过ne数组的定义，我们可以知道，当两个字符不匹配的时候，此时匹配位置就不必向后错一个位置继续从头匹配，而是从下一个前缀已经匹配完全的位置开始。</p><p>&emsp;&emsp;这里通过将开始下标设置为1，之前定义的ne数组是前后缀的最大长度，正好也是当不匹配时，模板串应该移动到的下标位置。</p><p>&emsp;&emsp;KMP算法求模板串ne数组的方法实际上是一种动态规划。每次使用了之前模板串中相同的长度，并且每次最长前缀最多+1，来计算下一次的最长前缀。</p><p>&emsp;&emsp;当无法匹配的时候，正好通过定义j = ne[j]来跳到最大匹配位置继续。</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;KMP算法核心是ne数组，其定义是：<strong>从0（空串）到第i个模板串字符的子串为止，子串中前缀和后缀相等的最大长度，其中前缀和后缀不包括子串本身。</strong></p><p>&emsp;&emsp;举例来说，对于字符串ababab（按照下标从1开始存储，更为方便）：</p><ul><li>ne[0]总是0的原因是空串最长前缀也是0。</li><li>ne[1] = 0的原因是长度为1的子串前缀如果<strong>不包括子串本身</strong>，也只有长度为0的空串，因此也是0。</li><li>ne[2] = 0，(ab)abab此时子串ab的前缀没有和后缀相等的匹配。</li><li>ne[3] = 1，(aba)bab的前缀可以看到下s[1] = a和s[3] = a相等。</li><li>ne[4] = 2，(abab)ab的前缀可以看到{s[1], s[2]} = ab和{s[3], s[4]} = ab相等，这里由于只增加了一个字母，且当前最长前缀用到了长度为3子串时的最长前缀，所以最长前缀长度<strong>最多增加1</strong>，这一点很重要，是<strong>动态规划的思想</strong>。</li><li>ne[5] = 3，(ababa)b，可以看到{s[1], s[2], s[3]} = aba和{s[3], s[4], s[5]} = aba相等。</li><li>ne[6] = 4，（ababab), abab = abab。</li></ul><p>&emsp;&emsp;通过ne数组的定义，我们可以知道，当模板串和匹配串两个字符不匹配的时候，此时模板串的匹配位置就不必向后错一个位置继续从头匹配，而是从下一个前缀已经匹配完全的位置开始。</p><p>&emsp;&emsp;这里通过将开始下标设置为1，之前定义的ne数组是前后缀的最大长度，正好也是当不匹配时，模板串应该移动到的下标位置。</p><p>&emsp;&emsp;KMP算法求模板串ne数组的方法实际上是一种动态规划。每次使用了之前模板串中相同的长度，并且每次最长前缀最多+1，来计算下一次的最长前缀。当无法匹配的时候，正好通过定义j = ne[j]来跳到最大匹配位置继续。</p><h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="c++">//n是模板串长度，m是匹配串长度//p存储模板串，s存储匹配串//产生ne数组的过程，模板串自己和自己匹配for (int i = 2, j = 0; i &lt;= n; i ++ ){    while (j &amp;&amp; p[i] != p[j + 1]) j = ne[j];    if (p[i] == p[j + 1]) j ++ ;    ne[i] = j;}//在匹配串中匹配的过程for (int i = 1, j = 0; i &lt;= m; i ++ ){    while (j &amp;&amp; s[i] != p[j + 1]) j = ne[j];    if (s[i] == p[j + 1]) j ++ ;    if (j == n)    {        //输出位置etc.        j = ne[j];    }}</code></pre><h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/833/" target="_blank" rel="noopener">AW.831 KMP字符串（简单）</a></p>]]></content>
     
     <summary type="html">
     
@@ -77,17 +37,37 @@
   </entry>
   
   <entry>
-    <title>位运算</title>
-    <link href="/2020/06/04/%E4%BD%8D%E8%BF%90%E7%AE%97/"/>
-    <id>/2020/06/04/位运算/</id>
-    <published>2020-06-04T06:26:01.000Z</published>
-    <updated>2020-06-08T05:30:25.427Z</updated>
+    <title>二分查找</title>
+    <link href="/2020/06/08/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
+    <id>/2020/06/08/二分查找/</id>
+    <published>2020-06-08T13:40:00.000Z</published>
+    <updated>2020-06-08T13:44:05.911Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h1><h3 id="亦或运算"><a href="#亦或运算" class="headerlink" title="亦或运算"></a>亦或运算</h3><p>&emsp;&emsp;亦或运算本质是定义了一组操作，0^0 = 0, 1^1 = 0, 1^0 = 1, 0^1 = 1，描述为相同为0，不同为1。从定义来看，可以判断两个数是否相同，如果为0则相同，为1则不同。进一步，由于有结合律，可以消除一个序列中所有相同的数组，即a^b^c = (a^b)^c = a^(b^c)。在进一步思考，其实所有能够满足上述运算规律的情况都可以用亦或运算来实现，简单有效。比如无进位二进制加法，实际上与0+0 = 0, 1+1 = 0, 1+0 = 1, 0+1 = 1相同。奇偶性检验，如果我们把奇数看做1，偶数看做0，则有0+0 = 0, 1+1 = 0, 1 + 0 = 1, 0 + 1 = 1，和亦或操作一样。凡是有两个相反、相对的状态，都可以抽象为 0 和 1。另外对于奇偶性一般都会有简单的考察：奇数+奇数 = 偶数，以及奇数 - 1 = 偶数这两条基本性质。</p><p>​     状态压缩题目中一般应用按位与、或和亦或运算会将状态之间的转换变得容易很多。包括如果想取得某一位的状态，可以用 i &gt;&gt; j &amp; 1来计算。</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h1><h2 id="二分查找元素"><a href="#二分查找元素" class="headerlink" title="二分查找元素"></a>二分查找元素</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;二分使用的条件是有<strong>单调性</strong>，比如有序的序列，事实上二分是<strong>分治算法</strong>思想。本质是将问题抽象化为<strong>找一个分界面</strong>，分界面左边不满足某一性质，而右边满足某一个性质。这时候左边边界缩减时需要多缩减一个，因为左边不满足性质；右边边界缩减到当前mid，不用多缩减。下边代码的check函数即是满足某种性质的判断函数，当满足性质时返回 true, 不满足时返回false。</p><p>&emsp;&emsp;当搜素结束时，左右边界重合，即<code>l == r</code>。如果有<code>l = mid</code>的情况，需要<code>l + r + 1 &gt;&gt; 1</code>才能够避免最后两个数相邻时，mid永远更新为左边界的死循环。</p><p>&emsp;&emsp;二分查找分为整数二分和浮点数二分，浮点数查找时原理相同，但是要求精度小于一定数时停止。浮点数二分比整数二分容易很多，不需要考虑很多边界条件的情况。</p><h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="c++">//每次右边界缩减为mid的情况while (l &lt; r){    int mid = l + r &gt;&gt; 1;    if (check(mid)) r = mid;    else l = mid + 1;}//每次左边界缩减为mid的情况while (l &lt; r){    int mid = l + r + 1 &gt;&gt; 1;    if (check(mid)) l = mid;    else r = mid + 1;}//浮点数二分const double eps = 1e-8;while (r - l &gt; eps){    int mid = l + r / 2.0;    if (check(mid)) l = mid;    else r = mid;}</code></pre><h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://leetcode-cn.com/problems/binary-search/" target="_blank" rel="noopener">LC.704 二分查找（简单）</a></p><p><a href="https://www.acwing.com/problem/content/792/" target="_blank" rel="noopener">AW.790 数的三次方根（简单）</a></p><p><a href="https://www.acwing.com/problem/content/791/" target="_blank" rel="noopener">AW.789 数的范围（简单）</a></p><h2 id="二分搜索答案"><a href="#二分搜索答案" class="headerlink" title="二分搜索答案"></a>二分搜索答案</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;答案很多时候是<strong>有范围的</strong>，当某一个问题<strong>验证某一个答案</strong>的时间复杂度乘以二分区间范围的log时，可以考虑搜索答案。通过不断的尝试排除错误答案，且是以指数速度排除，最终得到正确答案。这里一般在验证答案的时候，可以采用某种程度的贪心策略，并且将原问题中单调性质进行转化，能够通过一次的验证缩小答案范围。</p><p>&emsp;&emsp;这类题往往不是简单的搜索答案，而是将问题某种程度的转化之后，再搜索答案。</p><h3 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/104/" target="_blank" rel="noopener">AW.102 最佳牛围栏（简单）</a></p><p><a href="https://leetcode-cn.com/problems/find-the-duplicate-number/" target="_blank" rel="noopener">LC.287 寻找重复数（中等）</a></p>]]></content>
     
     <summary type="html">
     
-      位运算
+      二分查找模板和常见套路
+    
+    </summary>
+    
+      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>BFS</title>
+    <link href="/2020/06/04/BFS/"/>
+    <id>/2020/06/04/BFS/</id>
+    <published>2020-06-04T06:26:01.000Z</published>
+    <updated>2020-06-08T05:34:21.937Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="BFS"><a href="#BFS" class="headerlink" title="BFS"></a>BFS</h1><h2 id="采坑"><a href="#采坑" class="headerlink" title="采坑"></a>采坑</h2><pre><code class="c++">while (q.size()){    int len = q.size();    for (int i = 0; i &lt; len; i ++ )    {        auto t = q.front();        int x = t.first, y = t.second;        q.pop();        //如果是这里标记，队列里面有大量相同元素，虽然不影响最终得到正确结果，但是效率很低        //A[x][y] = -1;        for (int i = 0; i &lt; 4; i ++ )        {            int a = x + dx[i], b = y + dy[i];            if (a &lt; 0 || a &gt;= A.size() || b &lt; 0 || b &gt;= A[0].size()) continue;            if (A[a][b] == -1) continue;            if (A[a][b] == 1) return dis;            //就是这里要在入队之前将当前入队元素标记为已经遍历            A[a][b] = -1;            q.push({a, b});        }    }    dis ++ ;}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      BFS
     
     </summary>
     
@@ -128,6 +108,26 @@
     <summary type="html">
     
       动态规划其他DP
+    
+    </summary>
+    
+      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>位运算</title>
+    <link href="/2020/06/04/%E4%BD%8D%E8%BF%90%E7%AE%97/"/>
+    <id>/2020/06/04/位运算/</id>
+    <published>2020-06-04T06:26:01.000Z</published>
+    <updated>2020-06-08T05:30:25.427Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h1><h3 id="亦或运算"><a href="#亦或运算" class="headerlink" title="亦或运算"></a>亦或运算</h3><p>&emsp;&emsp;亦或运算本质是定义了一组操作，0^0 = 0, 1^1 = 0, 1^0 = 1, 0^1 = 1，描述为相同为0，不同为1。从定义来看，可以判断两个数是否相同，如果为0则相同，为1则不同。进一步，由于有结合律，可以消除一个序列中所有相同的数组，即a^b^c = (a^b)^c = a^(b^c)。在进一步思考，其实所有能够满足上述运算规律的情况都可以用亦或运算来实现，简单有效。比如无进位二进制加法，实际上与0+0 = 0, 1+1 = 0, 1+0 = 1, 0+1 = 1相同。奇偶性检验，如果我们把奇数看做1，偶数看做0，则有0+0 = 0, 1+1 = 0, 1 + 0 = 1, 0 + 1 = 1，和亦或操作一样。凡是有两个相反、相对的状态，都可以抽象为 0 和 1。另外对于奇偶性一般都会有简单的考察：奇数+奇数 = 偶数，以及奇数 - 1 = 偶数这两条基本性质。</p><p>​     状态压缩题目中一般应用按位与、或和亦或运算会将状态之间的转换变得容易很多。包括如果想取得某一位的状态，可以用 i &gt;&gt; j &amp; 1来计算。</p>]]></content>
+    
+    <summary type="html">
+    
+      位运算
     
     </summary>
     
@@ -277,26 +277,6 @@
   </entry>
   
   <entry>
-    <title>读书笔记</title>
-    <link href="/2020/06/01/%E8%AF%BB%E4%B9%A6/"/>
-    <id>/2020/06/01/读书/</id>
-    <published>2020-06-01T14:16:01.000Z</published>
-    <updated>2020-06-04T06:30:48.012Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="读书笔记"><a href="#读书笔记" class="headerlink" title="读书笔记"></a>读书笔记</h1><p>近期更新，敬请期待~</p>]]></content>
-    
-    <summary type="html">
-    
-      读书笔记
-    
-    </summary>
-    
-      <category term="读书" scheme="/categories/%E8%AF%BB%E4%B9%A6/"/>
-    
-    
-  </entry>
-  
-  <entry>
     <title>生活</title>
     <link href="/2020/06/01/%E7%94%9F%E6%B4%BB/"/>
     <id>/2020/06/01/生活/</id>
@@ -312,6 +292,26 @@
     </summary>
     
       <category term="生活" scheme="/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>读书笔记</title>
+    <link href="/2020/06/01/%E8%AF%BB%E4%B9%A6/"/>
+    <id>/2020/06/01/读书/</id>
+    <published>2020-06-01T14:16:01.000Z</published>
+    <updated>2020-06-04T06:30:48.012Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="读书笔记"><a href="#读书笔记" class="headerlink" title="读书笔记"></a>读书笔记</h1><p>近期更新，敬请期待~</p>]]></content>
+    
+    <summary type="html">
+    
+      读书笔记
+    
+    </summary>
+    
+      <category term="读书" scheme="/categories/%E8%AF%BB%E4%B9%A6/"/>
     
     
   </entry>
