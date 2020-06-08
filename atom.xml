@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="/"/>
-  <updated>2020-06-08T05:34:21.937Z</updated>
+  <updated>2020-06-04T06:27:23.602Z</updated>
   <id>/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>二分查找</title>
+    <link href="/2020/06/04/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
+    <id>/2020/06/04/二分查找/</id>
+    <published>2020-06-04T06:26:01.000Z</published>
+    <updated>2020-06-04T06:27:23.602Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h1><h3 id="二分查找元素"><a href="#二分查找元素" class="headerlink" title="二分查找元素"></a>二分查找元素</h3><p>&emsp;&emsp;就使用以下万能模板，本质是将问题抽象化为找一个分界面，分界面左边不满足某一性质，而右边满足某一个性质，这时候左边边界缩减时需要多缩减一个，右边边界缩减到当前mid即可。当搜素结束时，左右边界重合，即l == r。如果有l = mid的情况，需要l + r + 1 &gt;&gt; 1才能够避免到最后两个数相邻时，mid永远更新为左边界的死循环。</p><pre><code class="c++">while (l &lt; r){    int mid = l + r &gt;&gt; 1;    if (check(mid)) r = mid;    else l = mid + 1;}</code></pre><h3 id="二分搜索答案"><a href="#二分搜索答案" class="headerlink" title="二分搜索答案"></a>二分搜索答案</h3><p>&emsp;&emsp;二分搜索答案的套路是当某一个问题验证某一个答案正确或者计算某一个阈值下的答案的时间复杂度乘以二分区间范围的log时，可以考虑搜索答案。一般都是整数答案，浮点数想直接二分搜索答案比较困难，因为在精度比较高的情况下，二分次数会比较多。</p>]]></content>
+    
+    <summary type="html">
+    
+      二分查找模板和常见套路
+    
+    </summary>
+    
+      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>BFS</title>
@@ -57,26 +77,6 @@
   </entry>
   
   <entry>
-    <title>二分查找</title>
-    <link href="/2020/06/04/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
-    <id>/2020/06/04/二分查找/</id>
-    <published>2020-06-04T06:26:01.000Z</published>
-    <updated>2020-06-04T06:27:23.602Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h1><h3 id="二分查找元素"><a href="#二分查找元素" class="headerlink" title="二分查找元素"></a>二分查找元素</h3><p>&emsp;&emsp;就使用以下万能模板，本质是将问题抽象化为找一个分界面，分界面左边不满足某一性质，而右边满足某一个性质，这时候左边边界缩减时需要多缩减一个，右边边界缩减到当前mid即可。当搜素结束时，左右边界重合，即l == r。如果有l = mid的情况，需要l + r + 1 &gt;&gt; 1才能够避免到最后两个数相邻时，mid永远更新为左边界的死循环。</p><pre><code class="c++">while (l &lt; r){    int mid = l + r &gt;&gt; 1;    if (check(mid)) r = mid;    else l = mid + 1;}</code></pre><h3 id="二分搜索答案"><a href="#二分搜索答案" class="headerlink" title="二分搜索答案"></a>二分搜索答案</h3><p>&emsp;&emsp;二分搜索答案的套路是当某一个问题验证某一个答案正确或者计算某一个阈值下的答案的时间复杂度乘以二分区间范围的log时，可以考虑搜索答案。一般都是整数答案，浮点数想直接二分搜索答案比较困难，因为在精度比较高的情况下，二分次数会比较多。</p>]]></content>
-    
-    <summary type="html">
-    
-      二分查找模板和常见套路
-    
-    </summary>
-    
-      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-  </entry>
-  
-  <entry>
     <title>位运算</title>
     <link href="/2020/06/04/%E4%BD%8D%E8%BF%90%E7%AE%97/"/>
     <id>/2020/06/04/位运算/</id>
@@ -88,26 +88,6 @@
     <summary type="html">
     
       位运算
-    
-    </summary>
-    
-      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>动态规划（二）其他DP</title>
-    <link href="/2020/06/04/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%88%E4%BA%8C%EF%BC%89%E5%85%B6%E4%BB%96DP/"/>
-    <id>/2020/06/04/动态规划（二）其他DP/</id>
-    <published>2020-06-04T06:26:01.000Z</published>
-    <updated>2020-06-08T05:29:22.216Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="其他DP"><a href="#其他DP" class="headerlink" title="其他DP"></a>其他DP</h1><h3 id="区间dp"><a href="#区间dp" class="headerlink" title="区间dp"></a>区间dp</h3><p>区间DP是在区间上进行动态规划，本质是用更小区间的最优解来求更大区间的最优解。一般的模板都是这样的：</p><pre><code class="c++">for (int len = 2; len &lt;= n; len ++ )    for (int i = 1; i + len - 1 &lt;= n; i ++ )    {        int j = i + len - 1;        for (int k = i; k &lt; j; k ++ )            f[i][j] = mamx(f[i][j], f[i][k] + f[k][j] + ****);    }</code></pre><h2 id="状压dp"><a href="#状压dp" class="headerlink" title="状压dp"></a>状压dp</h2><p>状压DP分为两类，一类是棋盘式（基于连通性）的模型，另一类是基于集合。</p><p>  棋盘式：蒙德里安的梦想这道题，是求把N<em>M的棋盘分割成若干个1</em>2的的长方形，有多少种方案。通过将每一列看成一个状态，其中放了小块的格子为1，没放的为0，这样可以通过枚举所有的状态到状态的转移来进行计数。</p><p>  基于集合：最短哈密尔顿路径，给定一张 n 个点的带权无向图，点从 0~n-1 标号，求起点 0 到终点 n-1 的最短Hamilton路径。 Hamilton路径的定义是从 0 到 n-1 不重不漏地经过每个点恰好一次。对所有点构成的集合考虑，已经走过的点为1，还没有到达过的点为0，可以确定一个n位状态state，但如果需要从一个点转移到下一个点，则还需要记录当前停在了哪一个点上。因此用f[state][j]表示到达j号点时，已经走过的状态为state的路径集合中的最小值。</p><p>  因此可以得到状态转移方程：<br>$$<br>f[state][j] = min(f[state][j], f[state - (1 &lt;&lt; k)][k] + w[k][j]);<br>$$</p>]]></content>
-    
-    <summary type="html">
-    
-      动态规划其他DP
     
     </summary>
     
@@ -148,6 +128,26 @@
     <summary type="html">
     
       单调栈和单调队列总结
+    
+    </summary>
+    
+      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>动态规划（二）其他DP</title>
+    <link href="/2020/06/04/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%88%E4%BA%8C%EF%BC%89%E5%85%B6%E4%BB%96DP/"/>
+    <id>/2020/06/04/动态规划（二）其他DP/</id>
+    <published>2020-06-04T06:26:01.000Z</published>
+    <updated>2020-06-08T05:29:22.216Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="其他DP"><a href="#其他DP" class="headerlink" title="其他DP"></a>其他DP</h1><h3 id="区间dp"><a href="#区间dp" class="headerlink" title="区间dp"></a>区间dp</h3><p>区间DP是在区间上进行动态规划，本质是用更小区间的最优解来求更大区间的最优解。一般的模板都是这样的：</p><pre><code class="c++">for (int len = 2; len &lt;= n; len ++ )    for (int i = 1; i + len - 1 &lt;= n; i ++ )    {        int j = i + len - 1;        for (int k = i; k &lt; j; k ++ )            f[i][j] = mamx(f[i][j], f[i][k] + f[k][j] + ****);    }</code></pre><h2 id="状压dp"><a href="#状压dp" class="headerlink" title="状压dp"></a>状压dp</h2><p>状压DP分为两类，一类是棋盘式（基于连通性）的模型，另一类是基于集合。</p><p>  棋盘式：蒙德里安的梦想这道题，是求把N<em>M的棋盘分割成若干个1</em>2的的长方形，有多少种方案。通过将每一列看成一个状态，其中放了小块的格子为1，没放的为0，这样可以通过枚举所有的状态到状态的转移来进行计数。</p><p>  基于集合：最短哈密尔顿路径，给定一张 n 个点的带权无向图，点从 0~n-1 标号，求起点 0 到终点 n-1 的最短Hamilton路径。 Hamilton路径的定义是从 0 到 n-1 不重不漏地经过每个点恰好一次。对所有点构成的集合考虑，已经走过的点为1，还没有到达过的点为0，可以确定一个n位状态state，但如果需要从一个点转移到下一个点，则还需要记录当前停在了哪一个点上。因此用f[state][j]表示到达j号点时，已经走过的状态为state的路径集合中的最小值。</p><p>  因此可以得到状态转移方程：<br>$$<br>f[state][j] = min(f[state][j], f[state - (1 &lt;&lt; k)][k] + w[k][j]);<br>$$</p>]]></content>
+    
+    <summary type="html">
+    
+      动态规划其他DP
     
     </summary>
     
@@ -277,26 +277,6 @@
   </entry>
   
   <entry>
-    <title>生活</title>
-    <link href="/2020/06/01/%E7%94%9F%E6%B4%BB/"/>
-    <id>/2020/06/01/生活/</id>
-    <published>2020-06-01T14:16:01.000Z</published>
-    <updated>2020-06-04T06:30:41.296Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="生活"><a href="#生活" class="headerlink" title="生活"></a>生活</h1><p>近期更新，敬请期待~</p>]]></content>
-    
-    <summary type="html">
-    
-      生活
-    
-    </summary>
-    
-      <category term="生活" scheme="/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-    
-  </entry>
-  
-  <entry>
     <title>读书笔记</title>
     <link href="/2020/06/01/%E8%AF%BB%E4%B9%A6/"/>
     <id>/2020/06/01/读书/</id>
@@ -312,6 +292,26 @@
     </summary>
     
       <category term="读书" scheme="/categories/%E8%AF%BB%E4%B9%A6/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>生活</title>
+    <link href="/2020/06/01/%E7%94%9F%E6%B4%BB/"/>
+    <id>/2020/06/01/生活/</id>
+    <published>2020-06-01T14:16:01.000Z</published>
+    <updated>2020-06-04T06:30:41.296Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="生活"><a href="#生活" class="headerlink" title="生活"></a>生活</h1><p>近期更新，敬请期待~</p>]]></content>
+    
+    <summary type="html">
+    
+      生活
+    
+    </summary>
+    
+      <category term="生活" scheme="/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
   </entry>
