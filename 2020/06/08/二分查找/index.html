@@ -342,7 +342,7 @@
           <h1 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h1><h2 id="二分查找元素"><a href="#二分查找元素" class="headerlink" title="二分查找元素"></a>二分查找元素</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;二分使用的条件是有<strong>单调性</strong>，比如有序的序列，事实上二分是<strong>分治算法</strong>思想。本质是将问题抽象化为<strong>找一个分界面</strong>，分界面左边不满足某一性质，而右边满足某一个性质。这时候左边边界缩减时需要多缩减一个，因为左边不满足性质；右边边界缩减到当前mid，不用多缩减。下边代码的check函数即是满足某种性质的判断函数，当满足性质时返回 true, 不满足时返回false。</p>
 <p>&emsp;&emsp;当搜素结束时，左右边界重合，即<code>l == r</code>。如果有<code>l = mid</code>的情况，需要<code>l + r + 1 &gt;&gt; 1</code>才能够避免最后两个数相邻时，mid永远更新为左边界的死循环。</p>
 <p>&emsp;&emsp;二分查找分为整数二分和浮点数二分，浮点数查找时原理相同，但是要求精度小于一定数时停止。浮点数二分比整数二分容易很多，不需要考虑很多边界条件的情况。</p>
-<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="c++">//每次右边界缩减为mid的情况
+<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">//每次右边界缩减为mid的情况
 while (l &lt; r)
 {
     int mid = l + r &gt;&gt; 1;
@@ -365,7 +365,6 @@ while (r - l &gt; eps)
     if (check(mid)) l = mid;
     else r = mid;
 }
-
 </code></pre>
 <h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://leetcode-cn.com/problems/binary-search/" target="_blank" rel="noopener">LC.704 二分查找（简单）</a></p>
 <p><a href="https://www.acwing.com/problem/content/792/" target="_blank" rel="noopener">AW.790 数的三次方根（简单）</a></p>
@@ -423,15 +422,15 @@ while (r - l &gt; eps)
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/04/BFS/" rel="next">
+            <a href="/2020/06/04/动态规划（一）背包专题/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dXYnAwRcQ6qi8xh.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/dXYnAwRcQ6qi8xh.jpg">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                BFS</h3>
+                动态规划（一）背包专题</h3>
                 <hr>
               </div>
             </a>

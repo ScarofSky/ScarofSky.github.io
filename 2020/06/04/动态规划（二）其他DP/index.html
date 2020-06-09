@@ -323,7 +323,7 @@
         
         <div class="entry-content">
           <h1 id="其他DP"><a href="#其他DP" class="headerlink" title="其他DP"></a>其他DP</h1><h3 id="区间dp"><a href="#区间dp" class="headerlink" title="区间dp"></a>区间dp</h3><p>区间DP是在区间上进行动态规划，本质是用更小区间的最优解来求更大区间的最优解。一般的模板都是这样的：</p>
-<pre><code class="c++">for (int len = 2; len &lt;= n; len ++ )
+<pre><code class="lang-c++">for (int len = 2; len &lt;= n; len ++ )
     for (int i = 1; i + len - 1 &lt;= n; i ++ )
     {
         int j = i + len - 1;
@@ -334,8 +334,9 @@
 <h2 id="状压dp"><a href="#状压dp" class="headerlink" title="状压dp"></a>状压dp</h2><p>状压DP分为两类，一类是棋盘式（基于连通性）的模型，另一类是基于集合。</p>
 <p>  棋盘式：蒙德里安的梦想这道题，是求把N<em>M的棋盘分割成若干个1</em>2的的长方形，有多少种方案。通过将每一列看成一个状态，其中放了小块的格子为1，没放的为0，这样可以通过枚举所有的状态到状态的转移来进行计数。</p>
 <p>  基于集合：最短哈密尔顿路径，给定一张 n 个点的带权无向图，点从 0~n-1 标号，求起点 0 到终点 n-1 的最短Hamilton路径。 Hamilton路径的定义是从 0 到 n-1 不重不漏地经过每个点恰好一次。对所有点构成的集合考虑，已经走过的点为1，还没有到达过的点为0，可以确定一个n位状态state，但如果需要从一个点转移到下一个点，则还需要记录当前停在了哪一个点上。因此用f[state][j]表示到达j号点时，已经走过的状态为state的路径集合中的最小值。</p>
-<p>  因此可以得到状态转移方程：<br>$$<br>f[state][j] = min(f[state][j], f[state - (1 &lt;&lt; k)][k] + w[k][j]);<br>$$</p>
-
+<p>  因此可以得到状态转移方程：</p>
+<script type="math/tex; mode=display">
+f[state][j] = min(f[state][j], f[state - (1 << k)][k] + w[k][j]);</script>
         </div>
         <!-- .entry-content -->
         <div class="single-reward">
@@ -366,15 +367,15 @@
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/04/位运算/" rel="prev">
+            <a href="/2020/06/04/图论算法/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/aPU54kjQGVon2Hg.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/aPU54kjQGVon2Hg.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                位运算</h3>
+                图论算法</h3>
                 <hr>
               </div>
             </a>

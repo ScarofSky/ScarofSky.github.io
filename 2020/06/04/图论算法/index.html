@@ -339,7 +339,9 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h1 id="图论算法"><a href="#图论算法" class="headerlink" title="图论算法"></a>图论算法</h1><h2 id="最短路径算法"><a href="#最短路径算法" class="headerlink" title="最短路径算法"></a>最短路径算法</h2><h3 id="Floyd"><a href="#Floyd" class="headerlink" title="Floyd"></a>Floyd</h3><p>&emsp;&emsp;使用邻接矩阵存储图更为合理，因为floyd算法要求每两个点之间的最短路径。循环顺序是kij其中k是阶段，从ik到kj点的最短路径由松弛操作<br>$$<br>g[i][j] = min(g[i][j], g[i][k] + g[k][j])<br>$$<br>给出。当有重边和自环时，每两个点之间存储的<code>g[i][j]</code>只存储最短的一条即可。</p>
+          <h1 id="图论算法"><a href="#图论算法" class="headerlink" title="图论算法"></a>图论算法</h1><h2 id="最短路径算法"><a href="#最短路径算法" class="headerlink" title="最短路径算法"></a>最短路径算法</h2><h3 id="Floyd"><a href="#Floyd" class="headerlink" title="Floyd"></a>Floyd</h3><p>&emsp;&emsp;使用邻接矩阵存储图更为合理，因为floyd算法要求每两个点之间的最短路径。循环顺序是kij其中k是阶段，从ik到kj点的最短路径由松弛操作</p>
+<script type="math/tex; mode=display">
+g[i][j] = min(g[i][j], g[i][k] + g[k][j])</script><p>给出。当有重边和自环时，每两个点之间存储的<code>g[i][j]</code>只存储最短的一条即可。</p>
 <p>总结：图论算法主要包括几部分，有最短路径、最小生成树。下图可以比较清楚地将最短路径算法分类。</p>
 <h3 id="Dijkstra"><a href="#Dijkstra" class="headerlink" title="Dijkstra"></a>Dijkstra</h3><p>&emsp;&emsp;使用dist数组来维护所有点到源点的最短距离，用st数组维护已经确定最短距离的点。st数组一定要从空集开始，这样才能更新1号点。从所有点中选择距离源点最近的点来更新，将其所有临接点到源点的最短距离更新。最终更新了n个点后，所有点到达最短距离。时间复杂度为O(n^2)。</p>
 <h3 id="堆优化的Dijkstra"><a href="#堆优化的Dijkstra" class="headerlink" title="堆优化的Dijkstra"></a>堆优化的Dijkstra</h3><p>&emsp;&emsp;维护一个堆，堆中储存一对信息（距离源点距离，当前点序号），从而每次得到距离源点最近的点的编号，扩展所有邻接点。这里不能保证每个点只入堆一次，因此当第一次从堆出来以后，再出来的就是错误的更新点，因此continue。时间复杂度因为有堆进行优化，所以是O(nlogn)。</p>
@@ -379,7 +381,7 @@
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/04/快速幂/" rel="prev">
+            <a href="/2020/06/04/位运算/" rel="prev">
               <div class="background">
                 <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
               </div>
@@ -387,7 +389,7 @@
               Previous Post</span>
               <div class="info">
                 <h3>
-                快速幂</h3>
+                位运算</h3>
                 <hr>
               </div>
             </a>
@@ -397,7 +399,7 @@
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/04/欧几里得算法/" rel="next">
+            <a href="/2020/06/04/动态规划（二）其他DP/" rel="next">
               <div class="background">
                 <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
               </div>
@@ -405,7 +407,7 @@
               Next Post</span>
               <div class="info">
                 <h3>
-                欧几里得算法</h3>
+                动态规划（二）其他DP</h3>
                 <hr>
               </div>
             </a>

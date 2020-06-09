@@ -340,20 +340,25 @@
         
         <div class="entry-content">
           <h1 id="背包专题"><a href="#背包专题" class="headerlink" title="背包专题"></a>背包专题</h1><h3 id="01背包"><a href="#01背包" class="headerlink" title="01背包"></a>01背包</h3><p>&emsp;&emsp;<code>dp[i][j]</code>表示考虑到第i个元素时，背包容量为j的情况下的最大价值。</p>
-<p>$$<br>dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - v[i]])<br>$$<br>表示当前状态由前一个状态拿当前物品i或者不拿物品i转移。</p>
+<script type="math/tex; mode=display">
+dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - v[i]])</script><p>表示当前状态由前一个状态拿当前物品i或者不拿物品i转移。</p>
 <p>一维形式循环顺序要从m到v[i]，原因是省略了i - 1维度。</p>
-<pre><code class="c++">for (int i = 01; i &lt;= n; i ++ )
+<pre><code class="lang-c++">for (int i = 01; i &lt;= n; i ++ )
     for (int j = m; j &gt;= v[i];j -- )
         f[j] = max(f[j], f[j - v[i]] + w[i]);
 </code></pre>
-<h2 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h2><p>$$<br>dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - v[i]] + w[i], … , dp[i - 1][j - s <em> v[i]] + s </em> w[i]);<br>$$</p>
-<p>如果直接循环则需要3重循环来实现，但是我们发现上述部分项已经计算过了。<br>$$<br>dp[i][j - v[i]] = max(dp[i - 1][j - v[i]] + w[i], dp[i - 1][j - 2 <em> v[i]] + 2 </em> w[i] , … , dp[i - 1][j - s <em> v[i]] + s </em> w[i]);<br>$$<br>所以<code>dp[i][j]</code>可以进行简化为：<br>$$<br>dp[i][j] = max(dp[i - 1][j], dp[i][j - v[i]]);<br>$$<br>如果化简为一维形式，由于需要比较的是<code>dp[i][j - v[i]]</code>和01背包对应的，应该体积从小到大循环。</p>
-<pre><code class="c++">for (int i = 1; i &lt;= n; i ++ )
+<h2 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h2><script type="math/tex; mode=display">
+dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - v[i]] + w[i], ... , dp[i - 1][j - s * v[i]] + s * w[i]);</script><p>如果直接循环则需要3重循环来实现，但是我们发现上述部分项已经计算过了。</p>
+<script type="math/tex; mode=display">
+dp[i][j - v[i]] = max(dp[i - 1][j - v[i]] + w[i], dp[i - 1][j - 2 * v[i]] + 2 * w[i] , ... , dp[i - 1][j - s * v[i]] + s * w[i]);</script><p>所以<code>dp[i][j]</code>可以进行简化为：</p>
+<script type="math/tex; mode=display">
+dp[i][j] = max(dp[i - 1][j], dp[i][j - v[i]]);</script><p>如果化简为一维形式，由于需要比较的是<code>dp[i][j - v[i]]</code>和01背包对应的，应该体积从小到大循环。</p>
+<pre><code class="lang-c++">for (int i = 1; i &lt;= n; i ++ )
     for (int j = v[i]; j &lt;= m; j ++ )
         f[j] = max(f[j], f[j - v[i]] + w[i]);
 </code></pre>
 <h2 id="多重背包"><a href="#多重背包" class="headerlink" title="多重背包"></a>多重背包</h2><p>多重背包问题可以使用三重循环直接暴力求解，也可以使用二进制优化。暴力求解：</p>
-<pre><code class="c++">for (int i = 1; i &lt;= n; i ++ )
+<pre><code class="lang-c++">for (int i = 1; i &lt;= n; i ++ )
     for (int j = 0; j &lt;= m; j ++ )
         for (int t = 0; t &lt;= s[i]; t ++ )
             if (j - s * v[i] &gt;= 0)
@@ -392,15 +397,15 @@
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/04/单调栈与单调队列/" rel="prev">
+            <a href="/2020/06/08/二分查找/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dptoeG2n78wNqS1.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/dptoeG2n78wNqS1.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/BUkJ5s7SDhxmzAI.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/BUkJ5s7SDhxmzAI.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                单调栈与单调队列</h3>
+                二分查找</h3>
                 <hr>
               </div>
             </a>
@@ -410,7 +415,7 @@
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/04/快速幂/" rel="next">
+            <a href="/2020/06/04/BFS/" rel="next">
               <div class="background">
                 <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
               </div>
@@ -418,7 +423,7 @@
               Next Post</span>
               <div class="info">
                 <h3>
-                快速幂</h3>
+                BFS</h3>
                 <hr>
               </div>
             </a>
