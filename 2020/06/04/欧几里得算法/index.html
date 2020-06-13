@@ -322,14 +322,13 @@
           </header>
         
         <div class="entry-content">
-          <h1 id="欧几里得算法"><a href="#欧几里得算法" class="headerlink" title="欧几里得算法"></a>欧几里得算法</h1><h3 id="gcd"><a href="#gcd" class="headerlink" title="gcd"></a>gcd</h3><p>&emsp;&emsp;gcd可以计算两个数的最大公约数。欧几里得算法通过递归来计算最大公约数。</p>
-<pre><code class="lang-c++">int gcd(int a, int b)
+          <h1 id="欧几里得算法"><a href="#欧几里得算法" class="headerlink" title="欧几里得算法"></a>欧几里得算法</h1><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;gcd可以计算两个数的最大公约数。欧几里得算法通过递归来计算最大公约数。基本情况是当b为0时，a和b的最大公约数就是a。</p>
+<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">int gcd(int a, int b)
 {
     return b ? gcd(b, a % b) : a;
 }
 </code></pre>
-<p>&emsp;&emsp;基本情况是当b为0时，a和b的最大公约数就是a。</p>
-
+<h1 id="扩展欧几里得算法"><a href="#扩展欧几里得算法" class="headerlink" title="扩展欧几里得算法"></a>扩展欧几里得算法</h1>
         </div>
         <!-- .entry-content -->
         <div class="single-reward">
@@ -360,7 +359,7 @@
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/04/快速幂/" rel="prev">
+            <a href="/2020/06/04/动态规划（二）其他DP/" rel="prev">
               <div class="background">
                 <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
               </div>
@@ -368,7 +367,7 @@
               Previous Post</span>
               <div class="info">
                 <h3>
-                快速幂</h3>
+                动态规划（二）其他DP</h3>
                 <hr>
               </div>
             </a>
