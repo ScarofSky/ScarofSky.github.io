@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="/"/>
-  <updated>2020-06-15T08:20:52.168Z</updated>
+  <updated>2020-06-15T09:14:39.334Z</updated>
   <id>/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="/2020/06/15/%E9%AB%98%E7%B2%BE%E5%BA%A6/"/>
     <id>/2020/06/15/高精度/</id>
     <published>2020-06-15T08:20:48.000Z</published>
-    <updated>2020-06-15T08:20:52.168Z</updated>
+    <updated>2020-06-15T09:14:39.334Z</updated>
     
     <content type="html"><![CDATA[<h1 id="高精度"><a href="#高精度" class="headerlink" title="高精度"></a>高精度</h1><h2 id="高精度加法和乘法"><a href="#高精度加法和乘法" class="headerlink" title="高精度加法和乘法"></a>高精度加法和乘法</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>高精度加法和高精度乘法用在某些题目中成为一个模块，不会单独出现，基本方法是用一个数组或者vector来模拟竖式加法和乘法。有些题目分析之后可能可以用double来代替高精度。</p><h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">#include &lt;iostream&gt;#include &lt;vector&gt;using namespace std;//高精度加法vector&lt;int&gt; add(vector&lt;int&gt;&amp; A, vector&lt;int&gt;&amp; B){    vector&lt;int&gt; C;    int t = 0;    for (int i = 0; i &lt; A.size() || i &lt; B.size() || t; i ++ )    {        if (i &lt; A.size()) t += A[i];        if (i &lt; B.size()) t += B[i];        C.push_back(t % 10);        t /= 10;    }    return C;}//高精度乘法vector&lt;int&gt; mul(vector&lt;int&gt;&amp; A, int b){    vector&lt;int&gt; C;    int t = 0;    for (int i = 0; i &lt; A.size() || t; i ++ )    {        if (i &lt; A.size()) t += A[i] * b;        C.push_back(t % 10);        t /= 10;    }    //12345 * 0;    while (!C.back() &amp;&amp; C.size() &gt; 1) C.pop_back();    return C;}int main(){    string a, b;    cin &gt;&gt; a &gt;&gt; b;    vector&lt;int&gt; A, B;    for (int i = a.size() - 1; i &gt;= 0; i -- ) A.push_back(a[i] - &#39;0&#39;);    for (int i = b.size() - 1; i &gt;= 0; i -- ) B.push_back(b[i] - &#39;0&#39;);    auto C = add(A, B);    for (int i = C.size() - 1; i &gt;= 0; i -- )         cout &lt;&lt; C[i];       cout &lt;&lt; endl;    return 0;}</code></pre><h2 id="高精度除法"><a href="#高精度除法" class="headerlink" title="高精度除法"></a>高精度除法</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>高精度加法和乘法方法如同竖式一样，高精度除法是余数每次乘10之后加上当前位除以被除数。没有涉及到两个大数相乘和相除的问题，具体方法要更加复杂。</p>]]></content>
     
@@ -61,7 +61,7 @@
     <link href="/2020/06/13/%E9%A2%98%E5%BA%93%E9%A2%98%E8%A7%A3/"/>
     <id>/2020/06/13/题库题解/</id>
     <published>2020-06-13T13:37:30.000Z</published>
-    <updated>2020-06-14T15:35:36.273Z</updated>
+    <updated>2020-06-15T09:17:32.420Z</updated>
     
     <content type="html"><![CDATA[<h1 id="题库"><a href="#题库" class="headerlink" title="题库"></a>题库</h1><h2 id="题库-题解"><a href="#题库-题解" class="headerlink" title="题库+题解"></a>题库+题解</h2><p><a href="https://leetcode-cn.com/problems/3sum/" target="_blank" rel="noopener">LC.15 三数之和（中等）</a></p><p>排序+双指针，排序加上双指针可以简化定和搜索。排序可以将相同元素邻接。时间复杂度O(n^2)。</p><pre><code class="lang-c++">class Solution {public:    vector&lt;vector&lt;int&gt;&gt; threeSum(vector&lt;int&gt;&amp; nums) {        vector&lt;vector&lt;int&gt;&gt; ans;        sort(nums.begin(), nums.end());        for (int i = 0; i &lt; nums.size(); i ++ )        {            //因为要不重复，所以当前如果在之前出现过就跳过，排序的好处体现在这里            if (i - 1 &gt;=0 &amp;&amp; nums[i - 1] == nums[i]) continue;            int target = -nums[i];            //第i个左边的都遍历过了，只考虑右边即可。            int l = i + 1, r = nums.size() - 1;            //双指针过程            while (l &lt; r)            {                if (nums[l] + nums[r] &lt; target) l ++ ;                else if (nums[l] + nums[r] &gt; target) r -- ;                else                 {                    vector&lt;int&gt; cur;                    cur.push_back(nums[i]);                    cur.push_back(nums[l]);                    cur.push_back(nums[r]);                    ans.push_back(cur);                    //重复的直接跳过                    while (l + 1 &lt;= nums.size() - 1 &amp;&amp; nums[l + 1] == nums[l]) l ++ ;                    while (r - 1 &gt;= 0 &amp;&amp; nums[r - 1] == nums[r]) r -- ;                    l ++ , r -- ;                }            }        }        return ans;    }};</code></pre><p><a href="https://leetcode-cn.com/problems/probability-of-a-two-boxes-having-the-same-number-of-distinct-balls/" target="_blank" rel="noopener">LC.1467 两个盒子中球的颜色数相同的概率（困难）</a></p><p>首先要知道<strong>可重复排列数</strong>计算原理和公式，假设有1122333这样的数，要求不重复的排列数，就要用到可重复排列数计算公式。思想是首先将所有的相同的数看做不同，求总共的排列数，假设一共有sum个数，有sum!种排列方式。再对于每一种数，除以重复的种数的全排列，用公式表达如下：</p><script type="math/tex; mode=display">res = \frac{(S_1 + S_2 + ... + S_n)!}{S_1!*S_2!*...*S_n!}</script><p>其中Si表示第i个数出现的次数。这样可以计算出概率的分母，对于分子，首先其必须满足分成两部分之后，左边和右边的种类数相同，然后对于左边和右边分别计算可重复排列数，并且利用乘法原理，得到最终合并之后的排列数。另外dfs过程中需要剪枝，当左边总和个数的两倍大于整体总和的时候不要继续计算了。</p><p>这道题是典型的概率类题目，之前没遇到过，记录一下。</p><pre><code class="lang-c++">double fact[50];class Solution {public:    //计算阶乘    void factorial()    {        fact[0] = 1;        for (int i = 1; i &lt;= 48; i ++ )            fact[i] = fact[i - 1] * i;    }    //计算可重复排列数    double get(vector&lt;int&gt;&amp; balls)    {        int sum = 0;        for (int i = 0; i &lt; balls.size(); i ++ ) sum += balls[i];        double res = fact[sum];        for (int i = 0; i &lt; balls.size(); i ++ ) res /= fact[balls[i]];        return res;    }    //通过dfs计算所有可能的情况    double dfs(int u, int ts, int ls, int rs, vector&lt;int&gt;&amp; left, vector&lt;int&gt;&amp; right, vector&lt;int&gt;&amp; balls)    {        //剪枝        if (ls * 2 &gt; ts || rs * 2 &gt; ts) return 0;        double res = 0;        if (u == balls.size())        {            int l = 0, r = 0;            for (int i = 0; i &lt; left.size(); i ++ )                if (left[i]) l += 1;            for (int i = 0; i &lt; right.size(); i ++ )                if (right[i]) r += 1;            //如果左右种类数不同，不可能产生答案，直接返回0            if (l != r) return 0;            return get(left) * get(right);        }        //对于每一种球分别枚举        for (int i = 0; i &lt;= balls[u]; i ++ )        {            left[u] = i, right[u] = balls[u] - i;            res += dfs(u + 1, ts, ls + i, rs + balls[u] - i, left, right, balls);        }        return res;    }    double getProbability(vector&lt;int&gt;&amp; balls) {        int n = balls.size();        int sum = 0;        for (int i = 0; i &lt; balls.size(); i ++ ) sum += balls[i];        factorial();        double down = get(balls);        vector&lt;int&gt; left(n, 0), right(n, 0);        double up = dfs(0, sum, 0, 0, left, right, balls);        return up / down;    }};</code></pre><p><a href="https://leetcode-cn.com/problems/minimum-number-of-days-to-make-m-bouquets/" target="_blank" rel="noopener">LC.5438 制作m束花所需的最少天数（中等）</a></p><p>这是周赛的第三题，答案有一个范围，并且验证答案的时间在O(n)，且具有单调性（如果第x天无法制作那么小于x天都不行，如果x天可以制作，那么大于x天都可以制作），数据规模在10^5，因此O(nlogn)的二分算法可以完成这道题。</p><pre><code class="lang-c++">class Solution {public:    int minDays(vector&lt;int&gt;&amp; bd, int m, int k) {        int n = bd.size();        //无论如果都不能制作只有花数量不够        if (m * k &gt; n) return -1;        //答案是在最小值和最大值之间，增加效率        int l = INT_MAX, r = INT_MIN;        for (int i = 0; i &lt; n; i ++ )        {            l = min(l, bd[i]);            r = max(r, bd[i]);        }        //标准二分查找答案模板        while (l &lt; r)        {            int mid = l + r &gt;&gt; 1;            if (check(bd, mid, m, k)) r = mid;            else l = mid + 1;        }        return l;    }    //check函数用O(n)的时间判断是否当前答案可行    //这里判断是否可行有点贪心的意味    bool check(vector&lt;int&gt;&amp; bd, int mid, int m, int k)    {        int cnt = 0;        int ans = 0;        for (int i = 0; i &lt; bd.size(); i ++ )        {            //如果已经过了开花时间，则连续花数 + 1            if (bd[i] &lt;= mid)            {                cnt ++ ;                //如果有k朵花了，可以做个束                if (cnt &gt;= k)                {                    ans ++ ;                    //当前连续花数清零                    cnt = 0;                }            }            else cnt = 0;        }        if (ans &gt;= m) return true;        else return false;    }};</code></pre>]]></content>
     
@@ -297,26 +297,6 @@
   </entry>
   
   <entry>
-    <title>读书笔记</title>
-    <link href="/2020/06/01/%E8%AF%BB%E4%B9%A6/"/>
-    <id>/2020/06/01/读书/</id>
-    <published>2020-06-01T14:16:01.000Z</published>
-    <updated>2020-06-04T06:30:48.012Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="读书笔记"><a href="#读书笔记" class="headerlink" title="读书笔记"></a>读书笔记</h1><p>近期更新，敬请期待~</p>]]></content>
-    
-    <summary type="html">
-    
-      读书笔记
-    
-    </summary>
-    
-      <category term="读书" scheme="/categories/%E8%AF%BB%E4%B9%A6/"/>
-    
-    
-  </entry>
-  
-  <entry>
     <title>生活</title>
     <link href="/2020/06/01/%E7%94%9F%E6%B4%BB/"/>
     <id>/2020/06/01/生活/</id>
@@ -332,6 +312,26 @@
     </summary>
     
       <category term="生活" scheme="/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>读书笔记</title>
+    <link href="/2020/06/01/%E8%AF%BB%E4%B9%A6/"/>
+    <id>/2020/06/01/读书/</id>
+    <published>2020-06-01T14:16:01.000Z</published>
+    <updated>2020-06-04T06:30:48.012Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="读书笔记"><a href="#读书笔记" class="headerlink" title="读书笔记"></a>读书笔记</h1><p>近期更新，敬请期待~</p>]]></content>
+    
+    <summary type="html">
+    
+      读书笔记
+    
+    </summary>
+    
+      <category term="读书" scheme="/categories/%E8%AF%BB%E4%B9%A6/"/>
     
     
   </entry>
