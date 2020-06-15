@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">天の痕的博客</title>
+  <title itemprop="name">题库题解 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -303,344 +303,283 @@
   </div>
 </header>
 
-      <div class="blank" style="padding-top: 0px;"></div>
+      <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
 <div id="content" class="site-content">
-  
-  <div class="notice" style="margin-top:60px">
-    <i class="iconfont icon-notification">
-    </i>
-    <div class="notice-content">已经基本迁移完毕，欢迎大家来参观~</div>
-  </div>
-  
-  <div class="top-feature-row">
-  <h1 class="fes-title" style="font-family: 'Ubuntu', sans-serif;">
-  <i class="fa fa-anchor" aria-hidden="true">
-  </i>
-  START:DASH!!</h1>
-  
-  <div class="top-feature-v2">
-    <div class="the-feature square from_left_and_right">
-      <a href="https://leetcode-cn.com/u/over-lord/" target="_blank">
-        <div class="img">
-          <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/startdash/leetcode.jpg">
-        </div>
-        <div class="info">
-          <h3>Leetcode</h3>
-          <p>博主的Leetcode</p>
-        </div>
-      </a>
-    </div>
-  </div>
-  
-  <div class="top-feature-v2">
-    <div class="the-feature square from_left_and_right">
-      <a href="/theme-sakura/" target="_blank">
-        <div class="img">
-          <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/startdash/sakura.md.png">
-        </div>
-        <div class="info">
-          <h3>Sakura</h3>
-          <p>本站 hexo 主题</p>
-        </div>
-      </a>
-    </div>
-  </div>
-  
-</div>
   <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
-      <h1 class="main-title" style="font-family: 'Ubuntu', sans-serif;">
-      <i class="fa fa-envira" aria-hidden="true"></i>
-      Discovery</h1>
+      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
+        
+          <header class="entry-header">
+            <h1 class="entry-title">题库题解</h1>
+            <p class="entry-census">天の痕&nbsp;·&nbsp;2020-6-13&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
+
+            <hr>
+          </header>
+        
+        <div class="entry-content">
+          <h1 id="题库"><a href="#题库" class="headerlink" title="题库"></a>题库</h1><h2 id="题库-题解"><a href="#题库-题解" class="headerlink" title="题库+题解"></a>题库+题解</h2><p><a href="https://leetcode-cn.com/problems/3sum/" target="_blank" rel="noopener">LC.15 三数之和（中等）</a></p>
+<p>排序+双指针，排序加上双指针可以简化定和搜索。排序可以将相同元素邻接。时间复杂度O(n^2)。</p>
+<pre><code class="lang-c++">class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; threeSum(vector&lt;int&gt;&amp; nums) {
+        vector&lt;vector&lt;int&gt;&gt; ans;
+        sort(nums.begin(), nums.end());
+        for (int i = 0; i &lt; nums.size(); i ++ )
+        {
+            //因为要不重复，所以当前如果在之前出现过就跳过，排序的好处体现在这里
+            if (i - 1 &gt;=0 &amp;&amp; nums[i - 1] == nums[i]) continue;
+            int target = -nums[i];
+
+            //第i个左边的都遍历过了，只考虑右边即可。
+            int l = i + 1, r = nums.size() - 1;
+            //双指针过程
+            while (l &lt; r)
+            {
+                if (nums[l] + nums[r] &lt; target) l ++ ;
+                else if (nums[l] + nums[r] &gt; target) r -- ;
+                else 
+                {
+                    vector&lt;int&gt; cur;
+                    cur.push_back(nums[i]);
+                    cur.push_back(nums[l]);
+                    cur.push_back(nums[r]);
+                    ans.push_back(cur);
+                    //重复的直接跳过
+                    while (l + 1 &lt;= nums.size() - 1 &amp;&amp; nums[l + 1] == nums[l]) l ++ ;
+                    while (r - 1 &gt;= 0 &amp;&amp; nums[r - 1] == nums[r]) r -- ;
+                    l ++ , r -- ;
+                }
+            }
+        }
+
+        return ans;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/probability-of-a-two-boxes-having-the-same-number-of-distinct-balls/" target="_blank" rel="noopener">LC.1467 两个盒子中球的颜色数相同的概率（困难）</a></p>
+<p>首先要知道<strong>可重复排列数</strong>计算原理和公式，假设有1122333这样的数，要求不重复的排列数，就要用到可重复排列数计算公式。思想是首先将所有的相同的数看做不同，求总共的排列数，假设一共有sum个数，有sum!种排列方式。再对于每一种数，除以重复的种数的全排列，用公式表达如下：</p>
+<script type="math/tex; mode=display">
+res = \frac{(S_1 + S_2 + ... + S_n)!}{S_1!*S_2!*...*S_n!}</script><p>其中Si表示第i个数出现的次数。这样可以计算出概率的分母，对于分子，首先其必须满足分成两部分之后，左边和右边的种类数相同，然后对于左边和右边分别计算可重复排列数，并且利用乘法原理，得到最终合并之后的排列数。另外dfs过程中需要剪枝，当左边总和个数的两倍大于整体总和的时候不要继续计算了。</p>
+<p>这道题是典型的概率类题目，之前没遇到过，记录一下。</p>
+<pre><code class="lang-c++">double fact[50];
+
+class Solution {
+public:
+    //计算阶乘
+    void factorial()
+    {
+        fact[0] = 1;
+        for (int i = 1; i &lt;= 48; i ++ )
+            fact[i] = fact[i - 1] * i;
+    }
+    //计算可重复排列数
+    double get(vector&lt;int&gt;&amp; balls)
+    {
+        int sum = 0;
+        for (int i = 0; i &lt; balls.size(); i ++ ) sum += balls[i];
+        double res = fact[sum];
+        for (int i = 0; i &lt; balls.size(); i ++ ) res /= fact[balls[i]];
+        return res;
+    }
+
+    //通过dfs计算所有可能的情况
+    double dfs(int u, int ts, int ls, int rs, vector&lt;int&gt;&amp; left, vector&lt;int&gt;&amp; right, vector&lt;int&gt;&amp; balls)
+    {
+        //剪枝
+        if (ls * 2 &gt; ts || rs * 2 &gt; ts) return 0;
+        double res = 0;
+        if (u == balls.size())
+        {
+            int l = 0, r = 0;
+            for (int i = 0; i &lt; left.size(); i ++ )
+                if (left[i]) l += 1;
+            for (int i = 0; i &lt; right.size(); i ++ )
+                if (right[i]) r += 1;
+            //如果左右种类数不同，不可能产生答案，直接返回0
+            if (l != r) return 0;
+            return get(left) * get(right);
+        }
+        //对于每一种球分别枚举
+        for (int i = 0; i &lt;= balls[u]; i ++ )
+        {
+            left[u] = i, right[u] = balls[u] - i;
+            res += dfs(u + 1, ts, ls + i, rs + balls[u] - i, left, right, balls);
+        }
+        return res;
+    }
+
+    double getProbability(vector&lt;int&gt;&amp; balls) {
+        int n = balls.size();
+        int sum = 0;
+        for (int i = 0; i &lt; balls.size(); i ++ ) sum += balls[i];
+        factorial();
+        double down = get(balls);
+        vector&lt;int&gt; left(n, 0), right(n, 0);
+        double up = dfs(0, sum, 0, 0, left, right, balls);
+        return up / down;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/minimum-number-of-days-to-make-m-bouquets/" target="_blank" rel="noopener">LC.5438 制作m束花所需的最少天数（中等）</a></p>
+<p>这是周赛的第三题，答案有一个范围，并且验证答案的时间在O(n)，且具有单调性（如果第x天无法制作那么小于x天都不行，如果x天可以制作，那么大于x天都可以制作），数据规模在10^5，因此O(nlogn)的二分算法可以完成这道题。</p>
+<pre><code class="lang-c++">class Solution {
+public:
+    int minDays(vector&lt;int&gt;&amp; bd, int m, int k) {
+        int n = bd.size();
+        //无论如果都不能制作只有花数量不够
+        if (m * k &gt; n) return -1;
+
+        //答案是在最小值和最大值之间，增加效率
+        int l = INT_MAX, r = INT_MIN;
+
+        for (int i = 0; i &lt; n; i ++ )
+        {
+            l = min(l, bd[i]);
+            r = max(r, bd[i]);
+        }
+
+        //标准二分查找答案模板
+        while (l &lt; r)
+        {
+            int mid = l + r &gt;&gt; 1;
+
+            if (check(bd, mid, m, k)) r = mid;
+            else l = mid + 1;
+        }
+
+        return l;
+    }
+
+    //check函数用O(n)的时间判断是否当前答案可行
+    //这里判断是否可行有点贪心的意味
+    bool check(vector&lt;int&gt;&amp; bd, int mid, int m, int k)
+    {
+        int cnt = 0;
+        int ans = 0;
+        for (int i = 0; i &lt; bd.size(); i ++ )
+        {
+            //如果已经过了开花时间，则连续花数 + 1
+            if (bd[i] &lt;= mid)
+            {
+                cnt ++ ;
+                //如果有k朵花了，可以做个束
+                if (cnt &gt;= k)
+                {
+                    ans ++ ;
+                    //当前连续花数清零
+                    cnt = 0;
+                }
+            }
+            else cnt = 0;
+        }
+
+        if (ans &gt;= m) return true;
+        else return false;
+    }
+};
+</code></pre>
+
+        </div>
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/donate/AliPayQR.jpg"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/donate/WeChanQR.jpg"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+        <footer class="post-footer">
+          <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow"><i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+          <div class="post-tags">
+          </div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+          
+            <div class="post-nepre half previous">
+          
+            <a href="/2020/06/15/BFS/" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/15/fZCdM51Ak4cUlim.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/15/fZCdM51Ak4cUlim.jpg">
+              </div>
+              <span class="label">
+              Previous Post</span>
+              <div class="info">
+                <h3>
+                BFS</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+        
+          
+            <div class="post-nepre half next">
+          
+            <a href="/2020/06/12/动态规划（一）背包专题/" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dXYnAwRcQ6qi8xh.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/dXYnAwRcQ6qi8xh.jpg">
+              </div>
+              <span class="label">
+              Next Post</span>
+              <div class="info">
+                <h3>
+                动态规划（一）背包专题</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
       
-  <!-- 首页默认取最最新文章集 -->
-  
-    
-<article  class="post post-list-thumb post-list-thumb-left"  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
+<div id="vcomments"></div>
+<script>
+  window.onload = function(){
+      var valine = new Valine();
+      valine.init({
+        el: '#vcomments',
+        appId: "Eg4LiBqPfNMfvhhF7RBt3YdV-gzGzoHsz",
+        appKey: "f5OCYpX4S5HM1oOfq90Yo91S",
+        path: window.location.pathname,
+        placeholder: "你是我一生只会遇见一次的惊喜 ..."
+      })
+  }
+</script>
 
-  <div class="post-thumb">
-    <a href="/2020/06/04/动态规划（二）其他DP/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/image-404.png">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-6-4 14:06</div>
-      <a href="/2020/06/04/动态规划（二）其他DP/" class="post-title">
-        <h3>动态规划（二）其他DP</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>动态规划其他DP</p>
-        <div class="post-bottom">
-          <a href="/2020/06/04/动态规划（二）其他DP/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+          <a href="https://scarofsky.github.io" class="profile gravatar"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.1/img/custom/avatar.jpg" itemprop="image" alt="天の痕" height="70" width="70"></a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+            <a href="https://scarofsky.github.io" itemprop="url" rel="author">天の痕</a>
+            </h3>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/06/04/图论算法/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/aPU54kjQGVon2Hg.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-6-4 14:06</div>
-      <a href="/2020/06/04/图论算法/" class="post-title">
-        <h3>图论算法</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>图论算法总结</p>
-        <div class="post-bottom">
-          <a href="/2020/06/04/图论算法/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb post-list-thumb-left"  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/06/04/欧几里得算法/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/image-404.png">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-6-4 14:06</div>
-      <a href="/2020/06/04/欧几里得算法/" class="post-title">
-        <h3>欧几里得算法</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>欧几里得算法</p>
-        <div class="post-bottom">
-          <a href="/2020/06/04/欧几里得算法/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/06/04/高级数据结构/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dwOKa7ZPDfsYCjI.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-6-4 14:06</div>
-      <a href="/2020/06/04/高级数据结构/" class="post-title">
-        <h3>数据结构</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>高级数据结构</p>
-        <div class="post-bottom">
-          <a href="/2020/06/04/高级数据结构/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb post-list-thumb-left"  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/06/01/读书/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-6-1 22:06</div>
-      <a href="/2020/06/01/读书/" class="post-title">
-        <h3>读书笔记</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/读书/">读书</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>读书笔记</p>
-        <div class="post-bottom">
-          <a href="/2020/06/01/读书/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/06/01/生活/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-6-1 22:06</div>
-      <a href="/2020/06/01/生活/" class="post-title">
-        <h3>生活</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/生活/">生活</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>生活</p>
-        <div class="post-bottom">
-          <a href="/2020/06/01/生活/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb post-list-thumb-left"  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/06/01/随笔/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/HvD73JVyupPK8iq.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-6-1 22:06</div>
-      <a href="/2020/06/01/随笔/" class="post-title">
-        <h3>随笔</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/随笔/">随笔</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>随笔</p>
-        <div class="post-bottom">
-          <a href="/2020/06/01/随笔/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-
-
-    </main>
-      <!-- 首页默认取最最新文章集 -->
-    <!-- 
-      <nav class="navigator">
-        
-        <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-back"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-      </nav>
-     -->
-  </div>
-  
+        <hr>
+        <p><i class="iconfont icon-write"></i>庄敬日强，功不唐捐。</p>
+      </section>
+    </main><!-- #main -->
+  </div><!-- #primary -->
 </div>
+
+
 
     </div>    
     <div class="ins-search">
