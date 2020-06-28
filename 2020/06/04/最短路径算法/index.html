@@ -339,12 +339,20 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h1 id="最短路径算法"><a href="#最短路径算法" class="headerlink" title="最短路径算法"></a>最短路径算法</h1><h2 id="Floyd"><a href="#Floyd" class="headerlink" title="Floyd"></a>Floyd</h2><p>&emsp;&emsp;使用邻接矩阵存储图更为合理，因为floyd算法要求每两个点之间的最短路径。循环顺序是kij其中k是阶段，从ik到kj点的最短路径由松弛操作</p>
+          <h1 id="最短路径算法"><a href="#最短路径算法" class="headerlink" title="最短路径算法"></a>最短路径算法</h1><h2 id="Floyd"><a href="#Floyd" class="headerlink" title="Floyd"></a>Floyd</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;使用邻接矩阵存储图更为合理，因为floyd算法要求每两个点之间的最短路径。循环顺序是kij其中k是阶段，从ik到kj点的最短路径由松弛操作</p>
 <script type="math/tex; mode=display">
-g[i][j] = min(g[i][j], g[i][k] + g[k][j])</script><p>给出。当有重边和自环时，每两个点之间存储的<code>g[i][j]</code>只存储最短的一条即可。</p>
-<p>总结：图论算法主要包括几部分，有最短路径、最小生成树。下图可以比较清楚地将最短路径算法分类。</p>
-<h2 id="Dijkstra"><a href="#Dijkstra" class="headerlink" title="Dijkstra"></a>Dijkstra</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;使用dist数组来维护所有点到源点的最短距离，用st数组维护已经确定最短距离的点。<strong>st数组一定要从空集开始</strong>，这样才能更新1号点。从所有点中选择<strong>距离源点最近的点</strong>来更新，将其所有临接点到源点的最短距离更新。最终更新了n个点后，所有点到达最短距离。时间复杂度为O(n^2)。</p>
-<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">#include &lt;iostream&gt;
+g[i][j] = min(g[i][j], g[i][k] + g[k][j])</script><p>给出。当有重边和自环时，每两个点之间存储的<code>g[i][j]</code>只存储最短的一条即可。时间复杂度为<strong>O(n^3)</strong>。</p>
+<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">void floyd()
+{
+    for (int k = 1; k &lt;= n; k ++ )
+        for (int i = 1; i &lt;= n; i ++ )
+            for (int j = 1; j &lt;= n; j ++ )
+                g[i][j] = min(g[i][j], g[i][k] + g[k][j]);
+}
+</code></pre>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/856/" target="_blank" rel="noopener">AW.854 Floyd求最短路（简单）</a></p>
+<h2 id="Dijkstra"><a href="#Dijkstra" class="headerlink" title="Dijkstra"></a>Dijkstra</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;使用dist数组来维护所有点到源点的最短距离，用st数组维护已经确定最短距离的点。<strong>st数组一定要从空集开始</strong>，这样才能更新1号点。从所有点中选择<strong>距离源点最近的点</strong>来更新，将其所有临接点到源点的最短距离更新。最终更新了n个点后，所有点到达最短距离。时间复杂度为<strong>O(n^2)</strong>。</p>
+<h3 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;cstring&gt;
 
@@ -397,8 +405,8 @@ int main()
     return 0;
 }
 </code></pre>
-<h2 id="堆优化的Dijkstra"><a href="#堆优化的Dijkstra" class="headerlink" title="堆优化的Dijkstra"></a>堆优化的Dijkstra</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;维护一个堆，堆中储存一对信息（<strong>距离源点距离</strong>，<strong>当前点序号</strong>），从而每次得到距离源点最近的点的编号，扩展所有邻接点。这里不能保证每个点只入堆一次，因此当第一次从堆出来以后，再出来的就是错误的更新点，因此使用判重布尔数组st来continue。时间复杂度因为有堆进行优化，所以是O(mlogn)。</p>
-<h3 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">#include &lt;iostream&gt;
+<h2 id="堆优化的Dijkstra"><a href="#堆优化的Dijkstra" class="headerlink" title="堆优化的Dijkstra"></a>堆优化的Dijkstra</h2><h3 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;维护一个堆，堆中储存一对信息（<strong>距离源点距离</strong>，<strong>当前点序号</strong>），从而每次得到距离源点最近的点的编号，扩展所有邻接点。这里不能保证每个点只入堆一次，因此当第一次从堆出来以后，再出来的就是错误的更新点，因此使用判重布尔数组st来continue。时间复杂度因为有堆进行优化，所以是<strong>O(mlogn)</strong>。</p>
+<h3 id="模板-2"><a href="#模板-2" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">#include &lt;iostream&gt;
 #include &lt;cstring&gt;
 #include &lt;algorithm&gt;
 #include &lt;queue&gt;
@@ -473,10 +481,10 @@ int main()
     return 0;
 }
 </code></pre>
-<h2 id="Bellman-Ford"><a href="#Bellman-Ford" class="headerlink" title="Bellman Ford"></a>Bellman Ford</h2><p>&emsp;&emsp;可以求解不超过k条边的最短路径，通过k次循环，每次备份dist数组，每次遍历所有的边，通过上次dist数组更新本次dist数组，可以求取负边权的情况。时间复杂度是O(km)，因为每次经过k次迭代，每次迭代m条边。</p>
-<h2 id="SPFA"><a href="#SPFA" class="headerlink" title="SPFA"></a>SPFA</h2><h3 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;SPFA算法是<strong>队列优化</strong>的Bellman Ford算法，由于Bellman Ford算法需要k次更新所有的边，但是其中某些边在没有最短路径涉及时不需要更新。SPFA算法通过维护队列，将<strong>每次被更新的点加入队列</strong>，每次只更新队列内部的点，这样就减少了很多不必要点的更新操作。队列里是所有被更新过的点，因此可以<strong>维护st数组</strong>，当某个点被多个点更新时，就不用重复进入队列作为一下步扩展更新了。时间复杂度是<strong>O(nm)</strong>，但是实际上会比这个复杂度快很多，接近于<strong>O(m)</strong>。有可能会被特殊的图卡时间复杂度，如果没有卡，算是最短路径里面最好用的算法了。</p>
+<h2 id="Bellman-Ford"><a href="#Bellman-Ford" class="headerlink" title="Bellman Ford"></a>Bellman Ford</h2><p>&emsp;&emsp;可以求解不超过k条边的最短路径，通过k次循环，每次备份dist数组，每次遍历所有的边，通过上次dist数组更新本次dist数组，可以求取负边权的情况。时间复杂度是<strong>O(km)</strong>，因为每次经过k次迭代，每次迭代m条边。</p>
+<h2 id="SPFA"><a href="#SPFA" class="headerlink" title="SPFA"></a>SPFA</h2><h3 id="原理-3"><a href="#原理-3" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;SPFA算法是<strong>队列优化</strong>的Bellman Ford算法，由于Bellman Ford算法需要k次更新所有的边，但是其中某些边在没有最短路径涉及时不需要更新。SPFA算法通过维护队列，将<strong>每次被更新的点加入队列</strong>，每次只更新队列内部的点，这样就减少了很多不必要点的更新操作。队列里是所有被更新过的点，因此可以<strong>维护st数组</strong>，当某个点被多个点更新时，就不用重复进入队列作为一下步扩展更新了。时间复杂度是<strong>O(nm)</strong>，但是实际上会比这个复杂度快很多，接近于<strong>O(m)</strong>。有可能会被特殊的图卡时间复杂度，如果没有卡，算是最短路径里面最好用的算法了。</p>
 <p>&emsp;&emsp;实现过程中，使用<strong>循环队列</strong>，因为一共需要更新多少次不一定，如果使用n * m的队列太大了。</p>
-<h3 id="模板-2"><a href="#模板-2" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">#include &lt;iostream&gt;
+<h3 id="模板-3"><a href="#模板-3" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;cstring&gt;
 
@@ -598,15 +606,15 @@ int main()
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/04/最小生成树算法/" rel="next">
+            <a href="/2020/06/04/高级数据结构/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/aPU54kjQGVon2Hg.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/aPU54kjQGVon2Hg.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dwOKa7ZPDfsYCjI.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/dwOKa7ZPDfsYCjI.jpg">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                最小生成树算法</h3>
+                数据结构</h3>
                 <hr>
               </div>
             </a>

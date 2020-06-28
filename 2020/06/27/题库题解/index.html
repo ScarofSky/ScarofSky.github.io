@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">BFS | 天の痕的博客</title>
+  <title itemprop="name">题库题解 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -309,11 +309,11 @@
 
   <div class="pattern-center single-center">
     <!-- 有配图默认渲染第一张 -->
-    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/15/fZCdM51Ak4cUlim.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/15/fZCdM51Ak4cUlim.jpg">
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/15/R6HiqNrF74yvBjh.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/15/R6HiqNrF74yvBjh.jpg">
     </div>
     <header class="pattern-header single-header">
       <h1 class="entry-title">
-      BFS</h1>
+      题库题解</h1>
       <p class="entry-census">
         <span>
           <a href="https://scarofsky.github.io">
@@ -325,7 +325,7 @@
         </span>
         <span class="bull">
         ·</span>
-        2020-6-15<span class="bull">
+        2020-6-27<span class="bull">
         ·</span>
       <span id="busuanzi_value_page_pv"></span>次阅读</p>
     </header>
@@ -339,72 +339,538 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h1 id="BFS"><a href="#BFS" class="headerlink" title="BFS"></a>BFS</h1><h2 id="标准BFS"><a href="#标准BFS" class="headerlink" title="标准BFS"></a>标准BFS</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>通过队列每次将邻接点加入，多层扩展，BFS可以求得边权为1的情况下的最短路径，因为当第一次搜索到的都是，就是最短路径。BFS要注意元素不要在出队的时候判重，要在入队之前设置为已经遍历。</p>
-<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">int dx[] = {0, -1, 0, 1}, dy[] = {1, 0, -1, 0};
-int dis = 0;
-
-while (q.size())
-{
-    int len = q.size();
-    for (int i = 0; i &lt; len; i ++ )
-    {
-        auto t = q.front();
-        int x = t.first, y = t.second;
-        q.pop();
-        //如果是这里标记，队列里面有大量相同元素，虽然不影响最终得到正确结果，但是效率很低
-        //A[x][y] = -1;
-        for (int i = 0; i &lt; 4; i ++ )
+          <h1 id="题库"><a href="#题库" class="headerlink" title="题库"></a>题库</h1><h2 id="题库-题解"><a href="#题库-题解" class="headerlink" title="题库+题解"></a>题库+题解</h2><p><a href="https://leetcode-cn.com/problems/3sum/" target="_blank" rel="noopener">LC.15 三数之和（中等）</a></p>
+<p>排序+双指针，排序加上双指针可以简化定和搜索。排序可以将相同元素邻接。时间复杂度O(n^2)。</p>
+<pre><code class="lang-c++">class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; threeSum(vector&lt;int&gt;&amp; nums) {
+        vector&lt;vector&lt;int&gt;&gt; ans;
+        sort(nums.begin(), nums.end());
+        for (int i = 0; i &lt; nums.size(); i ++ )
         {
-            int a = x + dx[i], b = y + dy[i];
-            if (a &lt; 0 || a &gt;= A.size() || b &lt; 0 || b &gt;= A[0].size()) continue;
-            if (A[a][b] == -1) continue;
-            if (A[a][b] == 1) return dis;
-            //就是这里要在入队之前将当前入队元素标记为已经遍历
-            A[a][b] = -1;
-            q.push({a, b});
+            //因为要不重复，所以当前如果在之前出现过就跳过，排序的好处体现在这里
+            if (i - 1 &gt;=0 &amp;&amp; nums[i - 1] == nums[i]) continue;
+            int target = -nums[i];
+
+            //第i个左边的都遍历过了，只考虑右边即可。
+            int l = i + 1, r = nums.size() - 1;
+            //双指针过程
+            while (l &lt; r)
+            {
+                if (nums[l] + nums[r] &lt; target) l ++ ;
+                else if (nums[l] + nums[r] &gt; target) r -- ;
+                else 
+                {
+                    vector&lt;int&gt; cur;
+                    cur.push_back(nums[i]);
+                    cur.push_back(nums[l]);
+                    cur.push_back(nums[r]);
+                    ans.push_back(cur);
+                    //重复的直接跳过
+                    while (l + 1 &lt;= nums.size() - 1 &amp;&amp; nums[l + 1] == nums[l]) l ++ ;
+                    while (r - 1 &gt;= 0 &amp;&amp; nums[r - 1] == nums[r]) r -- ;
+                    l ++ , r -- ;
+                }
+            }
         }
+
+        return ans;
     }
-    dis ++ ;
-}
+};
 </code></pre>
-<h2 id="多源BFS"><a href="#多源BFS" class="headerlink" title="多源BFS"></a>多源BFS</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>通过设置超级源点，可以将多个分散的源点合并为一个，可以解决一个点到另外多个点的最短距离问题。我们从超级源点开始做单源BFS，发现原先的多个源点只不过是BFS的<strong>第二层</strong>而已，所以多源BFS没有改变BFS的本质，不会影响结果的正确性。</p>
-<p><img src="https://pic.leetcode-cn.com/be6bdff2b8d983d2135e5d2675b4dae750fef16104c904e462d9b1d64ef6d8ed-%E5%A4%9A%E6%BA%90BFS.gif" alt></p>
-<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://leetcode-cn.com/problems/as-far-from-land-as-possible/" target="_blank" rel="noopener">LC.1162 地图分析（中等）</a></p>
-<h2 id="双端队列BFS"><a href="#双端队列BFS" class="headerlink" title="双端队列BFS"></a>双端队列BFS</h2><h3 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h3><p>双端队列BFS可以解决图中<strong>权重仅为0和1时的情况</strong>，相当于简化的dijkstra算法，可以更快的（<strong>时间复杂度为O(m)</strong>)搜到想要的答案。使用一个双端队列，队列头插入搜索权重为0的节点，队列尾插入权重为1的节点，每次从队头扩展，可以尽早的扩展那些权重为0的边，相比于BFS更快的搜索到答案。</p>
-<h3 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">#include &lt;deque&gt;
+<p><a href="https://leetcode-cn.com/problems/probability-of-a-two-boxes-having-the-same-number-of-distinct-balls/" target="_blank" rel="noopener">LC.1467 两个盒子中球的颜色数相同的概率（困难）</a></p>
+<p>首先要知道<strong>可重复排列数</strong>计算原理和公式，假设有1122333这样的数，要求不重复的排列数，就要用到可重复排列数计算公式。思想是首先将所有的相同的数看做不同，求总共的排列数，假设一共有sum个数，有sum!种排列方式。再对于每一种数，除以重复的种数的全排列，用公式表达如下：</p>
+<script type="math/tex; mode=display">
+res = \frac{(S_1 + S_2 + ... + S_n)!}{S_1!*S_2!*...*S_n!}</script><p>其中Si表示第i个数出现的次数。这样可以计算出概率的分母，对于分子，首先其必须满足分成两部分之后，左边和右边的种类数相同，然后对于左边和右边分别计算可重复排列数，并且利用乘法原理，得到最终合并之后的排列数。另外dfs过程中需要剪枝，当左边总和个数的两倍大于整体总和的时候不要继续计算了。</p>
+<p>这道题是典型的概率类题目，之前没遇到过，记录一下。</p>
+<pre><code class="lang-c++">double fact[50];
 
-void bfs()
-{
-    memset(dist, 0x3f, sizeof dist);
-    memset(st, 0, sizeof st);
-
-    deque&lt;int&gt; q;
-    q.push_back(1);
-
-    while(q.size())
+class Solution {
+public:
+    //计算阶乘
+    void factorial()
     {
-        int t = q.front();
-        q.pop_front();
+        fact[0] = 1;
+        for (int i = 1; i &lt;= 48; i ++ )
+            fact[i] = fact[i - 1] * i;
+    }
+    //计算可重复排列数
+    double get(vector&lt;int&gt;&amp; balls)
+    {
+        int sum = 0;
+        for (int i = 0; i &lt; balls.size(); i ++ ) sum += balls[i];
+        double res = fact[sum];
+        for (int i = 0; i &lt; balls.size(); i ++ ) res /= fact[balls[i]];
+        return res;
+    }
 
-        if (st[t]) continue;
-        st[t] = true;
+    //通过dfs计算所有可能的情况
+    double dfs(int u, int ts, int ls, int rs, vector&lt;int&gt;&amp; left, vector&lt;int&gt;&amp; right, vector&lt;int&gt;&amp; balls)
+    {
+        //剪枝
+        if (ls * 2 &gt; ts || rs * 2 &gt; ts) return 0;
+        double res = 0;
+        if (u == balls.size())
+        {
+            int l = 0, r = 0;
+            for (int i = 0; i &lt; left.size(); i ++ )
+                if (left[i]) l += 1;
+            for (int i = 0; i &lt; right.size(); i ++ )
+                if (right[i]) r += 1;
+            //如果左右种类数不同，不可能产生答案，直接返回0
+            if (l != r) return 0;
+            return get(left) * get(right);
+        }
+        //对于每一种球分别枚举
+        for (int i = 0; i &lt;= balls[u]; i ++ )
+        {
+            left[u] = i, right[u] = balls[u] - i;
+            res += dfs(u + 1, ts, ls + i, rs + balls[u] - i, left, right, balls);
+        }
+        return res;
+    }
 
-        for (int i = h[t]; ~i; i = ne[i])
+    double getProbability(vector&lt;int&gt;&amp; balls) {
+        int n = balls.size();
+        int sum = 0;
+        for (int i = 0; i &lt; balls.size(); i ++ ) sum += balls[i];
+        factorial();
+        double down = get(balls);
+        vector&lt;int&gt; left(n, 0), right(n, 0);
+        double up = dfs(0, sum, 0, 0, left, right, balls);
+        return up / down;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/minimum-number-of-days-to-make-m-bouquets/" target="_blank" rel="noopener">LC.5438 制作m束花所需的最少天数（中等）</a></p>
+<p>这是周赛的第三题，答案有一个范围，并且验证答案的时间在O(n)，且具有单调性（如果第x天无法制作那么小于x天都不行，如果x天可以制作，那么大于x天都可以制作），数据规模在10^5，因此O(nlogn)的二分算法可以完成这道题。</p>
+<pre><code class="lang-c++">class Solution {
+public:
+    int minDays(vector&lt;int&gt;&amp; bd, int m, int k) {
+        int n = bd.size();
+        //无论如果都不能制作只有花数量不够
+        if (m * k &gt; n) return -1;
+
+        //答案是在最小值和最大值之间，增加效率
+        int l = INT_MAX, r = INT_MIN;
+
+        for (int i = 0; i &lt; n; i ++ )
+        {
+            l = min(l, bd[i]);
+            r = max(r, bd[i]);
+        }
+
+        //标准二分查找答案模板
+        while (l &lt; r)
+        {
+            int mid = l + r &gt;&gt; 1;
+
+            if (check(bd, mid, m, k)) r = mid;
+            else l = mid + 1;
+        }
+
+        return l;
+    }
+
+    //check函数用O(n)的时间判断是否当前答案可行
+    //这里判断是否可行有点贪心的意味
+    bool check(vector&lt;int&gt;&amp; bd, int mid, int m, int k)
+    {
+        int cnt = 0;
+        int ans = 0;
+        for (int i = 0; i &lt; bd.size(); i ++ )
+        {
+            //如果已经过了开花时间，则连续花数 + 1
+            if (bd[i] &lt;= mid)
+            {
+                cnt ++ ;
+                //如果有k朵花了，可以做个束
+                if (cnt &gt;= k)
+                {
+                    ans ++ ;
+                    //当前连续花数清零
+                    cnt = 0;
+                }
+            }
+            else cnt = 0;
+        }
+
+        if (ans &gt;= m) return true;
+        else return false;
+    }
+};
+</code></pre>
+<p><a href="https://www.acwing.com/problem/content/344/" target="_blank" rel="noopener">AW.342 道路与航线（中等）</a></p>
+<p>这题很有意思，是图论的题，里面使用了堆优化的dijkstra + 拓扑排序 + dfs，看起来很难写，但是事实如果理清关系，是比较好写的一道题。</p>
+<pre><code class="lang-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+#include &lt;queue&gt;
+
+#define x first
+#define y second
+
+using namespace std;
+
+typedef pair&lt;int, int&gt; PII;
+
+const int N = 25010, M = 150010, INF = 0x3f3f3f3f;
+
+int h[N], e[M], ne[M], w[M], idx;
+int dist[N];
+bool st[N];
+int id[N];
+int din[N];
+int bid;
+vector&lt;int&gt; block[N];
+queue&lt;int&gt; q;
+
+int n, mr, mp, s;
+
+void add(int a, int b, int c)
+{
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx ++ ;
+}
+
+void dfs(int u, int bid)
+{
+    id[u] = bid;
+    block[bid].push_back(u);
+
+    for (int i = h[u]; ~i; i = ne[i])
+    {
+        int j = e[i];
+        if (!id[j])
+            dfs(j, bid);
+    }
+}
+
+void dijkstra(int bid)
+{
+    priority_queue&lt;PII, vector&lt;PII&gt;, greater&lt;PII&gt;&gt; heap;
+    for (int i = 0; i &lt; block[bid].size(); i ++ )
+    {
+        int j = block[bid][i];
+        heap.push({dist[j], j});
+    }
+
+    while(heap.size())
+    {
+        auto t = heap.top();
+        heap.pop();
+
+        int ver = t.y, distance = t.x;
+
+        if (st[ver]) continue;
+        st[ver] = true;
+
+        for (int i = h[ver]; ~i; i = ne[i])
         {
             int j = e[i];
-            if (dist[j] &gt; dist[t] + w[i])
+            if (id[ver] != id[j]) 
             {
-                dist[j] = dist[t] + w[i];
-                if (!w[i]) q.push_front(j);
-                else q.push_back(j);
+                din[id[j]] -- ;
+                if (din[id[j]] == 0)
+                    q.push(id[j]);
+            }
+            if (dist[j] &gt; dist[ver] + w[i])
+            {
+                dist[j] = dist[ver] + w[i];
+                if (id[ver] == id[j])
+                    heap.push({dist[j], j});
             }
         }
     }
 }
+
+void top_sort()
+{
+    memset(dist, 0x3f, sizeof dist);
+
+    dist[s] = 0;
+
+    for (int i = 1; i &lt;= bid; i ++ )
+        if (!din[i])
+            q.push(i);
+
+    while (q.size())
+    {
+        int t = q.front();
+        q.pop();
+
+        dijkstra(t);
+    }
+}
+
+int main()
+{
+    cin &gt;&gt; n &gt;&gt; mr &gt;&gt; mp &gt;&gt; s;
+    memset(h, -1, sizeof h);
+
+    for (int i = 0; i &lt; mr; i ++ )
+    {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        add(a, b, c), add(b, a, c);
+    }
+
+    for (int i = 1; i &lt;= n; i ++ )
+        if (!id[i])
+            dfs(i, ++ bid);
+
+    for (int i = 0; i &lt; mp; i ++ )
+    {
+        int a, b, c;
+        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+        add(a, b, c);
+        din[id[b]] ++ ;
+    }
+
+    top_sort();
+
+    for (int i = 1; i &lt;= n; i ++ )
+        if (dist[i] &gt; INF / 2) cout &lt;&lt; &quot;NO PATH&quot; &lt;&lt; endl;
+        else cout &lt;&lt; dist[i] &lt;&lt; endl;
+
+    return 0;
+}
 </code></pre>
-<h3 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/177/" target="_blank" rel="noopener">AW.175 电路维修（简单）</a></p>
-<p><a href="https://www.acwing.com/problem/content/342/" target="_blank" rel="noopener">AW.340 通信线路（中等）</a></p>
-<p>这题是二分+双端广搜</p>
+<p><a href="https://leetcode-cn.com/problems/find-two-non-overlapping-sub-arrays-each-with-target-sum/" target="_blank" rel="noopener">LC.1477 找两个和为目标值且不重叠的子数组</a></p>
+<p>这题的数据保证了每一个数都是正数，因此双指针算法很容易每次<strong>寻找一个区间</strong>，使得当前区间的和为target。如果要找<strong>两个</strong>和为目标值<strong>且不重叠</strong>的子数组，只需要记忆化之前所有的答案，f[i] 定义为从0到i的子数组满足和为target的最短长度，以动态规划的思想，可以每次得到f[i] = min(i - j + 1, f[i - 1])用O(1)的时间复杂度更新。很容易想到双指针算法去寻找一个区间，但是对于两个区间，没有及时想到记忆化的方法。</p>
+<p>这里双指针应该用i做循环，这样每次计算f[i]比较容易。</p>
+<p>这题融合了双指针算法和动态规划的思想，是好题。</p>
+<pre><code class="lang-c++">class Solution {
+public:
+    int minSumOfLengths(vector&lt;int&gt;&amp; arr, int target) {
+        int n = arr.size();
+        vector&lt;int&gt; f(n, 1e8);
+
+        int res = 1e8;
+        for (int i = 0, j = 0, sum = 0; i &lt; n; i ++ )
+        {
+            sum += arr[i];
+            while (sum &gt; target) sum -= arr[j ++ ];
+            if (sum == target)
+            {
+                if (j) res = min(res, i - j + 1 + f[j - 1]);
+                f[i] = i - j + 1;
+            }
+            if (i) f[i] = min(f[i], f[i - 1]);
+        }
+
+        if (res &gt; arr.size()) res = -1;
+        return res;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/regular-expression-matching/" target="_blank" rel="noopener">LC.10 正则表达式匹配（困难）</a></p>
+<p>动态规划，<code>dp[i][j]</code>表示<strong>s串前i个字符和p串前j个字符是否匹配</strong>。初始条件是空串一定匹配，且s的空串可以匹配任意个以.*开头的p串位置。之后对于最后一个p串位置的字符分类讨论：</p>
+<ol>
+<li>p[j] != ‘*’ :  此时p[j]有两种可能，’.’或者字符，这样就是普通的匹配，如果s[i] == p[j]那么就依赖于<code>dp[i - 1][j - 1]</code>，否则就不可能匹配，为false。</li>
+<li>p[j] == ‘<em>‘ :  </em>的意思是<strong>匹配0个或多个前边一个字符</strong>。如果匹配0个，那么当前结果依赖<code>dp[i][j - 2]</code>，如果匹配多个之前的字符，是依赖<code>dp[i - 1][j - 3]、dp[i - 2][j - 4]...</code>如此代码会比较难写，且增加时间复杂度。从i角度来看，其实是看<code>dp[i - 1][j]</code>，表示当前s串的第i个字符能否被j这个*所取代。</li>
+</ol>
+<p>整体的转移方程如下：</p>
+<script type="math/tex; mode=display">
+f[i][j] = \left\{
+\begin{array}
+if (p[j]\ ≠\ '*') = \left\{
+\begin{array}
+f[i - 1][j - 1], & matches(s[i], p[j])\\
+false, & otherwise\\
+\end{array}
+\right. \\
+otherwise = \left\{
+\begin{array}
+f[i - 1][j]\ or\ f[i][j - 2],& matches(s[i], p[j - 1)\\
+f[i][j - 2], & otherwise\\
+\end{array}
+\right.\\
+\end{array}
+\right.</script><pre><code class="lang-c++">class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int n = s.size(), m = p.size();
+        vector&lt;vector&lt;bool&gt;&gt; dp(n + 1, vector&lt;bool&gt;(m + 1, false));
+
+        dp[0][0] = true;
+
+        for (int j = 1; j &lt;= m; j ++ )
+        {
+            if (p[j - 1] == &#39;*&#39;) dp[0][j] = dp[0][j - 2];
+            else dp[0][j] = false;
+        }
+
+        for (int i = 1; i &lt;= n; i ++ )
+            for (int j = 1; j &lt;= m; j ++ )
+            {
+                if (p[j - 1] != &#39;*&#39;)
+                {
+                    if (equal(s[i - 1], p[j - 1])) dp[i][j] = dp[i - 1][j - 1];
+                    else dp[i][j] = false;
+                }
+                else
+                {
+                    if (j &gt;= 2) dp[i][j] = dp[i][j - 2];
+                    if (j &gt;= 2 &amp;&amp; equal(s[i - 1], p[j - 2])) dp[i][j] = (dp[i][j] || dp[i - 1][j]);
+                }
+            }
+
+        return dp[n][m];
+    }
+
+    bool equal(char a, char b)
+    {
+        if (b == &#39;.&#39;) return true;
+        else return a == b;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/" target="_blank" rel="noopener">LC.124 二叉树中的最大路径和（困难）</a></p>
+<p>这题主要是想总结一下树的题目主要考点。对于二叉树来说，90%都需要使用递归的方式来解决，一般是先递归解决左子树，再递归解决右子树。思考方式主要从以下几个方面：</p>
+<ol>
+<li>想清楚当前层该问题是如何解决的，如何利用左子树和右子树已知的答案得到当前根节点的答案，有些树状dp的意思。</li>
+<li>想清楚叶子节点的子节点，为nullptr的节点应该如何给上一层提供信息，也就是边界问题，或者是递归出口。</li>
+<li>对于树中每一个节点，先考虑递归解决左子树相同的问题，再递归解决右子树相同的问题，之后返回当前节点的问题答案。</li>
+</ol>
+<pre><code class="lang-c++">class Solution {
+public:
+    const int INF = 0x3f3f3f3f;
+    int ans = -INF;
+    int maxPathSum(TreeNode* root) {
+        dfs(root);
+        return ans;
+    }
+
+    int dfs(TreeNode* root)
+    {
+        if (root == nullptr) return -INF;
+        int val = root -&gt; val;
+        int left = dfs(root -&gt;left);
+        int right = dfs(root -&gt;right);
+
+        ans = max(ans, max({left, right, 0}) + val);
+        ans = max(ans, left + right + val);
+
+        return max({left, right, 0}) + val;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/avoid-flood-in-the-city/" target="_blank" rel="noopener">LC.1488 避免洪水泛滥（中等）</a></p>
+<p>194周赛第三题，思路是贪心。这里可以通过预处理得到当前天下一次下雨的时间点，因此可以通过贪心，每一次不下雨抽水时，优先抽走马上下次要下雨的的坑。找到马上要下雨的坑，可以通过堆来实现（寻找一个集合中的最小值）。</p>
+<p>贪心证明首先考虑，<strong>任意一种抽水方法，如果能完成最终任务，都可以通过排序转换为当前贪心的方法</strong>。再思考，如果这样抽水最终还是无法完成防洪的任务，那么调换顺序之后，一定会更早的洪水泛滥。因此从正反两方面可以证明当前贪心是正确的。</p>
+<pre><code class="lang-c++">class Solution {
+public:
+    vector&lt;int&gt; avoidFlood(vector&lt;int&gt;&amp; rains) {
+        unordered_map&lt;int, int&gt; hash;
+        int n = rains.size();
+        vector&lt;int&gt; next(n, n + 1);
+        for (int i = n - 1; i &gt;= 0; i -- )
+        {
+            int r = rains[i];
+            if (hash.count(r) == 0) hash[r] = i;
+            else 
+            {
+                next[i] = hash[r];
+                hash[r] = i;
+            }
+        }
+
+        typedef pair&lt;int, int&gt; PII;
+        priority_queue&lt;PII, vector&lt;PII&gt;, greater&lt;PII&gt;&gt; heap;
+        unordered_set&lt;int&gt; S;
+        vector&lt;int&gt; ans;
+
+        for (int i = 0; i &lt; n; i ++ )
+        {
+            int r = rains[i];
+            if (r &gt; 0)
+            {
+                ans.push_back(-1);
+                if (S.count(r)) return {};
+                else
+                {
+                    S.insert(r);
+                    heap.push({next[i], r});
+                }
+            }
+            else
+            {
+                if (heap.empty()) ans.push_back(1);
+                else{
+                    auto t = heap.top();
+                    heap.pop();
+
+                    int r = t.second;
+                    S.erase(r);
+                    ans.push_back(r);
+                }
+            }
+        }
+
+        return ans;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/first-missing-positive/" target="_blank" rel="noopener">LC.41 缺失的第一个正数（困难）</a></p>
+<p>这道题一个隐藏的思路是，<strong>下标都是从0到n - 1递增的</strong>，如果我们能将所有不超过n的数值都按规律填好，那么就可以很轻松的找到对应第一个未出现的正整数。这里如果发现已经填好的数，则跳过，如果发现置换之后死循环，也要处理。</p>
+<pre><code class="lang-c++">class Solution {
+public:
+    int firstMissingPositive(vector&lt;int&gt;&amp; nums) {
+        int n = nums.size();
+        for (int i = 0; i &lt; n; i ++ )
+        {
+            //如果已经填好的数，则可以跳过
+            if (nums[i] == i + 1) continue;
+
+            while (nums[i] &gt;= 1 &amp;&amp; nums[i] &lt;= n)
+            {
+                int t = nums[nums[i] - 1];
+                //如果换了的数和现在的数一样，那其实换下去没有意义，会死循环
+                if (t == nums[i]) break;
+                nums[nums[i] - 1] = nums[i];
+                nums[i] = t;
+            }
+        }
+
+        //找到第一个没有出现过的数
+        for (int i = 0; i &lt; n; i ++ )
+            if (nums[i] != i + 1)
+                return i + 1;
+
+        return n + 1;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/" target="_blank" rel="noopener">LC.满足条件的子序列数目（中等）</a></p>
+<p>周赛第三题，首先读题之后，判断题目最终所求信息和数组内元素顺序无关，这样可以考虑先排序试试。如果排序，可以得到有序序列，有序序列的特点是第一个元素最小，最后一个元素最大，且单调递增。因此可以考虑使用双指针算法来求解两数相加对于某个target和的问题。</p>
+<pre><code class="lang-c++">class Solution {
+public:
+    const int mod = 1e9 + 7;
+    int numSubseq(vector&lt;int&gt;&amp; nums, int target) {
+        int n = nums.size();
+        vector&lt;int&gt; pow2(n + 1);
+
+        pow2[0] = 1;
+        //这里可以先预处理出2的n次幂，之后每次要增加2的n次幂种情况，就直接调用了。
+        for (int i = 1; i &lt;= n; i ++ )
+            pow2[i] = (pow2[i - 1] * 2) % mod;
+        //排序，想到这里很重要
+        sort(nums.begin(), nums.end());
+
+        //标准的双指针算法
+        int ans = 0;
+        for (int i = 0, j = n - 1; i &lt; n; i ++ )
+        {
+            while (i &lt;= j &amp;&amp; nums[i] + nums[j] &gt; target) j -- ;
+            if (i &gt; j) break;
+
+            ans = (ans + pow2[j - i]) % mod;
+        }
+
+        return ans;
+    }
+};
+</code></pre>
 
         </div>
         <!-- .entry-content -->
@@ -436,15 +902,15 @@ void bfs()
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/15/高精度/" rel="prev">
+            <a href="/2020/06/28/双指针/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/15/RzFIOEACj6nZ3oT.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/15/RzFIOEACj6nZ3oT.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/28/7MwT5q6rZxoPHBk.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/28/7MwT5q6rZxoPHBk.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                高精度</h3>
+                双指针</h3>
                 <hr>
               </div>
             </a>
@@ -454,7 +920,7 @@ void bfs()
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/15/DFS/" rel="next">
+            <a href="/2020/06/25/C++原理与使用技巧/" rel="next">
               <div class="background">
                 <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
               </div>
@@ -462,7 +928,7 @@ void bfs()
               Next Post</span>
               <div class="info">
                 <h3>
-                DFS</h3>
+                C++原理与使用技巧</h3>
                 <hr>
               </div>
             </a>

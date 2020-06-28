@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">BFS | 天の痕的博客</title>
+  <title itemprop="name">操作系统 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -307,30 +307,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
 <div class="pattern-center-blank"></div>
 
-  <div class="pattern-center single-center">
-    <!-- 有配图默认渲染第一张 -->
-    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/15/fZCdM51Ak4cUlim.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/15/fZCdM51Ak4cUlim.jpg">
-    </div>
-    <header class="pattern-header single-header">
-      <h1 class="entry-title">
-      BFS</h1>
-      <p class="entry-census">
-        <span>
-          <a href="https://scarofsky.github.io">
-            <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.1/img/custom/avatar.jpg">
-          </a>
-        </span>
-        <span>
-          <a href="https://scarofsky.github.io">天の痕</a>
-        </span>
-        <span class="bull">
-        ·</span>
-        2020-6-15<span class="bull">
-        ·</span>
-      <span id="busuanzi_value_page_pv"></span>次阅读</p>
-    </header>
-  </div>
-
 <div id="content" class="site-content">
   <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
@@ -338,73 +314,68 @@
         <div class="toc"></div>
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
+          <header class="entry-header">
+            <h1 class="entry-title">操作系统</h1>
+            <p class="entry-census">天の痕&nbsp;·&nbsp;2020-6-25&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
+
+            <hr>
+          </header>
+        
         <div class="entry-content">
-          <h1 id="BFS"><a href="#BFS" class="headerlink" title="BFS"></a>BFS</h1><h2 id="标准BFS"><a href="#标准BFS" class="headerlink" title="标准BFS"></a>标准BFS</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>通过队列每次将邻接点加入，多层扩展，BFS可以求得边权为1的情况下的最短路径，因为当第一次搜索到的都是，就是最短路径。BFS要注意元素不要在出队的时候判重，要在入队之前设置为已经遍历。</p>
-<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">int dx[] = {0, -1, 0, 1}, dy[] = {1, 0, -1, 0};
-int dis = 0;
-
-while (q.size())
-{
-    int len = q.size();
-    for (int i = 0; i &lt; len; i ++ )
-    {
-        auto t = q.front();
-        int x = t.first, y = t.second;
-        q.pop();
-        //如果是这里标记，队列里面有大量相同元素，虽然不影响最终得到正确结果，但是效率很低
-        //A[x][y] = -1;
-        for (int i = 0; i &lt; 4; i ++ )
-        {
-            int a = x + dx[i], b = y + dy[i];
-            if (a &lt; 0 || a &gt;= A.size() || b &lt; 0 || b &gt;= A[0].size()) continue;
-            if (A[a][b] == -1) continue;
-            if (A[a][b] == 1) return dis;
-            //就是这里要在入队之前将当前入队元素标记为已经遍历
-            A[a][b] = -1;
-            q.push({a, b});
-        }
-    }
-    dis ++ ;
-}
-</code></pre>
-<h2 id="多源BFS"><a href="#多源BFS" class="headerlink" title="多源BFS"></a>多源BFS</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>通过设置超级源点，可以将多个分散的源点合并为一个，可以解决一个点到另外多个点的最短距离问题。我们从超级源点开始做单源BFS，发现原先的多个源点只不过是BFS的<strong>第二层</strong>而已，所以多源BFS没有改变BFS的本质，不会影响结果的正确性。</p>
-<p><img src="https://pic.leetcode-cn.com/be6bdff2b8d983d2135e5d2675b4dae750fef16104c904e462d9b1d64ef6d8ed-%E5%A4%9A%E6%BA%90BFS.gif" alt></p>
-<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://leetcode-cn.com/problems/as-far-from-land-as-possible/" target="_blank" rel="noopener">LC.1162 地图分析（中等）</a></p>
-<h2 id="双端队列BFS"><a href="#双端队列BFS" class="headerlink" title="双端队列BFS"></a>双端队列BFS</h2><h3 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h3><p>双端队列BFS可以解决图中<strong>权重仅为0和1时的情况</strong>，相当于简化的dijkstra算法，可以更快的（<strong>时间复杂度为O(m)</strong>)搜到想要的答案。使用一个双端队列，队列头插入搜索权重为0的节点，队列尾插入权重为1的节点，每次从队头扩展，可以尽早的扩展那些权重为0的边，相比于BFS更快的搜索到答案。</p>
-<h3 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">#include &lt;deque&gt;
-
-void bfs()
-{
-    memset(dist, 0x3f, sizeof dist);
-    memset(st, 0, sizeof st);
-
-    deque&lt;int&gt; q;
-    q.push_back(1);
-
-    while(q.size())
-    {
-        int t = q.front();
-        q.pop_front();
-
-        if (st[t]) continue;
-        st[t] = true;
-
-        for (int i = h[t]; ~i; i = ne[i])
-        {
-            int j = e[i];
-            if (dist[j] &gt; dist[t] + w[i])
-            {
-                dist[j] = dist[t] + w[i];
-                if (!w[i]) q.push_front(j);
-                else q.push_back(j);
-            }
-        }
-    }
-}
-</code></pre>
-<h3 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/177/" target="_blank" rel="noopener">AW.175 电路维修（简单）</a></p>
-<p><a href="https://www.acwing.com/problem/content/342/" target="_blank" rel="noopener">AW.340 通信线路（中等）</a></p>
-<p>这题是二分+双端广搜</p>
+          <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><p><strong>基本概念</strong>：</p>
+<p>进程是对运行时程序的封装，是系统进行资源调度和分配的基本单位，实现了操作系统的并发；</p>
+<p>线程是进程的子任务，是CPU调度和分派的基本单位，用于保证程序的实时性，实现进程内部的并发；线程是操作系统可识别的最小执行和调度单位。每个线程都独自占用一个虚拟处理器：独自的寄存器组，指令计数器和处理器状态。每个线程完成不同的任务，但是共享同一地址空间（也就是同样的动态内存，映射文件，目标代码等等），打开的文件队列和其他内核资源。</p>
+<p><strong>区别</strong>：</p>
+<ol>
+<li>一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程。线程依赖于进程而存在。</li>
+<li>进程在执行过程中拥有独立的内存单元，而多个线程共享进程的内存。（资源分配给进程，同一进程的所有线程共享该进程的所有资源。同一进程中的多个线程共享代码段（代码和常量），数据段（全局变量和静态变量），扩展段（堆存储）。但是每个线程拥有自己的栈段，栈段又叫运行时段，用来存放所有局部变量和临时变量。）</li>
+<li>进程是资源分配的最小单位，线程是CPU调度的最小单位；</li>
+<li>系统开销： 由于在创建或撤消进程时，系统都要为之分配或回收资源，如内存空间、IO设备等。因此，操作系统所付出的开销将显著地大于在创建或撤消线程时的开销。类似地，在进行进程切换时，涉及到整个当前进程CPU环境的保存以及新被调度运行的进程的CPU环境的设置。而线程切换只须保存和设置少量寄存器的内容，并不涉及存储器管理方面的操作。可见，进程切换的开销也远大于线程切换的开销。</li>
+<li>通信：由于同一进程中的多个线程具有相同的地址空间，致使它们之间的同步和通信的实现，也变得比较容易。进程间通信IPC，线程间可以直接读写进程数据段（如全局变量）来进行通信——需要进程同步和互斥手段的辅助，以保证数据的一致性。在有的系统中，线程的切换、同步和通信都无须操作系统内核的干预。</li>
+<li>进程编程调试简单可靠性高，但是创建销毁开销大；线程正相反，开销小，切换速度快，但是编程调试相对复杂。</li>
+<li>进程间不会相互影响 ；一个线程挂掉将导致整个进程挂掉。</li>
+<li>进程适应于多核、多机分布；线程适用于多核</li>
+</ol>
+<p><strong>进程间通信的方式</strong>：</p>
+<p>进程间通信主要包括管道、系统IPC（包括消息队列、信号量、信号、共享内存等）、以及套接字socket。</p>
+<p>1.管道：</p>
+<p>管道主要包括无名管道和命名管道:管道可用于具有亲缘关系的父子进程间的通信，有名管道除了具有管道所具有的功能外，它还允许无亲缘关系进程间的通信</p>
+<p>1.1 普通管道PIPE：</p>
+<p>1)它是半双工的（即数据只能在一个方向上流动），具有固定的读端和写端</p>
+<p>2)它只能用于具有亲缘关系的进程之间的通信（也是父子进程或者兄弟进程之间）</p>
+<p>3)它可以看成是一种特殊的文件，对于它的读写也可以使用普通的read、write等函数。但是它不是普通的文件，并不属于其他任何文件系统，并且只存在于内存中。</p>
+<p>1.2 命名管道FIFO：</p>
+<p>1)FIFO可以在无关的进程之间交换数据</p>
+<p>2)FIFO有路径名与之相关联，它以一种特殊设备文件形式存在于文件系统中。</p>
+<p>2.系统IPC：</p>
+<p>2.1 消息队列</p>
+<p>消息队列，是消息的链接表，存放在内核中。一个消息队列由一个标识符（即队列ID）来标记。 (消息队列克服了信号传递信息少，管道只能承载无格式字节流以及缓冲区大小受限等特点)具有写权限得进程可以按照一定得规则向消息队列中添加新信息；对消息队列有读权限得进程则可以从消息队列中读取信息；</p>
+<p>特点：</p>
+<p>1)消息队列是面向记录的，其中的消息具有特定的格式以及特定的优先级。</p>
+<p>2)消息队列独立于发送与接收进程。进程终止时，消息队列及其内容并不会被删除。</p>
+<p>3)消息队列可以实现消息的随机查询,消息不一定要以先进先出的次序读取,也可以按消息的类型读取。</p>
+<p>2.2 信号量semaphore</p>
+<p>信号量（semaphore）与已经介绍过的 IPC 结构不同，它是一个计数器，可以用来控制多个进程对共享资源的访问。信号量用于实现进程间的互斥与同步，而不是用于存储进程间通信数据。</p>
+<p>特点：</p>
+<p>1)信号量用于进程间同步，若要在进程间传递数据需要结合共享内存。</p>
+<p>2)信号量基于操作系统的 PV 操作，程序对信号量的操作都是原子操作。</p>
+<p>3)每次对信号量的 PV 操作不仅限于对信号量值加 1 或减 1，而且可以加减任意正整数。</p>
+<p>4)支持信号量组。</p>
+<p>2.3 信号signal</p>
+<p>信号是一种比较复杂的通信方式，用于通知接收进程某个事件已经发生。</p>
+<p>2.4 共享内存（Shared Memory）</p>
+<p>它使得多个进程可以访问同一块内存空间，不同进程可以及时看到对方进程中对共享内存中数据得更新。这种方式需要依靠某种同步操作，如互斥锁和信号量等</p>
+<p>特点：</p>
+<p>1)共享内存是最快的一种IPC，因为进程是直接对内存进行存取</p>
+<p>2)因为多个进程可以同时操作，所以需要进行同步</p>
+<p>3)信号量+共享内存通常结合在一起使用，信号量用来同步对共享内存的访问</p>
+<p>3.套接字SOCKET：</p>
+<p>socket也是一种进程间通信机制，与其他通信机制不同的是，它可用于不同主机之间的进程通信。</p>
+<p><strong>线程间通信的方式</strong>:</p>
+<p>临界区：通过多线程的串行化来访问公共资源或一段代码，速度快，适合控制数据访问；</p>
+<p>互斥量Synchronized/Lock：采用互斥对象机制，只有拥有互斥对象的线程才有访问公共资源的权限。因为互斥对象只有一个，所以可以保证公共资源不会被多个线程同时访问</p>
+<p>信号量Semphare：为控制具有有限数量的用户资源而设计的，它允许多个线程在同一时刻去访问同一个资源，但一般需要限制同一时刻访问此资源的最大线程数目。</p>
+<p>事件(信号)，Wait/Notify：通过通知操作的方式来保持多线程同步，还可以方便的实现多线程优先级的比较操作。</p>
 
         </div>
         <!-- .entry-content -->
@@ -436,15 +407,15 @@ void bfs()
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/15/高精度/" rel="prev">
+            <a href="/2020/06/25/数据库/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/15/RzFIOEACj6nZ3oT.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/15/RzFIOEACj6nZ3oT.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                高精度</h3>
+                数据库</h3>
                 <hr>
               </div>
             </a>
@@ -454,7 +425,7 @@ void bfs()
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/15/DFS/" rel="next">
+            <a href="/2020/06/25/计算机网络/" rel="next">
               <div class="background">
                 <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
               </div>
@@ -462,7 +433,7 @@ void bfs()
               Next Post</span>
               <div class="info">
                 <h3>
-                DFS</h3>
+                计算机网络</h3>
                 <hr>
               </div>
             </a>

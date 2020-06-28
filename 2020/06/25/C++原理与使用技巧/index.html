@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">BFS | 天の痕的博客</title>
+  <title itemprop="name">C++原理与使用技巧 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -307,30 +307,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
 <div class="pattern-center-blank"></div>
 
-  <div class="pattern-center single-center">
-    <!-- 有配图默认渲染第一张 -->
-    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/15/fZCdM51Ak4cUlim.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/15/fZCdM51Ak4cUlim.jpg">
-    </div>
-    <header class="pattern-header single-header">
-      <h1 class="entry-title">
-      BFS</h1>
-      <p class="entry-census">
-        <span>
-          <a href="https://scarofsky.github.io">
-            <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.1/img/custom/avatar.jpg">
-          </a>
-        </span>
-        <span>
-          <a href="https://scarofsky.github.io">天の痕</a>
-        </span>
-        <span class="bull">
-        ·</span>
-        2020-6-15<span class="bull">
-        ·</span>
-      <span id="busuanzi_value_page_pv"></span>次阅读</p>
-    </header>
-  </div>
-
 <div id="content" class="site-content">
   <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
@@ -338,73 +314,44 @@
         <div class="toc"></div>
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
+          <header class="entry-header">
+            <h1 class="entry-title">C++原理与使用技巧</h1>
+            <p class="entry-census">天の痕&nbsp;·&nbsp;2020-6-25&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
+
+            <hr>
+          </header>
+        
         <div class="entry-content">
-          <h1 id="BFS"><a href="#BFS" class="headerlink" title="BFS"></a>BFS</h1><h2 id="标准BFS"><a href="#标准BFS" class="headerlink" title="标准BFS"></a>标准BFS</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>通过队列每次将邻接点加入，多层扩展，BFS可以求得边权为1的情况下的最短路径，因为当第一次搜索到的都是，就是最短路径。BFS要注意元素不要在出队的时候判重，要在入队之前设置为已经遍历。</p>
-<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">int dx[] = {0, -1, 0, 1}, dy[] = {1, 0, -1, 0};
-int dis = 0;
-
-while (q.size())
-{
-    int len = q.size();
-    for (int i = 0; i &lt; len; i ++ )
-    {
-        auto t = q.front();
-        int x = t.first, y = t.second;
-        q.pop();
-        //如果是这里标记，队列里面有大量相同元素，虽然不影响最终得到正确结果，但是效率很低
-        //A[x][y] = -1;
-        for (int i = 0; i &lt; 4; i ++ )
-        {
-            int a = x + dx[i], b = y + dy[i];
-            if (a &lt; 0 || a &gt;= A.size() || b &lt; 0 || b &gt;= A[0].size()) continue;
-            if (A[a][b] == -1) continue;
-            if (A[a][b] == 1) return dis;
-            //就是这里要在入队之前将当前入队元素标记为已经遍历
-            A[a][b] = -1;
-            q.push({a, b});
-        }
-    }
-    dis ++ ;
-}
-</code></pre>
-<h2 id="多源BFS"><a href="#多源BFS" class="headerlink" title="多源BFS"></a>多源BFS</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>通过设置超级源点，可以将多个分散的源点合并为一个，可以解决一个点到另外多个点的最短距离问题。我们从超级源点开始做单源BFS，发现原先的多个源点只不过是BFS的<strong>第二层</strong>而已，所以多源BFS没有改变BFS的本质，不会影响结果的正确性。</p>
-<p><img src="https://pic.leetcode-cn.com/be6bdff2b8d983d2135e5d2675b4dae750fef16104c904e462d9b1d64ef6d8ed-%E5%A4%9A%E6%BA%90BFS.gif" alt></p>
-<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://leetcode-cn.com/problems/as-far-from-land-as-possible/" target="_blank" rel="noopener">LC.1162 地图分析（中等）</a></p>
-<h2 id="双端队列BFS"><a href="#双端队列BFS" class="headerlink" title="双端队列BFS"></a>双端队列BFS</h2><h3 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h3><p>双端队列BFS可以解决图中<strong>权重仅为0和1时的情况</strong>，相当于简化的dijkstra算法，可以更快的（<strong>时间复杂度为O(m)</strong>)搜到想要的答案。使用一个双端队列，队列头插入搜索权重为0的节点，队列尾插入权重为1的节点，每次从队头扩展，可以尽早的扩展那些权重为0的边，相比于BFS更快的搜索到答案。</p>
-<h3 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">#include &lt;deque&gt;
-
-void bfs()
-{
-    memset(dist, 0x3f, sizeof dist);
-    memset(st, 0, sizeof st);
-
-    deque&lt;int&gt; q;
-    q.push_back(1);
-
-    while(q.size())
-    {
-        int t = q.front();
-        q.pop_front();
-
-        if (st[t]) continue;
-        st[t] = true;
-
-        for (int i = h[t]; ~i; i = ne[i])
-        {
-            int j = e[i];
-            if (dist[j] &gt; dist[t] + w[i])
-            {
-                dist[j] = dist[t] + w[i];
-                if (!w[i]) q.push_front(j);
-                else q.push_back(j);
-            }
-        }
-    }
-}
-</code></pre>
-<h3 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/177/" target="_blank" rel="noopener">AW.175 电路维修（简单）</a></p>
-<p><a href="https://www.acwing.com/problem/content/342/" target="_blank" rel="noopener">AW.340 通信线路（中等）</a></p>
-<p>这题是二分+双端广搜</p>
+          <h1 id="C-原理与使用技巧"><a href="#C-原理与使用技巧" class="headerlink" title="C++原理与使用技巧"></a>C++原理与使用技巧</h1><h2 id="C-语法相关"><a href="#C-语法相关" class="headerlink" title="C++语法相关"></a>C++语法相关</h2><h3 id="static关键字的使用"><a href="#static关键字的使用" class="headerlink" title="static关键字的使用"></a>static关键字的使用</h3><ol>
+<li>函数体内的static作用域是当前函数，表示该变量在下次这个函数调用时，不重新分配，还是上次执行之后的值。</li>
+<li>在模块内（一个cpp文件之内）的static全局变量，可以被模块内的所有函数访问，但是模块外的其他函数无法访问。（<strong>全局静态变量</strong>）。全局和静态不同，全局变量在另一个cpp里可以使用extern来引入，而静态变量不允许被其他cpp引入。</li>
+<li>在模块内的static函数只能被当前模块的其他函数调用，外部无法调用。函数的实现使用static修饰，那么这个函数只可在本cpp内使用，不会同其他cpp中的同名函数引起冲突。</li>
+<li>类中的static成员变量属于整个类所有，对类的所有对象，调用都是同一个。</li>
+<li>类中的static成员函数属于整个类所有，函数不接受this指针，因此只能访问static成员变量。</li>
+</ol>
+<p>总结：静态的变量和函数都是将变量或者函数限定在了当前cpp文件之中，局部则是多次调用复用。类的静态表示全类共有的东西。</p>
+<h3 id="C-C-中指针和引用的区别"><a href="#C-C-中指针和引用的区别" class="headerlink" title="C/C++ 中指针和引用的区别"></a>C/C++ 中指针和引用的区别</h3><ol>
+<li>指针有自己的一块空间，而引用只是一个别名；</li>
+<li>使用sizeof看一个指针的大小是4，而引用则是被引用对象的大小；</li>
+<li>指针可以被初始化为NULL，而引用必须被初始化且必须是一个已有对象的引用；</li>
+<li>作为参数传递时，指针需要被解引用(*操作)才可以对对象进行操作，而直接对引 用的修改都会改变引用所指向的对象；</li>
+<li>可以有const指针，但是没有const引用；</li>
+<li>指针在使用中可以指向其它对象，但是引用只能是一个对象的引用，<strong>不能被改变</strong>；</li>
+<li>指针可以有多级指针（**p），而引用只有一级；</li>
+<li>指针和引用使用++运算符的意义不一样，指针是指向下一个地址，引用代表所引用对象值+1；</li>
+<li>如果返回动态内存分配的对象或者内存，必须使用指针，引用可能引起内存泄露。</li>
+</ol>
+<h3 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h3><p>C++里面的四个智能指针: auto_ptr, shared_ptr, weak_ptr, unique_ptr 其中后三个是c++11支持，并且第一个已经被11弃用。unique_ptr是多个指针不能同时指向一个对象，shared_ptr可以指向同一个。weak_ptr不会改变shared_ptr的引用计数。</p>
+<p>智能指针主要用于管理在堆上分配的内存，它将普通的指针封装为一个栈对象。当栈对象的生存周期结束后，会在析构函数中释放掉申请的内存，从而<strong>防止内存泄漏</strong>。C++ 11中最常用的智能指针类型为shared_ptr,它采用引用计数的方法，记录当前内存资源被多少个智能指针引用。该引用计数的内存在堆上分配。当新增一个时引用计数加1，当过期时引用计数减一。只有引用计数为0时，智能指针才会自动释放引用的内存资源。对shared_ptr进行初始化时不能将一个普通指针直接赋值给智能指针，因为一个是指针，一个是类。可以通过make_shared函数或者通过构造函数传入普通指针。并可以通过get函数获得普通指针。</p>
+<p>当两个对象相互使用一个shared_ptr成员变量指向对方，会造成循环引用，使引用计数失效，从而导致内存泄漏。（因为引用计数不会为0）为了解决循环引用导致的内存泄漏，引入了weak_ptr弱指针，weak_ptr的构造函数不会修改引用计数的值，从而不会对对象的内存进行管理，其类似一个普通指针，但不指向引用计数的共享内存，但是其可以检测到所管理的对象是否已经被释放，从而避免非法访问。</p>
+<p><a href="https://blog.csdn.net/c_base_jin/article/details/79440999" target="_blank" rel="noopener">c++11 weak_ptr使用</a></p>
+<h2 id="C-STL相关"><a href="#C-STL相关" class="headerlink" title="C++STL相关"></a>C++STL相关</h2><h3 id="map和set的区别以及底层实现"><a href="#map和set的区别以及底层实现" class="headerlink" title="map和set的区别以及底层实现"></a>map和set的区别以及底层实现</h3><p>map和set都是C++的关联容器，其底层实现都是<strong>红黑树</strong>（RB-Tree）。由于 map 和set所开放的各种操作接口，RB-tree 也都提供了，所以几乎所有的 map 和set的操作行为，都只是转调 RB-tree 的操作行为。</p>
+<p>map和set区别在于：</p>
+<ol>
+<li>map中的元素是key-value（关键字—值）对：关键字起到索引的作用，值则表示与索引相关联的数据；Set与之相对就是关键字的简单集合，set中每个元素只包含一个关键字。</li>
+<li>set的迭代器是const的，不允许修改元素的值；map允许修改value，但不允许修改key。其原因是因为map和set是根据关键字排序来保证其有序性的，如果允许修改key的话，那么首先需要删除该键，然后调节平衡，再插入修改后的键值，调节平衡，如此一来，严重破坏了map和set的结构，导致iterator失效，不知道应该指向改变前的位置，还是指向改变后的位置。所以STL中将set的迭代器设置成const，不允许修改迭代器的值；而map的迭代器则不允许修改key值，允许修改value值。</li>
+<li>map支持下标操作，set不支持下标操作。map可以用key做下标，map的下标运算符[ ]将关键码作为下标去执行查找，如果关键码不存在，则插入一个具有该关键码和mapped_type类型默认值的元素至map中，因此下标运算符[ ]在map应用中需要慎用，const_map不能用，只希望确定某一个关键值是否存在而不希望插入元素时也不应该使用，mapped_type类型没有默认值也不应该使用。如果find能解决需要，尽可能用find。</li>
+</ol>
 
         </div>
         <!-- .entry-content -->
@@ -436,15 +383,15 @@ void bfs()
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/15/高精度/" rel="prev">
+            <a href="/2020/06/27/题库题解/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/15/RzFIOEACj6nZ3oT.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/15/RzFIOEACj6nZ3oT.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/15/R6HiqNrF74yvBjh.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/15/R6HiqNrF74yvBjh.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                高精度</h3>
+                题库题解</h3>
                 <hr>
               </div>
             </a>
@@ -454,7 +401,7 @@ void bfs()
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/15/DFS/" rel="next">
+            <a href="/2020/06/25/数据库/" rel="next">
               <div class="background">
                 <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
               </div>
@@ -462,7 +409,7 @@ void bfs()
               Next Post</span>
               <div class="info">
                 <h3>
-                DFS</h3>
+                数据库</h3>
                 <hr>
               </div>
             </a>
