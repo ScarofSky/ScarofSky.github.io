@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">最小生成树算法 | 天の痕的博客</title>
+  <title itemprop="name">二分查找 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -309,11 +309,11 @@
 
   <div class="pattern-center single-center">
     <!-- 有配图默认渲染第一张 -->
-    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/04/aPU54kjQGVon2Hg.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/aPU54kjQGVon2Hg.jpg">
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/04/BUkJ5s7SDhxmzAI.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/BUkJ5s7SDhxmzAI.jpg">
     </div>
     <header class="pattern-header single-header">
       <h1 class="entry-title">
-      最小生成树算法</h1>
+      二分查找</h1>
       <p class="entry-census">
         <span>
           <a href="https://scarofsky.github.io">
@@ -325,7 +325,7 @@
         </span>
         <span class="bull">
         ·</span>
-        2020-6-22<span class="bull">
+        2020-6-28<span class="bull">
         ·</span>
       <span id="busuanzi_value_page_pv"></span>次阅读</p>
     </header>
@@ -339,75 +339,44 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h1 id="最小生成树算法"><a href="#最小生成树算法" class="headerlink" title="最小生成树算法"></a>最小生成树算法</h1><h2 id="Prim"><a href="#Prim" class="headerlink" title="Prim"></a>Prim</h2><p>&emsp;&emsp;用st数组维护一个集合，最开始为空，每次扩充一个距离当前集合最近的点进入集合，并且更新其他点到集合的最近距离。所有点到集合的初始最近距离为INF，将所有点均加入到集合时算法结束。如果某一次扩充的点到集合的最近距离为正无穷，则说明不存在最小生成树。</p>
-<h2 id="Kruskal"><a href="#Kruskal" class="headerlink" title="Kruskal"></a>Kruskal</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;通过排序得到所有边的序列，从最小的边开始扩展，<strong>贪心</strong>的思路。维护一个<strong>并查集</strong>来确定两个点是否属于同一个集合，如果属于同一个集合的两个点还需要增加一条边，则该条边增加后则成环。因此维护一个计数器cnt，当算法结束之后，cnt如果小于n – 1则说明不存在有效的生成树，否则并查集维护的点就是当前生成树。时间复杂度因为用到了排序，因此是mlog(m)。</p>
-<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">#include &lt;iostream&gt;
-#include &lt;cstring&gt;
-#include &lt;algorithm&gt;
-
-using namespace std;
-
-const int N = 100010, M = 200010;
-
-struct Edge
+          <h1 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h1><h2 id="二分查找元素"><a href="#二分查找元素" class="headerlink" title="二分查找元素"></a>二分查找元素</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;二分使用的条件是有<strong>单调性</strong>，比如有序的序列，事实上二分是<strong>分治算法</strong>思想。本质是将问题抽象化为<strong>找一个分界面</strong>，分界面左边不满足某一性质，而右边满足某一个性质。这时候左边边界缩减时需要多缩减一个，因为左边不满足性质；右边边界缩减到当前mid，不用多缩减。下边代码的check函数即是满足某种性质的判断函数，当满足性质时返回 true, 不满足时返回false。</p>
+<p>&emsp;&emsp;当搜素结束时，左右边界重合，即<code>l == r</code>。如果有<code>l = mid</code>的情况，需要<code>l + r + 1 &gt;&gt; 1</code>才能够避免最后两个数相邻时，mid永远更新为左边界的死循环。</p>
+<p>&emsp;&emsp;二分查找分为整数二分和浮点数二分，浮点数查找时原理相同，但是要求精度小于一定数时停止。浮点数二分比整数二分容易很多，不需要考虑很多边界条件的情况。</p>
+<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">//每次右边界缩减为mid的情况
+while (l &lt; r)
 {
-    int a, b, w;
-    bool operator &lt; (const Edge&amp; a) const
-    {
-        return w &lt; a.w;
-    }
-}edges[M];
-
-int n, m;
-int p[N];
-
-int find(int x)
-{
-    if (p[x] != x) p[x] = find(p[x]);
-    return p[x];
+    int mid = l + r &gt;&gt; 1;
+    if (check(mid)) r = mid;
+    else l = mid + 1;
 }
-
-void kruskal()
+//每次左边界缩减为mid的情况
+while (l &lt; r)
 {
-    int res = 0, cnt = 0;
-    for (int i = 1; i &lt;= n; i ++ ) p[i] = i;
-
-    for (int i = 0; i &lt; m; i ++ )
-    {
-        auto e = edges[i];
-        int a = e.a, b = e.b, w = e.w;
-        int pa = find(a), pb = find(b);
-        if (pa != pb)
-        {
-            res += w;
-            cnt ++ ;
-            p[pa] = pb;
-        }
-    }
-
-    if (cnt &lt; n - 1) cout &lt;&lt; &quot;impossible&quot; &lt;&lt; endl;
-    else cout &lt;&lt; res &lt;&lt; endl;
+    int mid = l + r + 1 &gt;&gt; 1;
+    if (check(mid)) l = mid;
+    else r = mid + 1;
 }
+//浮点数二分
+const double eps = 1e-8;
 
-int main()
+while (r - l &gt; eps)
 {
-    cin &gt;&gt; n &gt;&gt; m;
-    for (int i = 0; i &lt; m; i ++ )
-    {
-        int a, b, c;
-        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
-        edges[i].a = a, edges[i].b = b, edges[i].w = c;
-    }
-
-    sort(edges, edges + m);
-
-    kruskal();
-
-    return 0;
+    int mid = l + r / 2.0;
+    if (check(mid)) l = mid;
+    else r = mid;
 }
 </code></pre>
-<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/861/" target="_blank" rel="noopener">AW.859 Kruskal算法求最小生成树（简单）</a></p>
-<p><a href="https://leetcode-cn.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/" target="_blank" rel="noopener">LC.1489 找到最小生成树中的关键边和伪关键边（困难）</a></p>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://leetcode-cn.com/problems/binary-search/" target="_blank" rel="noopener">LC.704 二分查找（简单）</a></p>
+<p><a href="https://www.acwing.com/problem/content/792/" target="_blank" rel="noopener">AW.790 数的三次方根（简单）</a></p>
+<p><a href="https://www.acwing.com/problem/content/791/" target="_blank" rel="noopener">AW.789 数的范围（简单）</a></p>
+<p><a href="https://leetcode-cn.com/problems/minimum-size-subarray-sum/" target="_blank" rel="noopener">LC.209 长度最小的子数组（中等）</a></p>
+<p>构造单调性+二分查找，重点在于单调性的构造</p>
+<h2 id="二分搜索答案"><a href="#二分搜索答案" class="headerlink" title="二分搜索答案"></a>二分搜索答案</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;答案很多时候是<strong>有范围的</strong>，当某一个问题<strong>验证某一个答案</strong>的时间复杂度乘以二分区间范围的log时，可以考虑搜索答案。通过不断的尝试排除错误答案，且是以指数速度排除，最终得到正确答案。这里一般在验证答案的时候，可以采用某种程度的贪心策略，并且将原问题中单调性质进行转化，能够通过一次的验证缩小答案范围。</p>
+<p>&emsp;&emsp;这类题往往不是简单的搜索答案，而是将问题某种程度的转化之后，再搜索答案。</p>
+<h3 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/104/" target="_blank" rel="noopener">AW.102 最佳牛围栏（简单）</a></p>
+<p><a href="https://leetcode-cn.com/problems/find-the-duplicate-number/" target="_blank" rel="noopener">LC.287 寻找重复数（中等）</a></p>
+<p><a href="https://leetcode-cn.com/problems/minimum-number-of-days-to-make-m-bouquets/" target="_blank" rel="noopener">LC.5438 制作m束花所需最少天数（中等）(193周赛第三题）</a></p>
+<p><a href="https://leetcode-cn.com/problems/sum-of-mutated-array-closest-to-target/" target="_blank" rel="noopener">LC.1300 转变数组后最接近目标值的数组和（中等）</a></p>
 
         </div>
         <!-- .entry-content -->
@@ -439,15 +408,15 @@ int main()
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/25/计算机网络/" rel="prev">
+            <a href="/2020/06/30/动态规划（二）其他DP/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/30/aFtNCbT1Sn6IQ7h.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/30/aFtNCbT1Sn6IQ7h.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                计算机网络</h3>
+                动态规划（二）其他DP</h3>
                 <hr>
               </div>
             </a>
@@ -457,15 +426,15 @@ int main()
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/18/从《广场协议》看近代日本经济/" rel="next">
+            <a href="/2020/06/28/最小生成树算法/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/18/ZGIg2YCMFNRpXzO.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/18/ZGIg2YCMFNRpXzO.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/aPU54kjQGVon2Hg.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/aPU54kjQGVon2Hg.jpg">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                从《广场协议》看近代日本经济</h3>
+                最小生成树算法</h3>
                 <hr>
               </div>
             </a>
