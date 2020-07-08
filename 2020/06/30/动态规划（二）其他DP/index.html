@@ -339,7 +339,7 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h1 id="其他DP"><a href="#其他DP" class="headerlink" title="其他DP"></a>其他DP</h1><h3 id="区间dp"><a href="#区间dp" class="headerlink" title="区间dp"></a>区间dp</h3><p>区间DP是在区间上进行动态规划，本质是用更小区间的最优解来求更大区间的最优解。一般的模板都是这样的：</p>
+          <h1 id="其他DP"><a href="#其他DP" class="headerlink" title="其他DP"></a>其他DP</h1><h2 id="区间dp"><a href="#区间dp" class="headerlink" title="区间dp"></a>区间dp</h2><p>区间DP是在区间上进行动态规划，本质是用更小区间的最优解来求更大区间的最优解。一般的模板都是这样的：</p>
 <pre><code class="lang-c++">for (int len = 2; len &lt;= n; len ++ )
     for (int i = 1; i + len - 1 &lt;= n; i ++ )
     {
@@ -389,6 +389,60 @@ for (int i = 0; i &lt; n; i ++ )
 
 cout &lt;&lt; len &lt;&lt; endl;
 </code></pre>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://leetcode-cn.com/problems/maximum-length-of-repeated-subarray/" target="_blank" rel="noopener">LC.718 最长重复子数组（中等）</a></p>
+<p>LIS + LCS的混合定义，和下边的LCS问题一起参考</p>
+<h2 id="LCS问题"><a href="#LCS问题" class="headerlink" title="LCS问题"></a>LCS问题</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>一般两个序列的匹配问题可以考虑是不是LCS问题。这里<code>f[i][j]</code>的定义是匹配到A序列的第i个字符和B序列的第j个字符位置时，最长公共子序列的长度。如此定义不需要考虑是否当前最后一位被选择，因为如果最后一位字符两个序列不相同，则最长就是再之前的匹配结果<code>f[i - 1][j]</code>和<code>f[i][j - 1]</code>中的最大值。这里没有连续性的要求。</p>
+<h3 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">//下方例题1
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+using namespace std;
+
+const int N = 1010;
+
+char a[N], b[N];
+int f[N][N];
+
+int n, m;
+
+int main()
+{
+    cin &gt;&gt; n &gt;&gt; m;
+    cin &gt;&gt; a + 1 &gt;&gt; b + 1;
+
+    for (int i = 1; i &lt;= n; i ++ )
+        for (int j = 1; j &lt;= m; j ++ )
+            if (a[i] == b[j]) f[i][j] = f[i - 1][j - 1] + 1;
+            else f[i][j] = max(f[i - 1][j], f[i][j - 1]);
+
+    cout &lt;&lt; f[n][m] &lt;&lt; endl;
+
+    return 0;
+}
+
+//下方例题2
+int dp[510][510];
+class Solution {
+public:
+    int maxDotProduct(vector&lt;int&gt;&amp; A, vector&lt;int&gt;&amp; B) {
+        //dp[i][j]表示考虑A[i]和B[j]时的最大值，A[i]和B[j]要么都选，要么都不选
+
+        int n = A.size(), m = B.size();
+        memset(dp, -0x3f, sizeof dp);
+
+        for (int i = 1; i &lt;= n; i ++ )
+            for (int j = 1; j &lt;= m; j ++ )
+            {
+                dp[i][j] = A[i - 1] * B[j - 1];
+                dp[i][j] = max({dp[i][j], dp[i - 1][j - 1] + A[i - 1] * B[j - 1], dp[i - 1][j], dp[i][j - 1]});
+            }
+
+        return dp[n][m];
+    }
+};
+</code></pre>
+<h3 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/description/899/" target="_blank" rel="noopener">AW.899 最长公共子序列（简单）</a></p>
+<p><a href="https://leetcode-cn.com/problems/max-dot-product-of-two-subsequences/" target="_blank" rel="noopener">LC.1458 两个子序列的最大点积（困难）</a></p>
 
         </div>
         <!-- .entry-content -->

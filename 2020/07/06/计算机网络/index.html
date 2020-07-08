@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">操作系统 | 天の痕的博客</title>
+  <title itemprop="name">计算机网络 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -309,11 +309,11 @@
 
   <div class="pattern-center single-center">
     <!-- 有配图默认渲染第一张 -->
-    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/30/BH8KDoN6Tfjwn4l.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/30/BH8KDoN6Tfjwn4l.jpg">
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/07/08/WwOj6y34pPGTLN2.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/08/WwOj6y34pPGTLN2.jpg">
     </div>
     <header class="pattern-header single-header">
       <h1 class="entry-title">
-      操作系统</h1>
+      计算机网络</h1>
       <p class="entry-census">
         <span>
           <a href="https://scarofsky.github.io">
@@ -325,7 +325,7 @@
         </span>
         <span class="bull">
         ·</span>
-        2020-6-30<span class="bull">
+        2020-7-6<span class="bull">
         ·</span>
       <span id="busuanzi_value_page_pv"></span>次阅读</p>
     </header>
@@ -339,384 +339,39 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><h2 id="进程与线程的区别"><a href="#进程与线程的区别" class="headerlink" title="进程与线程的区别"></a>进程与线程的区别</h2><ol>
-<li>一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程。线程依赖于进程而存在。</li>
-<li>进程在执行过程中拥有独立的内存单元，而多个线程共享进程的内存。（<strong>资源分配给进程，同一进程的所有线程共享该进程的所有资源</strong>。同一进程中的多个线程共享代码段（代码和常量），数据段（全局变量和静态变量），扩展段（堆存储）。但是每个线程拥有自己的栈段，栈段又叫运行时段，用来存放所有局部变量和临时变量。）</li>
-<li>进程是CPU<strong>资源分配</strong>的最小单位，线程是CPU<strong>调度</strong>的最小单位；</li>
-<li>系统开销： 由于在创建或撤消进程时，系统都要为之分配或回收资源，如内存空间、IO设备等。因此，操作系统所付出的开销将显著地大于在创建或撤消线程时的开销。类似地，在进行进程切换时，涉及到整个当前进程CPU环境的保存以及新被调度运行的进程的CPU环境的设置。而线程切换只须保存和设置少量寄存器的内容，并不涉及存储器管理方面的操作。可见，<strong>进程切换的开销也远大于线程切换的开销</strong>。</li>
-<li><strong>线程间比进程间通信更容易</strong>。由于同一进程中的多个线程具有相同的地址空间，致使它们之间的同步和通信的实现，也变得比较容易。进程间通信IPC，线程间可以直接读写进程数据段（如全局变量）来进行通信——需要进程同步和互斥手段的辅助，以保证数据的一致性。在有的系统中，线程的切换、同步和通信都无须操作系统内核的干预。</li>
-<li>进程编程<strong>调试简单可靠性高</strong>，但是创建销毁开销大；线程正相反，开销小，切换速度快，但是编程<strong>调试相对复杂</strong>。</li>
-<li>进程间不会相互影响 ；一个线程挂掉将导致整个进程挂掉。</li>
+          <h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="TCP的三次握手和四次挥手"><a href="#TCP的三次握手和四次挥手" class="headerlink" title="TCP的三次握手和四次挥手"></a>TCP的三次握手和四次挥手</h2><h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><ol>
+<li>Client将标志位SYN置为1，<strong>随机产生一个值</strong>seq=j，并将该数据包发送给Server，Client进入SYN_SENT状态，等待Server确认。（<strong>第一个SYN</strong>）</li>
+<li>Server收到数据包后由标志位SYN=1知道Client请求建立连接，Server将标志位SYN和ACK都置为1，ack=j+1，随机产生一个值seq=K，并将该数据包发送给Client以确认连接请求，Server进入SYN_RCVD状态。(<strong>第二个SYN + ACK</strong>)</li>
+<li>Client收到确认后，检查ack是否为j+1，ACK是否为1，如果正确则将标志位ACK置为1，ack=K+1，并将该数据包发送给Server，Server检查ack是否为K+1，ACK是否为1，如果正确则连接建立成功，Client和Server进入ESTABLISHED状态，完成三次握手，随后Client与Server之间可以开始传输数据了。(<strong>第三个ACK</strong>)</li>
 </ol>
-<h2 id="进程间通信的方式"><a href="#进程间通信的方式" class="headerlink" title="进程间通信的方式"></a>进程间通信的方式</h2><p>进程间通信主要包括<strong>管道</strong>、<strong>系统IPC</strong>（包括消息队列、信号量、共享内存、信号等）、以及<strong>套接字socket</strong>。</p>
-<h3 id="1-管道："><a href="#1-管道：" class="headerlink" title="1.管道："></a><strong>1.管道：</strong></h3><p>管道主要包括<strong>无名管道</strong>和<strong>命名管道</strong>。管道可用于具有亲缘关系的父子进程间的通信，有名管道除了具有管道所具有的功能外，它还允许无亲缘关系进程间的通信。</p>
-<p><strong>1.1 普通管道PIPE（无名管道）：</strong></p>
-<p>1)它是半双工的（即数据只能在一个方向上流动），具有固定的读端和写端，fd[0] 和fd[1]，0是读端，1是写端。</p>
-<p>2)它只能用于具有亲缘关系的进程之间的通信（也是父子进程或者兄弟进程之间）。</p>
-<p>3)它可以看成是一种特殊的文件，对于它的读写也可以使用普通的read、write等函数。但是它不是普通的文件，并<strong>不属于其他任何文件系统</strong>，并且<strong>只存在于内存</strong>中。</p>
-<p><strong>Linux下实现代码</strong>：</p>
-<pre><code class="lang-c++">int main()
-{
-    char buf[1024]=&quot;change world!\n&quot;;
-    int fds[2];
-    if(pipe(fds) == -1)
-        perror(&quot;pipe&quot;),exit(1);
-    pid_t pid = fork(); //创建子进程
-    if(pid == 0)//如果是父进程
-    {
-        close(fds[0]); //关闭管道读描述符
-        if(write(fds[1],buf,1024)==-1) //写进管道
-            perror(&quot;write&quot;),exit(1);
-
-        close(fds[1]); 
-        exit(1);
-    }
-    else
-    {
-        memset(buf,0x00,1024);
-        close(fds[1]); //关闭管道写描述符
-        if(read(fds[0],buf,1024)==-1) //从管道读内容
-            perror(&quot;read&quot;),exit(1);
-        if(write(1,buf,1024)==-1)
-            perror(&quot;write&quot;),exit(1);
-        close(fds[0]);
-        exit(1);
-    }
-    return 0;
-}
-</code></pre>
-<p><strong>1.2 命名管道FIFO：</strong></p>
-<p>1)FIFO可以在<strong>无关的进程</strong>之间交换数据</p>
-<p>2)FIFO有路径名与之相关联，它以一种特殊设备文件形式<strong>存在于文件系统</strong>中。</p>
-<p><strong>Linux下实现代码</strong>：</p>
-<p>在Linux系统中，使用下边命令创建命名管道</p>
-<pre><code class="lang-shell">mkfifo filename
-</code></pre>
-<pre><code class="lang-shell">[centos@localhost fifo]$ mkfifo myfifo
-[centos@localhost fifo]$ ls
-myfifo
-[centos@localhost fifo]$ file myfifo
-myfifo: fifo (named pipe)
-</code></pre>
-<p>也可以在程序内部创建</p>
-<pre><code class="lang-c++">int mkfifo(const char *pathname, mode_t mode);
-
-int main()
-{
-    mkfifo(&quot;my.p&quot;, 0644);
-    return 0;
-}
-</code></pre>
-<p>从命名管道中读入读出</p>
-<pre><code class="lang-c++">#include&lt;string.h&gt;
-#include&lt;stdlib.h&gt;
-#include&lt;unistd.h&gt;
-#include&lt;sys/types.h&gt;
-#include&lt;sys/stat.h&gt;
-#include&lt;fcntl.h&gt;
-
-//读入示例
-int main()
-{
-    mkfifo(&quot;my.p&quot;,0664);//八进制0664 = 110 110 100
-    int outfd = open(&quot;my.p&quot;,O_WRONLY);
-    if(outfd == -1)
-        perror(&quot;open my.txt&quot;),exit(1);
-    char buf[1024]={};
-    int n = 0;
-    while(fgets(buf,1024,stdin))
-    {   
-        write(outfd,buf,1024);
-        memset(buf,0x00,1024);
-    }  
-    close(outfd);
-}
-
-//读出示例
-int main()
-{
-    int infd = open(&quot;my.p&quot;,O_RDONLY);
-    if(infd==-1)
-        perror(&quot;open my.p&quot;),exit(1);
-    char buf[1024]={};
-    int n = 0;
-    while((n = read(infd,buf,1024))&gt;0)
-    {
-        write(1,buf,n);
-        memset(buf,0x00,1024);
-    }
-    close(infd);                                                                                                         
-    unlink(&quot;my.p&quot;); //删除管道
-    return 0;
-}
-</code></pre>
-<p><strong>总结：</strong></p>
-<p>匿名管道由pipe函数创建并打开。命名管道由mkfifo函数创建，打开⽤用open。FIFO（命名管道）与pipe（匿名管道）之间唯一的区别在它们创建与打开的⽅方式不同，一但这些工作完成之后，它们具有相同的语义。</p>
-<p><a href="https://www.cnblogs.com/zhonglongbo/p/8976730.html" target="_blank" rel="noopener">参考资料.Blog龙跃十二.利用管道实现进程间通信</a></p>
-<h3 id="2-系统IPC（Inter-Process-Communication"><a href="#2-系统IPC（Inter-Process-Communication" class="headerlink" title="2.系统IPC（Inter-Process Communication)"></a><strong>2.系统IPC（Inter-Process Communication)</strong></h3><p><strong>2.1 消息队列</strong></p>
-<p>消息队列，是消息的链接表，存放在内核中。一个消息队列由一个标识符（即队列ID）来标记。 (消息队列克服了信号传递信息少，管道<strong>只能承载无格式字节流</strong>以及缓冲区大小受限等特点)具有写权限的进程可以按照一定的规则向消息队列中添加新信息；对消息队列有读权限得进程则可以从消息队列中读取信息；</p>
-<p>特点：</p>
-<p>1)消息队列是面向记录的，其中的消息具有特定的格式以及特定的优先级。</p>
-<p>2)消息队列<strong>独立于发送与接收进程</strong>。进程终止时，消息队列及其内容并不会被删除。</p>
-<p>3)消息队列可以实现消息的随机查询,消息不一定要以先进先出的次序读取,<strong>也可以按消息的类型读取</strong>。</p>
-<p>Linux下消息队列实现主要通过四个函数，msgget(),msgsnd(),msgrcv(),msgctl()。</p>
-<pre><code class="lang-c++">#include &lt;sys/types.h&gt;
-#include &lt;sys/ipc.h&gt;
-#include &lt;sys/msg.h&gt;
-
-//调用成功返回一个key
-key_t ftok(const char *pathname, int proj_id);
-
-//创建和获取消息队列
-int msgget(key_t key, int msgflg);
-//key : 消息队列关联的键，即id, 使用ftok()产生,不同进程通过相同key可以得到相同消息队列
-//msgflg ：消息队列的建立标志和存取权限
-//IPC_CREAT 单独使用是如果没有就创建 
-//IPC_EXCL + IPC_CREAT 是已经存在则执行失败
-//返回创建的消息队列的标识符msqid，msqid是IPC对象内部名，失败返回-1
-//使用的例子
-int open_queue(int keyval)
-{
-    int qid;
-    qid = msgget(keyval, IPC_CREAT | 0666);
-    if (qid == -1)
-    {
-        perror(&quot;Failed in calling msgget&quot;);
-        return -1;
-    }
-    return qid;
-}
-
-//发送一条消息到指定的消息队列
-int msgsnd(int msqid, const void *msgp, size_t msgsz, int msgflag);
-//msqid为消息队列标识符
-//msgp指向准备发送消息的指针
-//msgsz上述指针指向消息的长度
-//msgflag默认为0（IPC_NOWAIT)，表示阻塞，1表示非阻塞。阻塞表示如果队列满了就一直等到有地方，如果非阻塞满了，就直接返回-1。
-//消息结构一方面必须小于系统规定的上限，另一方面必须以一个long int长整型开始，接受者以此来确定消息的类型（协议必须的部分）
-//实际例子
-struct msgbuf
-{
-    long mtype;
-    char mtext[1024];
-}
-
-int sendMsgQueue(int msg_id, int who, char* msg)
-{
-    struct msgbuf buf;
-    buf.mtype = who;
-    strcpy(buf.mtext, msg);//前目的，后源
-
-    if (msgsnd(msg_id, (void*) &amp;buf, sizeof(buf.mtext), 0) &lt; 0)
-    {
-        perror(&quot;Fail to send message to MsgQueue!&quot;);
-        return -1;
-    }
-    return 0;
-}
-
-//从指定消息队列接收一条消息
-int msgrcv(int msqid, const void* msgp, size_t msgsz, long msgtype, int msgflg);
-//参数和msgsnd相同
-
-//例子
-int recvMsgQueue(int msg_id, int recvType, char out[])
-{
-    struct msgbuf buf;
-    int size = sizeof(buf.mtext);
-    if (msgrcv(msg_id, (void*)&amp;buf, size, recvType, 0) &lt; 0)
-    {
-        perror(&quot;Fail to receive message from MsgQueue!&quot;);
-        return -1;
-    }
-
-    strncpy(out, buf.mtext, size);//将特定大小的字符串复制
-    out[size] = 0;//字符串设置为&#39;\0&#39;
-    return 0;
-}
-
-//消息控制
-int msgctl(int msqid, int cmd, struct msgid_ds *buf);
-//msqid是由msgget返回的消息队列id
-//cmd有三种值 
-//IPC_RMID 删除消息队列
-//PIC_STAT 把msgid_ds结构中的数据设置为消息队列的当前关联值
-//IPC_SET 在进程有足够权限的前提下，把消息队列的当前关联值设置为msgid_ds数据结构中给出的值
-
-int destoryMsgQueue(int msg_id)
-{
-    if (msgctl(msg_id, IPC_RMID, NULL) &lt; 0)
-    {
-        perror(&quot;Remove MsgQueue Fail!&quot;);
-        return -1;
-    }
-    return 0;
-}
-</code></pre>
-<pre><code class="lang-shell">#ipcs 显示IPC资源 -q是消息队列， -m是共享内存
-#ipcrm 手动删除IPC资源
-[root@localhost code]# ipcs -q
------- Message Queues --------                                                 key        msqid      owner      perms      used-bytes   messages
-0x66020001 524288     root       666        0            0
-
-[root@localhost code]# ipcrm -q 524288
-[root@localhost code]# ipcs -q
------- Message Queues --------                                                 key        msqid      owner      perms      used-bytes   messages
-
-[root@localhost code]#
-</code></pre>
-<p><a href="https://blog.csdn.net/wei_cheng18/article/details/79661495" target="_blank" rel="noopener">CSDN. Linux进程间通信之消息队列</a></p>
-<p><a href="https://blog.csdn.net/xiaohuangcat/article/details/8203734?locationNum=6" target="_blank" rel="noopener">CSDN. Linux进程通信之消息队列-项目实践</a></p>
-<p><strong>2.2 共享内存（Shared Memory）</strong></p>
-<p>它使得<strong>多个进程</strong>可以访问同一块内存空间，不同进程可以及时看到对方进程中对共享内存中数据得更新。这种方式需要依靠某种<strong>同步操作</strong>，如互斥锁和信号量等。</p>
-<p>特点：</p>
-<p>1)共享内存是<strong>最快</strong>的一种IPC，因为进程是直接对内存进行存取。</p>
-<p>2)因为多个进程可以同时操作，所以需要进行同步。</p>
-<p>3)信号量+共享内存通常结合在一起使用，信号量用来同步对共享内存的访问。</p>
-<p>Linux下共享内存机制实现代码，因为是IPC所以很多差不多：</p>
-<pre><code class="lang-c++">#include &lt;sys/types.h&gt;
-#include &lt;sys/ipc.h&gt;
-#include &lt;sys/shm.h&gt;
-
-//建立（获得）一块共享存储区，返回共享存储区的描述符shmid，新建立后初始化为0
-//key还是ftok函数生成的
-int shmget(key_t key, size_t size, int shmflg);
-//这里的key和size与消息队列相同
-//shmflg有 IPC_CREAT IPC_EXCL用法同消息队列
-//SHM_HUGETLB 使用“huge pages”来分配共享区段
-//SHM_NORESERVE 不要为共享区段保留交换空间
-
-//对共享存储区shmid执行操作cmd，对其状态进行修改和控制
-int shmctl(int shmid, int cmd, struct shmid_ds *buf);
-//cmd有五种，除了消息队列的三种，还多了两种
-//IPC_STAT IPC_SET IPC_RMID 删除的时候会等待最后一个使用该存储区的进程终止，但是标识符会立刻删除，无法再使用shmat与该段相连
-//SHM_LOCK SHM_UNLOCK 锁住和解锁共享存储区，需要superuser权限
-
-//获得了shmid后，系统需要使用shmat将该共享存储区附接到用户给定的某个进程的虚拟地址
-void *shmat(int shmid, const void *addr, int flag);
-//addr指定共享内存出现在进程地址的什么位置，指定为NULL可以让内核自己决定
-//flag是对于数据的操作，SHM_RDONLY（010000）是只读，其他为读写方式
-//成功返回指向共享存储段的指针，错误返回-1（0xffffffff)
-
-//当进程不再需要一个共享存储段时，可以使用shmdt
-int shmdt(void * addr);
-//addr是调用shmat的返回值
-//成功返回0，错误返回-1
-
-//实际例子
-struct Info{
-    char name[100];
-    int age;
-};
-
-int main()
-{
-    key_t key = ftok(&quot;/tmp&quot;, 66);
-    int shmid = shmget(key, sizeof(Info), IPC_CREAT|0666);
-    Info *p;
-    p = (Info *)shmat(shmid, NULL, 0);
-    char name[100] = &quot;ScarofSky&quot;;
-    int age = 25;
-    strcpy(p -&gt; name, name);
-    p -&gt; age = age;
-    if (shmdt(p) == -1)
-    {
-        perror(&quot;Dettach Fail!&quot;);
-        return -1;
-    }
-
-    return 0;
-}
-</code></pre>
-<p>总结：相当于对于共享内存的读写，转换为当前进程中虚拟地址（指针）的读写。</p>
-<p><a href="https://blog.csdn.net/qq_27664167/article/details/81277096" target="_blank" rel="noopener">CSDN.Linux下共享内存编程</a></p>
-<p><strong>2.3 信号量semaphore</strong></p>
-<p>信号量（semaphore）与已经介绍过的 IPC 结构不同，它是一个计数器，可以用来控制多个进程对共享资源的访问。<strong>信号量用于实现进程间的互斥与同步</strong>，而<strong>不是用于存储进程间通信数据</strong>。</p>
-<p>特点：</p>
+<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><p>由于TCP连接时全双工的，因此，每个方向都必须要单独进行关闭，这一原则是当一方完成数据发送任务后，发送一个FIN来终止这一方向的连接，收到一个FIN只是意味着这一方向上没有数据流动了，即不会再收到数据了，但是在这个TCP连接上仍然能够发送数据，直到这一方向也发送了FIN。首先进行关闭的一方将执行主动关闭，而另一方则执行被动关闭。</p>
 <ol>
-<li>信号量用于进程间同步，<strong>若要在进程间传递数据需要结合共享内存</strong>。</li>
-<li><p>信号量基于操作系统的 PV 操作，程序对信号量的操作都是<strong>原子操作</strong>。</p>
-</li>
-<li><p>每次对信号量的 PV 操作不仅限于对信号量值加 1 或减 1，而且<strong>可以加减任意正整数</strong>。</p>
-</li>
-<li><p>支持信号量组。</p>
-</li>
+<li>数据传输结束后，客户端的应用进程发出连接释放报文段，并停止发送数据，客户端进入FIN_WAIT_1状态，此时客户端依然可以接收服务器发送来的数据。</li>
+<li>服务器接收到FIN后，发送一个ACK给客户端，确认序号为收到的序号+1，服务器进入CLOSE_WAIT状态。客户端收到后进入FIN_WAIT_2状态。</li>
+<li>当服务器没有数据要发送时，服务器发送一个FIN报文，此时服务器进入LAST_ACK状态，等待客户端的确认</li>
+<li>客户端收到服务器的FIN报文后，给服务器发送一个ACK报文，确认序列号为收到的序号+1。此时客户端进入TIME_WAIT状态，等待2MSL（MSL：报文段最大生存时间），然后关闭连接。</li>
 </ol>
-<p>PV操作的具体意义：</p>
-<ul>
-<li>P(s):将信号量value值减1,若结果小于0,则执行P操作的进程被阻塞，若结果大于等于0,则执行P操作的进程将继续执行。</li>
-<li>V(s):将信号量的值加1,若结果不大于0,则执行V操作的进程从信号量s有关的list所知队列中释放一个进程，使其转化为就绪态，自己则继续执行，若结果大于0,则执行V操作的进程继续执行。</li>
-</ul>
-<p>PV操作先对value值加减，再判断和0的关系，之后再决定阻塞和唤醒，是上述逻辑。信号量在Linux中有两种规范，一个是System V标准，另一个是Posix标准。如下的具体代码只涉及Posix标准，System V只列出。</p>
-<pre><code class="lang-c++">//System V 标准API
-
-int semget(key_t key, int num_sems, int sem_flags);
-int semop(int sem_id, struct sembuf *sops, size_t nsops);
-int semctl(int sem_id, int sem_num, int cmd);
-
-//Posix 标准API
-#include &quot;semaphore.h&quot;
-
-//初始化一个信号量
-int sem_init(sem_t *sem, int pshared, unsigned int value);
-//sem为指向信号量结构的一个指针
-//pshared != 0在进程间共享，pshared == 0 只在当前进程的所有线程共享
-//value是初始值
-
-//等同于V操作
-int sem_post(sem_t *sem);
-//调用后value ++ , 线程调度策略决定唤醒哪个阻塞的线程
-
-//等同于P操作
-int sem_wait(sem_t *sem);
-//如果信号量值大于0， 则值-1， 如果值小于等于0，则阻塞当前进程
-//if (sem &gt; 0) sem -- ;
-//else if (sem &lt;= 0) 
-//{
-//    sem -- ;
-//    sleep();
-//}
-</code></pre>
-<p><a href="https://blog.csdn.net/sunxiaopengsun/article/details/79898884" target="_blank" rel="noopener">CSDN. Linux信号量操作</a></p>
-<p><strong>2.4 信号signal</strong></p>
-<p>信号是一种比较复杂的通信方式，用于通知接收进程某个事件已经发生。</p>
-<p><strong>软中断</strong>信号（signal，又简称为信号）用来通知进程发生了异步事件。<strong>在软件层次上是对中断机制的一种模拟</strong>，在原理上，一个进程收到一个信号与处理器收到一个中断请求可以说是一样的。信号是进程间通信机制中唯一的异步通信机制，一个进程不必通过任何操作来等待信号的到达，事实上，进程也不知道信号到底什么时候到达。进程之间可以互相通过系统调用kill发送软中断信号。内核也可以因为内部事件而给进程发送信号，通知进程发生了某个事件。信号机制除了基本通知功能外，还可以传递附加信息。</p>
-<p><a href="https://www.cnblogs.com/sky-heaven/p/10176422.html" target="_blank" rel="noopener">Blog.sky</a></p>
-<p><strong>3.套接字SOCKET：</strong></p>
-<p>socket也是一种进程间通信机制，与其他通信机制不同的是，它可用于不同主机之间的进程通信。</p>
-<p><a href="https://blog.csdn.net/kkkkde/article/details/81698124" target="_blank" rel="noopener">CSDN.Linux网络编程 套接字编程</a></p>
-<h2 id="线程间通信的方式"><a href="#线程间通信的方式" class="headerlink" title="线程间通信的方式"></a><strong>线程间通信的方式</strong></h2><p>临界区：通过多线程的串行化来访问公共资源或一段代码，速度快，适合控制数据访问；</p>
-<p>互斥量Synchronized/Lock：采用互斥对象机制，只有拥有互斥对象的线程才有访问公共资源的权限。因为互斥对象只有一个，所以可以保证公共资源不会被多个线程同时访问</p>
-<p>信号量Semphare：为控制具有有限数量的用户资源而设计的，它允许多个线程在同一时刻去访问同一个资源，但一般需要限制同一时刻访问此资源的最大线程数目。</p>
-<p>事件(信号)，Wait/Notify：通过通知操作的方式来保持多线程同步，还可以方便的实现多线程优先级的比较操作。</p>
-<h2 id="死锁的必要条件和解决方法"><a href="#死锁的必要条件和解决方法" class="headerlink" title="死锁的必要条件和解决方法"></a>死锁的必要条件和解决方法</h2><p>死锁是指两个或两个以上进程在执行过程中，因争夺资源而造成的下相互等待的现象。死锁发生的四个必要条件如下：</p>
+<p>图片理解：</p>
+<p><img src="https://i.loli.net/2020/07/08/RzkDXJysi3vYlSQ.png" alt></p>
+<h2 id="TCP如何保证可靠性"><a href="#TCP如何保证可靠性" class="headerlink" title="TCP如何保证可靠性"></a>TCP如何保证可靠性</h2><h3 id="校验和"><a href="#校验和" class="headerlink" title="校验和"></a>校验和</h3><p>发送方在发送数据之前计算校验和，填充校验和。接收方收到数据后，再次计算校验和，并和发送方的对比。</p>
+<h3 id="序列号和确认应答"><a href="#序列号和确认应答" class="headerlink" title="序列号和确认应答"></a>序列号和确认应答</h3><p>TCP传输时对于每一个包进行了编号。ACK可以通过带有对应的确认序列号告诉发送方下一个应该发送报文的序号，如果有丢包会重新发送。接收方也可以根据序列号排序所有的报文，得到正确的数据。</p>
+<h3 id="超时重传"><a href="#超时重传" class="headerlink" title="超时重传"></a>超时重传</h3><p>如果在确认应答机制中，ACK报文有可能丢失。有两种可能：</p>
 <ol>
-<li>互斥条件：进程对所分配到的资源不允许其他进程访问，若其他进程访问该资源，只能等待，直至占有该资源的进程使用完成后释放该资源。</li>
-<li>占有和等待：进程获得一定的资源后，又对其他资源发出请求，但是该资源可能被其他进程占有，此时请求阻塞，但该进程不会释放自己已经占有的资源。</li>
-<li>非抢占：进程已获得的资源，在未完成使用之前，不可被剥夺，只能在使用后自己释放。</li>
-<li>循环等待：进程发生死锁后，必然存在一个进程-资源之间的环形链。</li>
+<li>发送方发了，接收方一个都没收到。</li>
+<li>接收方收到了，但是ACK回去的时候丢了。</li>
 </ol>
-<p>死锁的处理方法是<strong>死锁预防</strong>、<strong>死锁避免</strong>、<strong>死锁检测</strong>和<strong>死锁恢复</strong>。</p>
-<ul>
-<li>死锁预防的方法：</li>
-</ul>
-<ol>
-<li><strong>资源一次性分配</strong>，从而剥夺占有并等待条件。当一个进程申请一个资源时，它不能占有其他资源。缺点是资源利用率低和可能发生饥饿，当资源一次性分配之后，可能有些最后才用到；如果进程需要多个常用资源，可能会发生饥饿导致一直分配不到资源，一直等待。</li>
-<li><strong>抢占式协议</strong>：如果一个进程占有资源并申请另一个不能立即分配的资源，那么现在已经分配的资源允许其他进程抢占。换句话说，这些资源被隐式释放了。如果有新的进程请求资源，那么系统先考虑自由资源，再考虑等待中进程的资源，如果都不够，那么该进程也进入等待。</li>
-<li><strong>资源有序分配法</strong>：系统给每类资源赋予一个序号，每个进程按编号递增的请求资源，释放则相反，从而破坏环路等待的条件。</li>
-</ol>
-<ul>
-<li>死锁避免的方法：获得以后进程如何申请资源的附加信息，由操作系统来综合考虑如何分配资源，使用已有的死锁避免算法。</li>
-</ul>
-<ol>
-<li>安全状态</li>
-<li>资源分配图算法（每种资源都有单个实例）</li>
-<li>银行家算法（每种资源有多个实例）</li>
-</ol>
-<ul>
-<li>死锁检测和恢复的方法：系统提供检测算法 + 恢复算法</li>
-</ul>
-
+<p>为了解决这个问题，引入了超时重传。发送方在发送完之后等待一个时间，如果时间结束没有接收到ACK报文，那么就重发一遍。接收方如果收到二次重发的数据，则丢弃，再发一次ACK。这个等待时间是<strong>动态计算</strong>的。</p>
+<p>在Linux中（BSD Unix和Windows下也是这样）超时以<strong>500ms为一个单位</strong>进行控制，每次判定超时重发的超时时间都是500ms的整数倍。重发一次后，仍未响应，那么等待2 x 500ms的时间后，再次重传。等待4 x 500ms的时间继续重传。以一个指数的形式增长。累计到一定的重传次数，TCP就认为网络或者对端出现异常，<strong>强制关闭连接</strong>。</p>
+<h3 id="连接管理"><a href="#连接管理" class="headerlink" title="连接管理"></a>连接管理</h3><p>三次握手和四次挥手。</p>
+<h3 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h3><p>TCP协议中根据接收端对数据的处理能力，决定发送端的发送速度，这个机制就是流量控制。防止接收端接收太多数据，缓冲区填满之后引发超时重传等机制。</p>
+<p>接收方会不停把自己缓冲区剩余大小放在ACK报文中，发送方通过ACK中窗口大小调节自己发送的速度。如果窗口大小为0，则<strong>停止发送数据</strong>，并定期向接收端发送窗口探测数据段。（心跳检测）</p>
+<h3 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h3><p>详细看下方的拥塞控制详解。</p>
+<p><a href="https://blog.csdn.net/liuchenxia8/article/details/80428157" target="_blank" rel="noopener">CSDN.网络基础：TCP协议-如何保证传输可靠性</a></p>
+<h2 id="TCP的拥塞控制"><a href="#TCP的拥塞控制" class="headerlink" title="TCP的拥塞控制"></a>TCP的拥塞控制</h2><p>TCP传输的过程中，发送端开始发送数据的时候，如果刚开始就发送大量的数据，那么就可能造成一些问题。网络可能在开始的时候就很拥堵，如果给网络中在扔出大量数据，那么这个拥堵就会加剧。拥堵的加剧就会产生大量的丢包，就对大量的超时重传，严重影响传输。</p>
+<h3 id="慢启动"><a href="#慢启动" class="headerlink" title="慢启动"></a>慢启动</h3><p>所以TCP引入了慢启动的机制，在开始发送数据时，先发送少量的数据探路。探清当前的网络状态如何，再决定多大的速度进行传输。这时候就引入一个叫做拥塞窗口的概念。发送刚开始定义拥塞窗口为 1，每次收到ACK应答，拥塞窗口加 1。在发送数据之前，首先将拥塞窗口与接收端反馈的窗口大小比对，取较小的值作为实际发送的窗口。</p>
+<script type="math/tex; mode=display">
+real\_send\_window = min(rwnd, cwnd)</script><h3 id="拥塞避免"><a href="#拥塞避免" class="headerlink" title="拥塞避免"></a>拥塞避免</h3><p>拥塞窗口的增长是指数级别的。慢启动的机制只是说明在开始的时候发送的少，发送的慢，但是增长的速度是非常快的。为了控制拥塞窗口的增长，不能使拥塞窗口单纯的加倍，设置一个拥塞窗口的阈值，当拥塞窗口大小超过阈值时，不能再按照指数来增长，而是线性的增长。在慢启动开始的时候，慢启动的阈值等于窗口的最大值，一旦造成网络拥塞，发生超时重传时，慢启动的阈值会为原来的一半（这里的原来指的是发生网络拥塞时拥塞窗口的大小），同时拥塞窗口重置为 1。</p>
+<h3 id="快重传"><a href="#快重传" class="headerlink" title="快重传"></a>快重传</h3>
         </div>
         <!-- .entry-content -->
         <div class="single-reward">
@@ -747,15 +402,15 @@ int sem_wait(sem_t *sem);
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/07/01/DFS/" rel="prev">
+            <a href="/2020/07/08/动态规划（一）背包专题/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/01/kmc7IaA34hPK1Us.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/07/01/kmc7IaA34hPK1Us.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dXYnAwRcQ6qi8xh.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/dXYnAwRcQ6qi8xh.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                DFS</h3>
+                动态规划（一）背包专题</h3>
                 <hr>
               </div>
             </a>
@@ -765,15 +420,15 @@ int sem_wait(sem_t *sem);
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/30/动态规划（二）其他DP/" rel="next">
+            <a href="/2020/07/05/最短路径算法/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/30/aFtNCbT1Sn6IQ7h.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/30/aFtNCbT1Sn6IQ7h.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/aPU54kjQGVon2Hg.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/aPU54kjQGVon2Hg.jpg">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                动态规划（二）其他DP</h3>
+                最短路径算法</h3>
                 <hr>
               </div>
             </a>
