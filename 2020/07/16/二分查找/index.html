@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">离散化 | 天の痕的博客</title>
+  <title itemprop="name">二分查找 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -309,11 +309,11 @@
 
   <div class="pattern-center single-center">
     <!-- 有配图默认渲染第一张 -->
-    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/04/S6bvKVChn3gYdxX.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/S6bvKVChn3gYdxX.jpg">
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/04/BUkJ5s7SDhxmzAI.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/BUkJ5s7SDhxmzAI.jpg">
     </div>
     <header class="pattern-header single-header">
       <h1 class="entry-title">
-      离散化</h1>
+      二分查找</h1>
       <p class="entry-census">
         <span>
           <a href="https://scarofsky.github.io">
@@ -325,7 +325,7 @@
         </span>
         <span class="bull">
         ·</span>
-        2020-6-11<span class="bull">
+        2020-7-16<span class="bull">
         ·</span>
       <span id="busuanzi_value_page_pv"></span>次阅读</p>
     </header>
@@ -339,32 +339,62 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h1 id="离散化"><a href="#离散化" class="headerlink" title="离散化"></a>离散化</h1><h2 id="通过哈希表进行离散化"><a href="#通过哈希表进行离散化" class="headerlink" title="通过哈希表进行离散化"></a>通过哈希表进行离散化</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;建立一个哈希表，通过每次将新的值映射为一个递增的n来达到离散化的目的。这种离散化不要求顺序，只需要值的对应即可。</p>
-<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">int find(int x)
+          <h1 id="二分"><a href="#二分" class="headerlink" title="二分"></a>二分</h1><h2 id="二分查找元素"><a href="#二分查找元素" class="headerlink" title="二分查找元素"></a>二分查找元素</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;二分使用的条件是有<strong>单调性</strong>，比如有序的序列，事实上二分是<strong>分治算法</strong>思想。本质是将问题抽象化为<strong>找一个分界面</strong>，分界面左边不满足某一性质，而右边满足某一个性质。这时候左边边界缩减时需要多缩减一个，因为左边不满足性质；右边边界缩减到当前mid，不用多缩减。下边代码的check函数即是满足某种性质的判断函数，当满足性质时返回 true, 不满足时返回false。</p>
+<p>&emsp;&emsp;当搜素结束时，左右边界重合，即<code>l == r</code>。如果有<code>l = mid</code>的情况，需要<code>l + r + 1 &gt;&gt; 1</code>才能够避免最后两个数相邻时，mid永远更新为左边界的死循环。</p>
+<p>&emsp;&emsp;二分查找分为整数二分和浮点数二分，浮点数查找时原理相同，但是要求精度小于一定数时停止。浮点数二分比整数二分容易很多，不需要考虑很多边界条件的情况。</p>
+<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">//每次右边界缩减为mid的情况
+while (l &lt; r)
 {
-    if (S.count(x) == 0) S[x] = ++ n;
-    return S[x];
+    int mid = l + r &gt;&gt; 1;
+    if (check(mid)) r = mid;
+    else l = mid + 1;
+}
+//每次左边界缩减为mid的情况
+while (l &lt; r)
+{
+    int mid = l + r + 1 &gt;&gt; 1;
+    if (check(mid)) l = mid;
+    else r = mid + 1;
+}
+
+//例子：求一个有序序列中的左右边界
+//1 【2 2 2】 3 3 
+//   ↑    ↑
+//   ①    ②
+while (l &lt; r)
+{
+    int mid = l + r &gt;&gt; 1;
+    if (a[mid] &gt;= x) r = mid;
+    else l = mid + 1;
+}
+while (l &lt; r)
+{
+    int mid = l + r + 1 &gt;&gt; 1;
+    if (a[mid] &lt;= x) l = mid;
+    else r = mid - 1;
+}
+
+//浮点数二分
+const double eps = 1e-8;
+
+while (r - l &gt; eps)
+{
+    int mid = l + r / 2.0;
+    if (check(mid)) l = mid;
+    else r = mid;
 }
 </code></pre>
-<p><img src="https://i.loli.net/2020/06/11/Ghvsez17FXYmINB.jpg" alt></p>
-<h2 id="排序-去重-二分查找进行离散化"><a href="#排序-去重-二分查找进行离散化" class="headerlink" title="排序+去重+二分查找进行离散化"></a>排序+去重+二分查找进行离散化</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;当要求有序的离散化时，需要将需要离散化的坐标排序，之后去重，最后使用二分查找获得映射后的坐标。这里其实相当于将排序后的数组下标作为离散化后的值。这种离散化的好处就是保序，当计算原下标3-7之间的结果时，直接计算离散化之后find(3)-find(7) = 3 - 5之间的结果即可。</p>
-<p><img src="https://i.loli.net/2020/06/11/vIzDqYwVsuAeUaN.jpg" alt></p>
-<h3 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">int find(int x)
-{
-    int l = 0, r = n - 1;
-    while (l &lt; r)
-    {
-        int mid = l + r &gt;&gt; 1;
-        if (a[mid] &gt;= x) r = mid;
-        else l = mid + 1;
-    }
-    return r;
-}
-//排序+去重
-sort(pts.begin(), pts.end());
-pts.erase(unique(pts.begin(), pts.end()), pts.end());
-</code></pre>
-<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/804/" target="_blank" rel="noopener">AW.802 区间和（简单）</a></p>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://leetcode-cn.com/problems/binary-search/" target="_blank" rel="noopener">LC.704 二分查找（简单）</a></p>
+<p><a href="https://www.acwing.com/problem/content/792/" target="_blank" rel="noopener">AW.790 数的三次方根（简单）</a></p>
+<p><a href="https://www.acwing.com/problem/content/791/" target="_blank" rel="noopener">AW.789 数的范围（简单）</a></p>
+<p><a href="https://leetcode-cn.com/problems/minimum-size-subarray-sum/" target="_blank" rel="noopener">LC.209 长度最小的子数组（中等）</a></p>
+<p>构造单调性+二分查找，重点在于单调性的构造</p>
+<h2 id="二分搜索答案"><a href="#二分搜索答案" class="headerlink" title="二分搜索答案"></a>二分搜索答案</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;答案很多时候是<strong>有范围的</strong>，当某一个问题<strong>验证某一个答案</strong>的时间复杂度乘以二分区间范围的log时，可以考虑搜索答案。通过不断的尝试排除错误答案，且是以指数速度排除，最终得到正确答案。这里一般在验证答案的时候，可以采用某种程度的贪心策略，并且将原问题中单调性质进行转化，能够通过一次的验证缩小答案范围。</p>
+<p>&emsp;&emsp;这类题往往不是简单的搜索答案，而是将问题某种程度的转化之后，再搜索答案。</p>
+<h3 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/104/" target="_blank" rel="noopener">AW.102 最佳牛围栏（简单）</a></p>
+<p><a href="https://leetcode-cn.com/problems/find-the-duplicate-number/" target="_blank" rel="noopener">LC.287 寻找重复数（中等）</a></p>
+<p><a href="https://leetcode-cn.com/problems/minimum-number-of-days-to-make-m-bouquets/" target="_blank" rel="noopener">LC.5438 制作m束花所需最少天数（中等）(193周赛第三题）</a></p>
+<p><a href="https://leetcode-cn.com/problems/sum-of-mutated-array-closest-to-target/" target="_blank" rel="noopener">LC.1300 转变数组后最接近目标值的数组和（中等）</a></p>
 
         </div>
         <!-- .entry-content -->
@@ -396,15 +426,15 @@ pts.erase(unique(pts.begin(), pts.end()), pts.end());
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/15/BFS/" rel="prev">
+            <a href="/2020/07/17/线段树/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/15/fZCdM51Ak4cUlim.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/15/fZCdM51Ak4cUlim.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/h9jEUfZqngcweu7.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/07/17/h9jEUfZqngcweu7.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                BFS</h3>
+                线段树</h3>
                 <hr>
               </div>
             </a>
@@ -414,15 +444,15 @@ pts.erase(unique(pts.begin(), pts.end()), pts.end());
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/11/快速幂/" rel="next">
+            <a href="/2020/07/15/单调栈与单调队列/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/11/mOVYjD65cMBteFx.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/11/mOVYjD65cMBteFx.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dptoeG2n78wNqS1.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/dptoeG2n78wNqS1.jpg">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                快速幂</h3>
+                单调栈与单调队列</h3>
                 <hr>
               </div>
             </a>

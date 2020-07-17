@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">动态规划（一）背包专题 | 天の痕的博客</title>
+  <title itemprop="name">数据库 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -309,11 +309,11 @@
 
   <div class="pattern-center single-center">
     <!-- 有配图默认渲染第一张 -->
-    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/04/dXYnAwRcQ6qi8xh.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dXYnAwRcQ6qi8xh.jpg">
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/07/17/ajZRFkDBVPsNLdy.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/ajZRFkDBVPsNLdy.jpg">
     </div>
     <header class="pattern-header single-header">
       <h1 class="entry-title">
-      动态规划（一）背包专题</h1>
+      数据库</h1>
       <p class="entry-census">
         <span>
           <a href="https://scarofsky.github.io">
@@ -325,7 +325,7 @@
         </span>
         <span class="bull">
         ·</span>
-        2020-6-12<span class="bull">
+        2020-7-14<span class="bull">
         ·</span>
       <span id="busuanzi_value_page_pv"></span>次阅读</p>
     </header>
@@ -339,94 +339,39 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h1 id="背包专题"><a href="#背包专题" class="headerlink" title="背包专题"></a>背包专题</h1><h2 id="01背包"><a href="#01背包" class="headerlink" title="01背包"></a>01背包</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p><code>dp[i][j]</code>表示考虑到第i个元素时，背包容量为j的情况下的最大价值。初始条件为<code>dp[0][i]</code> = 0，表示当考虑前0个物品时，无论背包容量为多少，最大价值都是0。状态转移方程可以通过定义得到，当前状态由前一个状态拿当前物品i或者不拿当前物品i转移过来。一维空间形式循环顺序要从m到v[i]，原因是省略了i - 1维度。</p>
-<script type="math/tex; mode=display">
-dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - v[i]] + w[i])</script><script type="math/tex; mode=display">
-dp[j] = max(dp[j], dp[j - v[i] + w[i]]), j ∈(m,v[i])</script><h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">for (int i = 1; i &lt;= n; i ++ )
-    for (int j = m; j &gt;= v[i];j -- )
-        f[j] = max(f[j], f[j - v[i]] + w[i]);
-</code></pre>
-<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/2/" target="_blank" rel="noopener">AW.2 01背包问题（简单）</a></p>
-<h2 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>如果按照01背包的状态定义和状态转移方程思维方式，我们不难得出如下的状态转移方程。</p>
-<script type="math/tex; mode=display">
-dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - v[i]] + w[i], ... , dp[i - 1][j - s * v[i]] + s * w[i]);</script><p>如果直接循环则需要3重循环来实现，但是我们发现上述部分项已经计算过了。</p>
-<script type="math/tex; mode=display">
-dp[i][j - v[i]] + w[i] = max(dp[i - 1][j - v[i]] + w[i], dp[i - 1][j - 2 * v[i]] + 2 * w[i] , ... , dp[i - 1][j - s * v[i]] + s * w[i]);</script><p>所以<code>dp[i][j]</code>可以进行简化为：</p>
-<script type="math/tex; mode=display">
-dp[i][j] = max(dp[i - 1][j], dp[i][j - v[i]] + w[i]), j∈(v[i], m)</script><p>如果化简为一维形式，由于需要简化的是<code>dp[i][j - v[i]]</code>，应该体积从小到大循环。这里可以优化的原因是，体积一定的情况下，如果可以随意拿取，那么拿取的s件一定是固定值，注意和下边的多重背包区分。</p>
-<h3 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">for (int i = 1; i &lt;= n; i ++ )
-    for (int j = v[i]; j &lt;= m; j ++ )
-        f[j] = max(f[j], f[j - v[i]] + w[i]);
-</code></pre>
-<h3 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/3/" target="_blank" rel="noopener">AW. 完全背包问题（简单）</a></p>
-<p><a href="https://leetcode-cn.com/problems/coin-change/" target="_blank" rel="noopener">LC.322 零钱兑换（中等）</a></p>
-<h2 id="多重背包"><a href="#多重背包" class="headerlink" title="多重背包"></a>多重背包</h2><h3 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h3><ul>
-<li>多重背包问题可以使用三重循环直接暴力求解，也可以使用二进制优化。暴力求解和上述完全背包问题相似，在于每次要确定s个物品，这里无法进行完全背包的优化，因为每次求解的s并不是固定值。</li>
-<li>二进制优化的原理是将多个物品打包成一个物品来看，将最多选s个物品的问题转化成log(s)个物品的 01背包问题，从而降低复杂度。可以证明每次选取1,2,4,8,16…(s- 2^k - 1)个物品打包之后，每个物品选与不选的组合（看做01背包）可以得到s种结果。这里二进制优化的思想很有意思，可以类比快速幂和龟速乘。</li>
+          <h1 id="数据库知识"><a href="#数据库知识" class="headerlink" title="数据库知识"></a>数据库知识</h1><h2 id="事物的四个特性"><a href="#事物的四个特性" class="headerlink" title="事物的四个特性"></a>事物的四个特性</h2><p>事务（Transaction）是由一系列对系统中数据进行访问与更新的操作所组成的一个程序执行逻辑单元。事务是DBMS中最基础的单位，事务不可分割。ACID：原子性、一致性、隔离性、持久性。</p>
+<ol>
+<li><p>A: 原子性（Atomicity)。原子性是指事务包含的所有操作<strong>要么全部成功，要么全部失败</strong>回滚，因此事务的操作如果成功就必须要<strong>完全应用到数据库</strong>，如果操作失败则<strong>不能对数据库有任何影响</strong>。</p>
+</li>
+<li><p>C:一致性（Consistency)。一致性是指事务必须使数据库从一个一致性状态变换到另一个一致性状态，也就是说一个事务执行之前和执行之后都必须处于一致性状态。</p>
+<p>拿转账来说，假设用户A和用户B两者的钱加起来一共是5000，那么不管A和B之间如何转账，转几次账，事务结束后两个用户的钱相加起来应该还得是5000，这就是事务的一致性。</p>
+</li>
+<li><p>I:隔离性（Isolation）。隔离性是当多个用户并发访问数据库时，比如操作同一张表时，数据库为每一个用户开启的事务，不能被其他事务的操作所干扰，多个并发事务之间要相互隔离。</p>
+</li>
+<li><p>D:持久性（Durability）。持久性是指一个事务一旦被提交了，那么对数据库中的数据的改变就是永久性的，即便是在数据库系统遇到故障的情况下也不会丢失提交事务的操作。</p>
+</li>
+</ol>
+<h2 id="脏读、幻读和不可重复读"><a href="#脏读、幻读和不可重复读" class="headerlink" title="脏读、幻读和不可重复读"></a>脏读、幻读和不可重复读</h2><p>这几种情况在读取和写入数据库的时候会产生，事务虽然有原子性，但是读写的并发并不影响原子性，因此最终导致了以下的数据并发问题。解决这几种错误的数据库现象，需要了解<strong>数据库的事务隔离级别</strong>，下方有详细介绍。</p>
+<ul>
+<li>脏读：事务A读取的事务B中尚未提交的数据，如果事务B回滚，则<strong>A读取使用了错误的数据</strong>。比如我给你转了100万，但是我还没有提交，此时你查询自己账户，多了100万，很开心。然后我发现转错人了，回滚了事物。然后你100万就没了。 在过程中你查到了没有提交事物的数据（多出的100万），这就是脏读。</li>
+<li>不可重复读：指在对于数据库中的某个数据，一个事务范围内<strong>多次查询却返回了不同的数据值</strong>（这里主要指某一表项的修改），这是由于在查询间隔，被另一个事务修改并提交了。这里的不可重复读主要说的是数据库表的某一项，和幻读的区别在于<strong>幻读是数据库内表中的查询不一致</strong>。在某些情况下，不可重复读并不是问题，比如我们多次查询某个数据当然以最后查询得到的结果为主。但在另一些情况下就有可能发生问题，例如<strong>同一个事物前后两次</strong>查询同一个数据，期望两次读的内容是一样的，但是因为读的过程中，因为另一个事务写了该数据，导致不可重复读。</li>
+<li>幻读：在事务A的多次读取构成中，事务B对数据（这里主要指的是<strong>表内的插入操作</strong>）进行了新增操作，导致事务A多次读取的数据不一样，好像出现了幻觉一样。不可重复度是表项的update操作，幻读是对表内的insert操作。比如第一次读取表内是10个查询结果，在第二次查询之前，另一个事务加了一条（因为不是对同一个数据项写入，不是不可重复读），这时再次查询就变成了11个，不一致了。</li>
+<li>第一类事务丢失（回滚丢失）：A和B在同时写一个数据，B事务已经提交，修改了数据，然后<strong>A事务因为某种原因回滚了</strong>，导致B事务的提交因A事务的回滚而丢失了。举例子来说，比如我有1000元。买一个东西，花了100元。然后我朋友给我转了1000元。理论上这两个事物（转账和买东西）正常的话，我应该还有1900元。 但是现在两个事物A和B同时进行，第一步都先查询我余额还有1000元，然后B事物给我转了1000元，提交了，理论上我还有2000元。然后我买东西，100元的，买到一半，我事物回滚，就回滚成了1000元(少了1000）。如果我不回滚，也提交了，我就还剩900元（也就是下面介绍的第二类事物丢失，覆盖丢失，也是少了1000）。</li>
+<li>第二类事务丢失（提交覆盖丢失）：A和B同时执行事务，两个事务同时取到一个数据，B事务首先提交，但是A事务接下来又提交，这样就覆盖了B事务。</li>
 </ul>
-<h3 id="模板-2"><a href="#模板-2" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">//暴力求解多重背包问题
-for (int i = 1; i &lt;= n; i ++ )
-    for (int j = 0; j &lt;= m; j ++ )
-        for (int t = 0; t &lt;= s[i]; t ++ )
-            if (j - s * v[i] &gt;= 0)
-                f[i][j] = max(f[i][j], f[i - 1][j - s * v[i]] + s * w[i]);
-//二进制优化
-#include &lt;iostream&gt;
-#include &lt;cstring&gt;
-#include &lt;algorithm&gt;
+<p><a href="https://blog.csdn.net/qq_35206244/article/details/82493215" target="_blank" rel="noopener">CSDN.数据库ACID四大特性及脏读，不可重复读，幻读，事物丢失</a></p>
+<p><a href="https://blog.csdn.net/ITWANGBOIT/article/details/102953327" target="_blank" rel="noopener">CSDN.对数据库幻读的理解</a></p>
+<p><a href="https://blog.csdn.net/paopaopotter/article/details/79259686" target="_blank" rel="noopener">CSDN.数据库第一类第二类丢失更新</a></p>
+<h2 id="数据库的事务隔离级别"><a href="#数据库的事务隔离级别" class="headerlink" title="数据库的事务隔离级别"></a>数据库的事务隔离级别</h2><p>事务的隔离级别实际上就是用锁来处理并发操作中，对于数据读写之后的不一致情况。下方的加锁的等级从低到高，而且加锁越多，数据库的效率越低，因为如果串行化就没有并发了。</p>
+<ol>
+<li>未提交读（Read uncommitted)。写操作加锁，读操作不加锁，禁止第一类丢失更新，但是其他数据并发问题还会发生。</li>
+<li>提交读（Read committed)。写操作加写锁，读操作加读锁。禁止第一类丢失更新和脏读。指你已经开始读了数据，然后一个事物开始写，然后写的事物不提交的话，是不能进行读的事物，避免了脏读。</li>
+<li>可重复读（Read repeatable)。对于读操作加读锁到事务结束，其他事务的更新操作只能等到事务结束之后进行。和提交 读的区别在于，提交读的读操作是加读锁到本次读操作结束，可重复读的锁粒度更大。禁止两类丢失更新，禁止脏读和不可 重复度，但是可能出现幻读.一个事物读的时候，我们把两次读看成整体，在读的过程中，不允许写的操作，这样就可以禁止不可重复读。就是两次读操作不允许其他事物。这是大部分关系数据库的<strong>默认隔离级别</strong>。</li>
+<li>序列化（Serializable)。对表级读和写加锁。读操作加表级读锁至事务结束。可以禁止幻读。</li>
+</ol>
+<p>好好看看下边的博客，里面图片比较容易理解。</p>
+<p><a href="https://www.cnblogs.com/shan-kylin/p/9543294.html" target="_blank" rel="noopener">Blog.ZhuoQiLin 数据库的四大特性以及四个隔离级别和引发的问题</a></p>
 
-using namespace std;
-
-const int N = 12010, M = 2010;
-
-int V[N], W[N];
-int idx;
-int n, m;
-
-int f[M];
-
-int main()
-{
-    scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
-
-    //对于每一个物品将s件拆解成log(s)件打包的物品
-    for (int i = 0; i &lt; n; i ++ )
-    {
-        int v, w, s;
-        scanf(&quot;%d%d%d&quot;, &amp;v, &amp;w, &amp;s);
-        int k = 1;
-        while (k &lt;= s)
-        {
-            ++ idx;
-            V[idx] = k * v;
-            W[idx] = k * w;
-            s -= k;
-            k *= 2;
-        }
-        //如果还有剩余不满足2的幂次也要打包
-        if (s)
-        {
-            ++ idx;
-            V[idx] = s * v;
-            W[idx] = s * w;
-        }
-    }
-
-    //用01背包求解
-    for (int i = 1; i &lt;= idx; i ++ )
-        for (int j = m; j &gt;= V[i]; j -- )
-            f[j] = max(f[j], f[j - V[i]] + W[i]);
-
-    cout &lt;&lt; f[m] &lt;&lt; endl;
-
-    return 0;
-}
-</code></pre>
-<p><a href="https://www.acwing.com/problem/content/4/" target="_blank" rel="noopener">AW.4 多重背包问题I（简单）</a></p>
-<p><a href="https://www.acwing.com/problem/content/5/" target="_blank" rel="noopener">AW.5 多重背包问题II（中等）</a></p>
-<p>第二题主要考察二进制优化</p>
-<h2 id="分组背包"><a href="#分组背包" class="headerlink" title="分组背包"></a>分组背包</h2><h3 id="原理-3"><a href="#原理-3" class="headerlink" title="原理"></a>原理</h3><p>分组背包问题指有很多物品组，从每组中只能挑选一个物品，求最大价值。分组背包是有依赖的背包问题的前序问题。</p>
-<h3 id="模板-3"><a href="#模板-3" class="headerlink" title="模板"></a>模板</h3>
         </div>
         <!-- .entry-content -->
         <div class="single-reward">
@@ -457,15 +402,15 @@ int main()
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/15/BFS/" rel="prev">
+            <a href="/2020/07/15/单调栈与单调队列/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/15/fZCdM51Ak4cUlim.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/15/fZCdM51Ak4cUlim.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dptoeG2n78wNqS1.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/dptoeG2n78wNqS1.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                BFS</h3>
+                单调栈与单调队列</h3>
                 <hr>
               </div>
             </a>
@@ -475,15 +420,15 @@ int main()
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/11/离散化/" rel="next">
+            <a href="/2020/07/14/有向图的强联通分量/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/S6bvKVChn3gYdxX.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/S6bvKVChn3gYdxX.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/N9XS6GObA7mMlyt.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/07/17/N9XS6GObA7mMlyt.jpg">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                离散化</h3>
+                有向图的强联通分量</h3>
                 <hr>
               </div>
             </a>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">计算机网络 | 天の痕的博客</title>
+  <title itemprop="name">Trie树 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -307,6 +307,30 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
 <div class="pattern-center-blank"></div>
 
+  <div class="pattern-center single-center">
+    <!-- 有配图默认渲染第一张 -->
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/07/17/kU4ox7WGnaqJ6YS.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/kU4ox7WGnaqJ6YS.jpg">
+    </div>
+    <header class="pattern-header single-header">
+      <h1 class="entry-title">
+      Trie树</h1>
+      <p class="entry-census">
+        <span>
+          <a href="https://scarofsky.github.io">
+            <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.1/img/custom/avatar.jpg">
+          </a>
+        </span>
+        <span>
+          <a href="https://scarofsky.github.io">天の痕</a>
+        </span>
+        <span class="bull">
+        ·</span>
+        2020-7-14<span class="bull">
+        ·</span>
+      <span id="busuanzi_value_page_pv"></span>次阅读</p>
+    </header>
+  </div>
+
 <div id="content" class="site-content">
   <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
@@ -314,15 +338,68 @@
         <div class="toc"></div>
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
-          <header class="entry-header">
-            <h1 class="entry-title">计算机网络</h1>
-            <p class="entry-census">天の痕&nbsp;·&nbsp;2020-6-25&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
-
-            <hr>
-          </header>
-        
         <div class="entry-content">
-          <h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h3 id><a href="#" class="headerlink" title=" "></a> </h3>
+          <h1 id="Trie树"><a href="#Trie树" class="headerlink" title="Trie树"></a>Trie树</h1><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;Trie树又叫字典树，可以<strong>快速插入和查询某一字符串是否在当前集合之中</strong>。限制条件是当前字符集合所有字符总数不能太大，否则效率低下且耗费空间。</p>
+<p>&emsp;&emsp;这里存储树是通过<code>son[N][26]</code>类型的二维数组来存储，本质是一个单向查询函数，其中son的第一个维度为当前<strong>指针地址</strong>，用idx从0开始分配。树根被分配为0，之后依次分配地址递增。第二个维度26是当前确定的字符，当确定了当前节点和当前字符之后，就确定了son中存储值，即下一个节点的地址。通过这种逻辑来用数组存储树和图是一种较为方便和快捷的方法。</p>
+<p>&emsp;&emsp;AC自动机是Trie树和KMP算法的结合，通过KMP算法的ne数组在Trie树上进行匹配，完成多个模板串在某一原串中出现次数的统计。</p>
+<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+
+using namespace std;
+
+const int N = 100010;
+
+int son[N * 32][2];
+int val[N * 32];
+int idx;
+int n;
+
+void build(int x)
+{
+    int p = 0;
+    for (int i = 31; i &gt;= 0; i -- )
+    {
+        int t = x &gt;&gt; i &amp; 1;
+        if (!son[p][t]) son[p][t] = ++ idx;
+        p = son[p][t];
+    }
+
+    val[p] = x;
+}
+
+int query(int x)
+{
+    int p = 0;
+    for (int i = 31; i &gt;= 0; i -- )
+    {
+        int t = x &gt;&gt; i &amp; 1;
+        if (!son[p][!t]) p = son[p][t];
+        else p = son[p][!t];
+    }
+
+    return x ^ val[p];
+}
+
+int main()
+{
+    scanf(&quot;%d&quot;, &amp;n);
+
+    int res = 0;
+    for (int i = 0; i &lt; n; i ++ )
+    {
+        int t;
+        scanf(&quot;%d&quot;, &amp;t);
+
+        res = max(res, query(t));
+        build(t);
+    }
+
+    printf(&quot;%d\n&quot;, res);
+    return 0;
+}
+</code></pre>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/145/" target="_blank" rel="noopener">AW.143 最大亦或对（简单）</a></p>
+
         </div>
         <!-- .entry-content -->
         <div class="single-reward">
@@ -353,15 +430,15 @@
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/25/数据库/" rel="prev">
+            <a href="/2020/07/14/有向图的强联通分量/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/N9XS6GObA7mMlyt.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/07/17/N9XS6GObA7mMlyt.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                数据库</h3>
+                有向图的强联通分量</h3>
                 <hr>
               </div>
             </a>
@@ -371,15 +448,15 @@
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/18/从《广场协议》看近代日本经济/" rel="next">
+            <a href="/2020/07/11/离散化/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/18/ZGIg2YCMFNRpXzO.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/18/ZGIg2YCMFNRpXzO.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/S6bvKVChn3gYdxX.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/04/S6bvKVChn3gYdxX.jpg">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                从《广场协议》看近代日本经济</h3>
+                离散化</h3>
                 <hr>
               </div>
             </a>

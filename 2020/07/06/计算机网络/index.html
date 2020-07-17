@@ -367,11 +367,19 @@
 <p>接收方会不停把自己缓冲区剩余大小放在ACK报文中，发送方通过ACK中窗口大小调节自己发送的速度。如果窗口大小为0，则<strong>停止发送数据</strong>，并定期向接收端发送窗口探测数据段。（心跳检测）</p>
 <h3 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h3><p>详细看下方的拥塞控制详解。</p>
 <p><a href="https://blog.csdn.net/liuchenxia8/article/details/80428157" target="_blank" rel="noopener">CSDN.网络基础：TCP协议-如何保证传输可靠性</a></p>
-<h2 id="TCP的拥塞控制"><a href="#TCP的拥塞控制" class="headerlink" title="TCP的拥塞控制"></a>TCP的拥塞控制</h2><p>TCP传输的过程中，发送端开始发送数据的时候，如果刚开始就发送大量的数据，那么就可能造成一些问题。网络可能在开始的时候就很拥堵，如果给网络中在扔出大量数据，那么这个拥堵就会加剧。拥堵的加剧就会产生大量的丢包，就对大量的超时重传，严重影响传输。</p>
-<h3 id="慢启动"><a href="#慢启动" class="headerlink" title="慢启动"></a>慢启动</h3><p>所以TCP引入了慢启动的机制，在开始发送数据时，先发送少量的数据探路。探清当前的网络状态如何，再决定多大的速度进行传输。这时候就引入一个叫做拥塞窗口的概念。发送刚开始定义拥塞窗口为 1，每次收到ACK应答，拥塞窗口加 1。在发送数据之前，首先将拥塞窗口与接收端反馈的窗口大小比对，取较小的值作为实际发送的窗口。</p>
+<h2 id="TCP的拥塞控制"><a href="#TCP的拥塞控制" class="headerlink" title="TCP的拥塞控制"></a>TCP的拥塞控制</h2><p>TCP传输的过程中，发送端开始发送数据的时候，如果刚开始就发送大量的数据，那么就可能造成一些问题。网络可能在开始的时候就很拥堵，如果给网络中在扔出大量数据，那么这个拥堵就会加剧。拥堵的加剧就会产生大量的丢包，产生大量的超时重传，严重影响传输。</p>
+<h3 id="慢启动"><a href="#慢启动" class="headerlink" title="慢启动"></a>慢启动</h3><p>所以TCP引入了慢启动的机制，在开始发送数据时，先发送少量的数据探路。探清当前的网络状态如何，再决定多大的速度进行传输。这时候就引入一个叫做拥塞窗口的概念。发送刚开始定义拥塞窗口为 1，每次收到ACK应答，拥塞窗口加 1。在发送数据之前，首先将拥塞窗口与接收端反馈的窗口大小比对，<strong>取较小的值作为实际发送的窗口</strong>，如下公式所述：</p>
 <script type="math/tex; mode=display">
-real\_send\_window = min(rwnd, cwnd)</script><h3 id="拥塞避免"><a href="#拥塞避免" class="headerlink" title="拥塞避免"></a>拥塞避免</h3><p>拥塞窗口的增长是指数级别的。慢启动的机制只是说明在开始的时候发送的少，发送的慢，但是增长的速度是非常快的。为了控制拥塞窗口的增长，不能使拥塞窗口单纯的加倍，设置一个拥塞窗口的阈值，当拥塞窗口大小超过阈值时，不能再按照指数来增长，而是线性的增长。在慢启动开始的时候，慢启动的阈值等于窗口的最大值，一旦造成网络拥塞，发生超时重传时，慢启动的阈值会为原来的一半（这里的原来指的是发生网络拥塞时拥塞窗口的大小），同时拥塞窗口重置为 1。</p>
-<h3 id="快重传"><a href="#快重传" class="headerlink" title="快重传"></a>快重传</h3>
+real\_send\_window = min(rwnd, cwnd)</script><p>这里慢启动不是指报文发送的很慢，而是指发送窗口较小。首先发送1个包，收到回复报文之后，<strong>加倍发送</strong>窗口，以此类推直到门限值为止。</p>
+<h3 id="拥塞避免"><a href="#拥塞避免" class="headerlink" title="拥塞避免"></a>拥塞避免</h3><p>慢启动的拥塞窗口增长是指数级别的，为了控制拥塞窗口的增长，不能使拥塞窗口单纯的加倍，设置一个拥塞窗口的阈值，当拥塞窗口大小超过阈值时，不能再按照指数来增长，而是<strong>线性的增长</strong>。在慢启动开始的时候，慢启动的阈值等于窗口的最大值，一旦造成网络拥塞，发生超时重传时，慢启动的阈值会为<strong>原来的一半</strong>（这里的原来指的是发生网络拥塞时拥塞窗口的大小），同时拥塞窗口<strong>重置为 1</strong>。</p>
+<p><img src="https://img-blog.csdnimg.cn/20190731165743903.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNDMxNDA2,size_16,color_FFFFFF,t_70" alt></p>
+<h3 id="快重传"><a href="#快重传" class="headerlink" title="快重传"></a>快重传</h3><p>TCP传输中，如果某一序号的报文丢失，发送方还可以继续发送报文，这时每发一个报文，接收方都会发现当前接收的报文在未接收的报文序列之后，就会要求重传。当发送方接收到3个要求重传的请求报文之后，就不会进行发送方对3号报文的超时重传，而是直接收到了快重传。</p>
+<p><img src="https://img-blog.csdnimg.cn/20190731184314574.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNDMxNDA2,size_16,color_FFFFFF,t_70" alt></p>
+<h3 id="快恢复"><a href="#快恢复" class="headerlink" title="快恢复"></a>快恢复</h3><p>快恢复算法是在收到三个重复ACK的时候，不直接把cwnd变成1，因为当前只是有个别的报文没有接收到，不需要重置网络传输窗口。</p>
+<p><img src="https://img-blog.csdnimg.cn/20190731184640178.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNDMxNDA2,size_16,color_FFFFFF,t_70" alt></p>
+<p><img src="https://img-blog.csdnimg.cn/20190731184935595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNDMxNDA2,size_16,color_FFFFFF,t_70" alt></p>
+<p><a href="https://blog.csdn.net/qq_41431406/article/details/97926927" target="_blank" rel="noopener">CSDN.TCP拥塞控制（详解）</a></p>
+
         </div>
         <!-- .entry-content -->
         <div class="single-reward">

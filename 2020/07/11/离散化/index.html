@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">数据库 | 天の痕的博客</title>
+  <title itemprop="name">离散化 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -307,6 +307,30 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
 <div class="pattern-center-blank"></div>
 
+  <div class="pattern-center single-center">
+    <!-- 有配图默认渲染第一张 -->
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/04/S6bvKVChn3gYdxX.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/S6bvKVChn3gYdxX.jpg">
+    </div>
+    <header class="pattern-header single-header">
+      <h1 class="entry-title">
+      离散化</h1>
+      <p class="entry-census">
+        <span>
+          <a href="https://scarofsky.github.io">
+            <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.1/img/custom/avatar.jpg">
+          </a>
+        </span>
+        <span>
+          <a href="https://scarofsky.github.io">天の痕</a>
+        </span>
+        <span class="bull">
+        ·</span>
+        2020-7-11<span class="bull">
+        ·</span>
+      <span id="busuanzi_value_page_pv"></span>次阅读</p>
+    </header>
+  </div>
+
 <div id="content" class="site-content">
   <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
@@ -314,15 +338,35 @@
         <div class="toc"></div>
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
-          <header class="entry-header">
-            <h1 class="entry-title">数据库</h1>
-            <p class="entry-census">天の痕&nbsp;·&nbsp;2020-6-25&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
-
-            <hr>
-          </header>
-        
         <div class="entry-content">
-          <h1 id="数据库知识"><a href="#数据库知识" class="headerlink" title="数据库知识"></a>数据库知识</h1><h3 id><a href="#" class="headerlink" title=" "></a> </h3>
+          <h1 id="离散化"><a href="#离散化" class="headerlink" title="离散化"></a>离散化</h1><h2 id="通过哈希表进行离散化"><a href="#通过哈希表进行离散化" class="headerlink" title="通过哈希表进行离散化"></a>通过哈希表进行离散化</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;建立一个哈希表，通过每次将新的值映射为一个递增的n来达到离散化的目的。这种离散化不要求顺序，只需要值的对应即可。</p>
+<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">int find(int x)
+{
+    if (S.count(x) == 0) S[x] = ++ n;
+    return S[x];
+}
+</code></pre>
+<p><img src="https://i.loli.net/2020/06/11/Ghvsez17FXYmINB.jpg" alt></p>
+<h2 id="排序-去重-二分查找进行离散化"><a href="#排序-去重-二分查找进行离散化" class="headerlink" title="排序+去重+二分查找进行离散化"></a>排序+去重+二分查找进行离散化</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;当要求有序的离散化时，需要将需要离散化的坐标排序，之后去重，最后使用二分查找获得映射后的坐标。这里其实相当于将排序后的数组下标作为离散化后的值。这种离散化的好处就是保序，当计算原下标3-7之间的结果时，直接计算离散化之后find(3)-find(7) = 3 - 5之间的结果即可。</p>
+<p><img src="https://i.loli.net/2020/06/11/vIzDqYwVsuAeUaN.jpg" alt></p>
+<h3 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">//通过find函数找到原值的对应下标，即离散化之后的值
+int find(int x)
+{
+    int l = 0, r = n - 1;
+    while (l &lt; r)
+    {
+        int mid = l + r &gt;&gt; 1;
+        if (a[mid] &gt;= x) r = mid;
+        else l = mid + 1;
+    }
+    return r;
+}
+//排序+去重
+sort(pts.begin(), pts.end());
+pts.erase(unique(pts.begin(), pts.end()), pts.end());
+</code></pre>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/804/" target="_blank" rel="noopener">AW.802 区间和（简单）</a></p>
+
         </div>
         <!-- .entry-content -->
         <div class="single-reward">
@@ -353,15 +397,15 @@
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/25/C++原理与使用技巧/" rel="prev">
+            <a href="/2020/07/14/Trie树/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/30/JTwzA4QFtGfs5ed.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/30/JTwzA4QFtGfs5ed.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/kU4ox7WGnaqJ6YS.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/07/17/kU4ox7WGnaqJ6YS.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                C++原理与使用技巧</h3>
+                Trie树</h3>
                 <hr>
               </div>
             </a>
@@ -371,15 +415,15 @@
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/18/从《广场协议》看近代日本经济/" rel="next">
+            <a href="/2020/07/11/树状数组/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/18/ZGIg2YCMFNRpXzO.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/18/ZGIg2YCMFNRpXzO.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/d2NyAqDnKsk6jIY.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/07/17/d2NyAqDnKsk6jIY.jpg">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                从《广场协议》看近代日本经济</h3>
+                树状数组</h3>
                 <hr>
               </div>
             </a>

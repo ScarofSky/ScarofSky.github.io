@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">DFS | 天の痕的博客</title>
+  <title itemprop="name">有向图的强联通分量 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -307,6 +307,30 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
 <div class="pattern-center-blank"></div>
 
+  <div class="pattern-center single-center">
+    <!-- 有配图默认渲染第一张 -->
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/07/17/N9XS6GObA7mMlyt.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/N9XS6GObA7mMlyt.jpg">
+    </div>
+    <header class="pattern-header single-header">
+      <h1 class="entry-title">
+      有向图的强联通分量</h1>
+      <p class="entry-census">
+        <span>
+          <a href="https://scarofsky.github.io">
+            <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.1/img/custom/avatar.jpg">
+          </a>
+        </span>
+        <span>
+          <a href="https://scarofsky.github.io">天の痕</a>
+        </span>
+        <span class="bull">
+        ·</span>
+        2020-7-14<span class="bull">
+        ·</span>
+      <span id="busuanzi_value_page_pv"></span>次阅读</p>
+    </header>
+  </div>
+
 <div id="content" class="site-content">
   <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
@@ -314,42 +338,47 @@
         <div class="toc"></div>
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
-          <header class="entry-header">
-            <h1 class="entry-title">DFS</h1>
-            <p class="entry-census">天の痕&nbsp;·&nbsp;2020-6-15&nbsp;·&nbsp;<span id="busuanzi_value_page_pv"></span>次阅读</p></p>
-
-            <hr>
-          </header>
-        
         <div class="entry-content">
-          <h1 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h1><h2 id="DFS的多种实现方法"><a href="#DFS的多种实现方法" class="headerlink" title="DFS的多种实现方法"></a>DFS的多种实现方法</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>通过程序调用栈自动实现DFS过程。</p>
-<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">int dx[] = {0, -1, 0, 1}, dy[] = {1, 0, -1, 0};
-int dis = 0;
-
-while (q.size())
+          <h1 id="有向图的强联通分量"><a href="#有向图的强联通分量" class="headerlink" title="有向图的强联通分量"></a>有向图的强联通分量</h1><h2 id="Tarjan算法"><a href="#Tarjan算法" class="headerlink" title="Tarjan算法"></a>Tarjan算法</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>Tarjan算法通过对于有向图的dfs，将图看成一颗树的形式，并且把树中的边分为四类：</p>
+<ol>
+<li>树枝边：树中从a到b在dfs中相邻的边。</li>
+<li>前向边：树中在dfs过程中，从祖先某个节点连接到未来某个节点的边。其中树枝边是前向边的特例。</li>
+<li>后向边：从当前dfs遍历的节点连接回dfs路径上某个点的边。</li>
+<li>横插边：从当前dfs遍历的节点连接回某个祖先节点的边。</li>
+</ol>
+<p>在遍历的过程中，用dfn数组记录第一次遍历到时的时间戳，用low数组记录<strong>当前节点可以走到的最早的祖先节点的时间戳</strong>，这样如果dfn[u] == low[u]表示当前节点是遍历的当前强联通分量的最早的节点，因此将栈中记录的所有点进行回溯，放到同一个联通分量中。</p>
+<p>一般来说Tarjan算法求完强联通分量之后，都会进行缩点操作，然后进行拓扑图上的拓扑顺序的遍历。当求完所有强联通分量之后，scc_cnt递减的顺序就是当前拓扑图的拓扑遍历顺序，不用再写拓扑排序进行遍历。</p>
+<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">void tarjan(int u)
 {
-    int len = q.size();
-    for (int i = 0; i &lt; len; i ++ )
+    dfn[u] = low[u] = ++ timestamp;
+
+      stk[ ++ top ] = u, in_stk[u] = true;
+
+    for (int i = h[u]; ~i; i = ne[i])
     {
-        auto t = q.front();
-        int x = t.first, y = t.second;
-        q.pop();
-        //如果是这里标记，队列里面有大量相同元素，虽然不影响最终得到正确结果，但是效率很低
-        //A[x][y] = -1;
-        for (int i = 0; i &lt; 4; i ++ )
+        int j = e[i];
+        if (!dfn[j])
         {
-            int a = x + dx[i], b = y + dy[i];
-            if (a &lt; 0 || a &gt;= A.size() || b &lt; 0 || b &gt;= A[0].size()) continue;
-            if (A[a][b] == -1) continue;
-            if (A[a][b] == 1) return dis;
-            //就是这里要在入队之前将当前入队元素标记为已经遍历
-            A[a][b] = -1;
-            q.push({a, b});
+            tarjan(j);
+            low[u] = min(low[u], low[j]);
+        }
+        else if (in_stk[j]) low[u] = min(low[u], dfn[j]);
+    }
+
+    if (dfn[u] == low[u])
+    {
+        int y;
+        ++ scc_cnt;
+        do {
+            y = stk[top -- ];
+            in_stk[y] = false;
+            id[y] = scc_cnt;
+            sz[scc_cnt] ++ ;
         }
     }
-    dis ++ ;
 }
 </code></pre>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/1176/" target="_blank" rel="noopener">AW.1174 最受欢迎的牛（中等）</a></p>
 
         </div>
         <!-- .entry-content -->
@@ -381,15 +410,15 @@ while (q.size())
           
             <div class="post-nepre half previous">
           
-            <a href="/2020/06/15/高精度/" rel="prev">
+            <a href="/2020/07/14/数据库/" rel="prev">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/15/RzFIOEACj6nZ3oT.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/15/RzFIOEACj6nZ3oT.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/ajZRFkDBVPsNLdy.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/07/17/ajZRFkDBVPsNLdy.jpg">
               </div>
               <span class="label">
               Previous Post</span>
               <div class="info">
                 <h3>
-                高精度</h3>
+                数据库</h3>
                 <hr>
               </div>
             </a>
@@ -399,15 +428,15 @@ while (q.size())
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/15/BFS/" rel="next">
+            <a href="/2020/07/14/Trie树/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/15/fZCdM51Ak4cUlim.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/15/fZCdM51Ak4cUlim.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/kU4ox7WGnaqJ6YS.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/07/17/kU4ox7WGnaqJ6YS.jpg">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                BFS</h3>
+                Trie树</h3>
                 <hr>
               </div>
             </a>

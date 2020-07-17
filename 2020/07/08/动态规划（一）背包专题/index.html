@@ -525,8 +525,45 @@ int main()
 <p>第二题主要考察二进制优化</p>
 <p><a href="https://www.acwing.com/problem/content/6/" target="_blank" rel="noopener">AW.6 多重背包问题III（困难）</a></p>
 <p>第三题考察多重背包问题的单调队列优化</p>
-<h2 id="分组背包"><a href="#分组背包" class="headerlink" title="分组背包"></a>分组背包</h2><h3 id="原理-3"><a href="#原理-3" class="headerlink" title="原理"></a>原理</h3><p>分组背包问题指有很多物品组，从每组中只能挑选一个物品，求最大价值。分组背包是有依赖的背包问题的前序问题。</p>
-<h3 id="模板-3"><a href="#模板-3" class="headerlink" title="模板"></a>模板</h3><h2 id="二维费用背包"><a href="#二维费用背包" class="headerlink" title="二维费用背包"></a>二维费用背包</h2><h3 id="原理-4"><a href="#原理-4" class="headerlink" title="原理"></a>原理</h3><p>二维费用背包在一维费用背包 基础上，多一维度费用的判断，必须满足两者的费用均满足转移条件时，才可以转移。</p>
+<h2 id="分组背包"><a href="#分组背包" class="headerlink" title="分组背包"></a>分组背包</h2><h3 id="原理-3"><a href="#原理-3" class="headerlink" title="原理"></a>原理</h3><p>分组背包问题指有很多物品组，从每组中只能挑选一个物品，求最大价值。相当于每组之内物品互斥，且每组之间可以看成01背包问题。分组背包是有依赖的背包问题的前序问题。</p>
+<h3 id="模板-3"><a href="#模板-3" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 110;
+int f[N];
+int v[N][N], w[N][N];
+int s[N];
+int n, m;
+
+int main()
+{
+    cin &gt;&gt; n &gt;&gt; m;
+
+    for (int i = 1; i &lt;= n; i ++ )
+    {
+        cin &gt;&gt; s[i];
+        for (int j = 0; j &lt; s[i]; j ++ )
+            cin &gt;&gt; v[i][j] &gt;&gt; w[i][j];
+    }
+
+    //先循环物品，再循环体积，再循环组内物品
+    for (int i = 1; i &lt;= n; i ++ )
+        for (int j = m; j &gt;= 0; j -- )
+            for (int k = 0; k &lt; s[i]; k ++ )
+                if (j &gt;= v[i][k])
+                    f[j] = max(f[j], f[j - v[i][k]] + w[i][k]);
+                    //这里枚举最后一个的时候是互斥的，因为确定了体积
+
+    cout &lt;&lt; f[m] &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+<h3 id="例题-2"><a href="#例题-2" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/9/" target="_blank" rel="noopener">AW.9 分组背包问题（中等）</a></p>
+<h2 id="二维费用背包"><a href="#二维费用背包" class="headerlink" title="二维费用背包"></a>二维费用背包</h2><h3 id="原理-4"><a href="#原理-4" class="headerlink" title="原理"></a>原理</h3><p>二维费用背包在一维费用背包 基础上，多一维度费用的判断，必须满足两者的费用均满足转移条件时，才可以转移。</p>
 <h3 id="模板-4"><a href="#模板-4" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">int f[N][M];
 int v1[K], v2[K], w[K];
 
@@ -535,7 +572,7 @@ for (int i = 1; i &lt;= n; i ++ )
         for (int k = m2; j &gt;= v2[i]; j -- )
             f[j][k] = max(f[j][k], f[j - v1[i]][k - v2[i]] + w[i]);
 </code></pre>
-<h3 id="例题-2"><a href="#例题-2" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/8/" target="_blank" rel="noopener">AW.8 二维费用背包问题（中等）</a></p>
+<h3 id="例题-3"><a href="#例题-3" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/8/" target="_blank" rel="noopener">AW.8 二维费用背包问题（中等）</a></p>
 <p><a href="https://www.acwing.com/problem/content/1024/" target="_blank" rel="noopener">AW.1022 宠物小精灵之收服（简单）</a></p>
 <h2 id="混合背包"><a href="#混合背包" class="headerlink" title="混合背包"></a>混合背包</h2><h3 id="原理-5"><a href="#原理-5" class="headerlink" title="原理"></a>原理</h3><p>输入很多个物品，每个物品可能有三种情况，01物品，无限次用物品和只能取用s个物品。其实可以将01背包看成多重背包的特例，之后分开进行状态转移。甚至完全背包也是多重背包的特例，每次可以取用的物品数一定不超过m / v  + 1个。</p>
 <h3 id="模板-5"><a href="#模板-5" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">#include &lt;iostream&gt;
@@ -577,7 +614,7 @@ int main()
     return 0;
 }
 </code></pre>
-<h3 id="例题-3"><a href="#例题-3" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/7/" target="_blank" rel="noopener">AW.7 混合背包问题（中等）</a></p>
+<h3 id="例题-4"><a href="#例题-4" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/7/" target="_blank" rel="noopener">AW.7 混合背包问题（中等）</a></p>
 
         </div>
         <!-- .entry-content -->
@@ -606,9 +643,26 @@ int main()
       <div class="toc" style="background: none;"></div>
       <section class="post-squares nextprev">
         
+          
+            <div class="post-nepre half previous">
+          
+            <a href="/2020/07/11/树状数组/" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/d2NyAqDnKsk6jIY.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/07/17/d2NyAqDnKsk6jIY.jpg">
+              </div>
+              <span class="label">
+              Previous Post</span>
+              <div class="info">
+                <h3>
+                树状数组</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
         
           
-            <div class="post-nepre full next">
+            <div class="post-nepre half next">
           
             <a href="/2020/07/06/计算机网络/" rel="next">
               <div class="background">

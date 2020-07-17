@@ -841,7 +841,7 @@ public:
     }
 };
 </code></pre>
-<p><a href="https://leetcode-cn.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/" target="_blank" rel="noopener">LC.满足条件的子序列数目（中等）</a></p>
+<p><a href="https://leetcode-cn.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/" target="_blank" rel="noopener">LC.1498 满足条件的子序列数目（中等）</a></p>
 <p>周赛第三题，首先读题之后，判断题目最终所求信息和数组内元素顺序无关，这样可以考虑先排序试试。如果排序，可以得到有序序列，有序序列的特点是第一个元素最小，最后一个元素最大，且单调递增。因此可以考虑使用双指针算法来求解两数相加对于某个target和的问题。</p>
 <pre><code class="lang-c++">class Solution {
 public:
@@ -1063,6 +1063,347 @@ public:
         return cnt &gt;= k;
     }
 };
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/count-of-smaller-numbers-after-self/" target="_blank" rel="noopener">LC.315 计算右侧小于当前元素的个数（困难）</a></p>
+<p>由于没有给数据范围，假设数据可以随便在int范围之内取值的话，需要首先离散化。这里离散化时保序的，因为每次需要知道比当前值小的数有多少个，因此保序离散化之后使用树状数组可以得到答案。树状数组可以O(logn)的时间复杂度计算前缀和，将个数作为树状数的存储值。</p>
+<pre><code class="lang-c++">class Solution {
+public:
+    vector&lt;int&gt; tr;
+    int n;
+
+    int lowbit(int x)
+    {
+        return x &amp; -x;
+    }
+
+    void add(int x, int c)
+    {
+        for (int i = x; i &lt;= n; i += lowbit(i)) tr[i] += c;
+    }
+
+    int sum(int x)
+    {
+        int res = 0;
+        for (int i = x; i; i -= lowbit(i)) res += tr[i];
+        return res;
+    }
+
+    int find(int x, vector&lt;int&gt;&amp; count)
+    {
+        int l = 0, r = count.size() - 1;
+        while (l &lt; r)
+        {
+            int mid = l + r + 1 &gt;&gt; 1;
+            if (count[mid] &lt;= x) l = mid;
+            else r = mid - 1;
+        }
+
+        return l;
+    }
+    vector&lt;int&gt; countSmaller(vector&lt;int&gt;&amp; nums) {
+        vector&lt;int&gt; ans;
+        vector&lt;int&gt; count;
+        vector&lt;int&gt; temp;
+        for (int i = 0; i &lt; nums.size(); i ++ ) temp.push_back(nums[i]);
+
+        sort(nums.begin(), nums.end());
+        nums.erase(unique(nums.begin(), nums.end()), nums.end());
+
+        n = nums.size();
+        tr.resize(n + 1, 0);
+        ans.resize(temp.size(), 0);
+
+        for (int i = temp.size() - 1; i &gt;= 0; i -- )
+        {
+            int p = find(temp[i], nums);
+            ans[i] = sum(p);
+            add(p + 1, 1);
+        }
+        return ans;     
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/dungeon-game/" target="_blank" rel="noopener">LC.174 地下城游戏（困难）</a></p>
+<p>动态规划的题，但是比较不太好想的是要从公主的房间开始倒着写DP。<code>dp[i][j]</code>表示到坐标为（i,j）的房间时，骑士所需要的最小血量。如果最小血量为负数，那么至少要有1点即可。</p>
+<pre><code class="lang-c++">class Solution {
+public:
+    int calculateMinimumHP(vector&lt;vector&lt;int&gt;&gt;&amp; g) {
+        int n = g.size(), m = g[0].size();
+
+        vector&lt;vector&lt;int&gt;&gt; f(n, vector&lt;int&gt;(m, 1));
+        //初始化公主所在房间的血量
+        f[n - 1][m - 1] = max(1, 1 - g[n - 1][m - 1]);
+        //初始化最后一列的所有房间的血量，因为只能向下走，所以是确定的
+        for (int i = n - 2; i &gt;= 0; i -- )
+            f[i][m - 1] = max(1, f[i + 1][m - 1] - g[i][m - 1]);
+        //初始化最后一行的所有房间的血量，因为只能向右走，所以是确定的
+        for (int j = m - 2; j &gt;= 0; j -- )
+            f[n - 1][j] = max(1, f[n - 1][j + 1] - g[n - 1][j]);
+        //剩余房间的血量是由下方和右方需要血量的最小值决定的，但是不能是负数
+        for (int i = n - 2; i &gt;= 0; i -- )
+            for (int j = m - 2; j &gt;= 0; j -- )
+                f[i][j] = max(1, min(f[i + 1][j] - g[i][j], f[i][j + 1] - g[i][j]));
+
+        return f[0][0];
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/max-value-of-equation/" target="_blank" rel="noopener">LC.1499 满足不等式的最大值（困难）</a></p>
+<p>首先题目给出的性质x从小到大排序，要求的表达式中有绝对值符号，这样我们可以认为定义一个顺序，将绝对值符号去掉。这样就把下标相同的x和y放到一起，可以分开处理。这种方法在之前LC有题目也是这样分开处理的。在题目中限制中需要i和j的x下标之差&lt;=k，意味着当某一个下标确定的时候，另一个下标正好是大小为k的滑动窗口内的最大值时，可以求得整体的最大值。这样抽象之后，可以使用单调队列解决。</p>
+<pre><code class="lang-c++">//用x作为下标的版本
+class Solution {
+public:
+    int findMaxValueOfEquation(vector&lt;vector&lt;int&gt;&gt;&amp; points, int k) {
+        deque&lt;pair&lt;int, int&gt;&gt; q;
+        int res = INT_MIN;
+
+        for (int i = 0; i &lt; points.size(); i ++ )
+        {
+            int x = points[i][0], y = points[i][1];
+            while (q.size() &amp;&amp; x - q.front().first &gt; k) q.pop_front();
+            if (i &amp;&amp; q.size()) res = max(res, q.front().second + x + y);
+            while (q.size() &amp;&amp; y - x &gt;= q.back().second) q.pop_back();
+            q.push_back({x, y - x});
+        }
+
+        return res;
+    }
+};
+
+//用i作为下标版本
+class Solution {
+public:
+    int findMaxValueOfEquation(vector&lt;vector&lt;int&gt;&gt;&amp; points, int k) {
+        deque&lt;int&gt; q;
+        int res = INT_MIN;
+
+        for (int i = 0; i &lt; points.size(); i ++ )
+        {
+            int x = points[i][0], y = points[i][1];
+            while (q.size() &amp;&amp; x - points[q.front()][0] &gt; k) q.pop_front();
+            if (q.size()) res = max(res, x + y + points[q.front()][1] - points[q.front()][0]);
+            while (q.size() &amp;&amp; y - x &gt; points[q.back()][1] - points[q.back()][0]) q.pop_back();
+            q.push_back(i);
+        }
+
+        return res;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/count-submatrices-with-all-ones/" target="_blank" rel="noopener">LC.1504 统计全1子矩阵</a></p>
+<p>计数的问题重点在于不重不漏，找到某种方法将所有的答案统计在内。这里参考<a href="https://leetcode-cn.com/problems/maximal-rectangle/" target="_blank" rel="noopener">85题</a>的方式来枚举所有的子矩阵，即右下角元素作为矩阵的标志，枚举每次的宽度来不重复的枚举。当然这里也可以使用85题的方式用单调队列优化，得到O(n^2)的时间复杂解法。</p>
+<p>这里有点动态规划的思想，就是先需要预处理好以i,j为最下边1的最长个数，这样就变成了<a href="https://leetcode-cn.com/problems/largest-rectangle-in-histogram/" target="_blank" rel="noopener">84题</a>的问题。</p>
+<pre><code class="lang-c++">//直接解法O(n^3)
+class Solution {
+public:
+    int numSubmat(vector&lt;vector&lt;int&gt;&gt;&amp; mat) {
+        int n = mat.size(), m = mat[0].size();
+        vector&lt;vector&lt;int&gt;&gt; f(n, vector&lt;int&gt;(m, 0));
+
+        for (int i = 0; i &lt; n; i ++ )
+            for (int j = 0; j &lt; m; j ++ )
+            {
+                if (mat[i][j]) 
+                {
+                    f[i][j] = 1;
+                    if (i) f[i][j] += f[i - 1][j];
+                }
+            }
+        int res = 0;
+        for (int i = 0; i &lt; n; i ++ )
+            for (int j = 0; j &lt; m; j ++ )
+            {
+                if (f[i][j])
+                {
+                    int w = 1;
+                    int s = f[i][j];
+                    res += s;
+                    while (j &gt;= w &amp;&amp; f[i][j - w])
+                    {
+                        s = min(s, f[i][j - w]);
+                        res += s;
+                        w ++ ;
+                    }
+                }
+            }
+
+        return res;
+    }
+};
+
+//O(n^2)的单调队列优化
+class Solution {
+public:
+    int numSubmat(vector&lt;vector&lt;int&gt;&gt;&amp; mat) {
+        int n = mat.size(), m = mat[0].size();
+        vector&lt;vector&lt;int&gt;&gt; f(n, vector&lt;int&gt;(m, 0));
+
+        for (int i = 0; i &lt; n; i ++ )
+            for (int j = 0; j &lt; m; j ++ )
+            {
+                if (mat[i][j]) 
+                {
+                    f[i][j] = 1;
+                    if (i) f[i][j] += f[i - 1][j];
+                }
+            }
+        int res = 0;
+        for (int i = 0; i &lt; n; i ++ )
+        {
+            //因为每次计算当前总共个数，涉及到上一个最小位置的结果，要存储一下
+            stack&lt;pair&lt;int, int&gt;&gt; stk;
+            for (int j = 0; j &lt; m; j ++ )
+            {
+                int s = 0;
+                //单调递增栈，找左侧第一个小于当前值的位置
+                while (stk.size() &amp;&amp; f[i][j] &lt;= f[i][stk.top().first]) stk.pop();
+                if (stk.size()) 
+                {
+                    //如果栈不空则需要加上当前到上一个最小之间的结果个数
+                    s += (j - stk.top().first) * f[i][j];
+                    //同时左侧第一个更小的结果个数里的每一个，当前也需要加上才对
+                    s += stk.top().second;
+                }
+                else s += (j + 1) * f[i][j]; //如果栈空的话，说明左侧全都比当前的大，那么长度就是j + 1，且没有上一个更小的数了，不存在上边的第二项
+                stk.push({j, s});
+                res += s;
+            }
+        }
+
+        return res;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/minimum-possible-integer-after-at-most-k-adjacent-swaps-on-digits/" target="_blank" rel="noopener">LC.1505 最多K次交换相邻数位后得到的最小整数（困难）</a></p>
+<p>题目首先是贪心性质，对于一个长整数来说，在k次交换之内将可以交换到的最小的数字交换到最高位肯定构造出的数字更小。假设当前最高位不是最小数字，那么一定存在一个和当前一样的交换，将k次之内可交换的最小值交换到最高位，得到的数字严格小于当前值。另外一个贪心性质是，当有多个数字重复的时候，一定是将排位最近的一个换到第一个最节约k的次数，因此之后所能构造出来的整数有可能会更小。</p>
+<p>在实现上，可以用10个队列来存储0-9数字的出现位置，并且按照从前到后的顺序遍历得到一个序列，每次从序列头取出元素保证每次得到的都是最靠前的一个数字。另外，每次一个数字经过k次调换到最高位时，相当于将所有最高位和当前位置之间的数字向后挪一位，相当于其下标全部 + 1，可以看做是区间的增加操作，每次获取某一个数的下标偏移量时，相当于求和操作，可以利用树状数组和差分来实现，降低时间复杂度。如果直接使用差分，则求下标的时间复杂度还是O(n)在当前数据规模下不符合要求，因此要使用树状数组来加速操作。</p>
+<pre><code class="lang-c++">class Solution {
+public:
+    int n;
+    vector&lt;int&gt; tr;
+
+    int lowbit(int x)
+    {
+        return x &amp; -x;
+    }
+
+    void add(int x, int c)
+    {
+        for (int i = x; i &lt;= n; i += lowbit(i)) 
+            tr[i] += c;
+    }
+
+    int sum(int x)
+    {
+        int res = 0;
+        for (int i = x; i; i -= lowbit(i)) res += tr[i];
+        return res;
+    }
+
+    string minInteger(string num, int k) {
+        n = num.size();
+        tr.resize(n + 1, 0);
+        //用10个队列存储每一种数字出现的下标，按先后顺序存储
+        queue&lt;int&gt; q[10];
+        num = &#39; &#39; + num;
+
+        for (int i = 1; i &lt;= n; i ++ )
+        {
+            int t = num[i] - &#39;0&#39;;
+            q[t].push(i);
+        }
+
+        string ans;
+        //枚举每一位应该是什么数
+        for (int i = 1; i &lt;= n; i ++ )
+        {
+            //按顺序从队列里面取，这样先取到的是最小的数，别忘了break
+            for (int j = 0; j &lt; 10; j ++ )
+            {
+                if (!q[j].size()) continue;
+                //t是在原数组中的下标
+                int t = q[j].front();
+                //pos是t + 偏移量之后，最新的下标
+                int pos = t + sum(t);
+                //这里要判断当前最新下标和正在枚举的位置之前转换次数是否大于k
+                if (pos - i &lt;= k)
+                {
+                    ans += j + &#39;0&#39;;
+                    //差分，相当于从1到t - 1的下标全部 + 1
+                    //因为所有出队之后的数不会再次用到，并且t位置之前的数字都是按照顺序的
+                    //因此可以直接将1到t - 1都右移1，已经用过的数字没有影响
+                    add(1, 1), add(t, -1);
+                    q[j].pop();
+                    k -= pos - i;
+                    break;
+                }
+            }
+        }
+
+        return ans;
+    }
+};
+</code></pre>
+<p><a href="https://www.acwing.com/problem/content/245/" target="_blank" rel="noopener">AW.244 谜一样的牛（简答）</a></p>
+<p>树状数组 + 二分查找。树状数组存储个数的话，存储的是从1~x的所有数个数，如果一定要存储小于x的所有数个数，逻辑会麻烦一些，因此不要那么存。将查找一个数之前有x个数的位置，转换为查找当前数是第x + 1个数，就能符合上述逻辑。</p>
+<pre><code class="lang-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 100010;
+
+int tr[N];
+int a[N];
+int n;
+
+int lowbit(int x)
+{
+    return x &amp; -x;
+}
+
+void add(int x, int c)
+{
+    for (int i = x; i &lt;= n; i += lowbit(i)) tr[i] += c;
+}
+
+int sum(int x)
+{
+    int res = 0;
+    for (int i = x; i; i -= lowbit(i)) res += tr[i];
+    return res;
+}
+
+int main()
+{
+    cin &gt;&gt; n;
+    for (int i = 2; i &lt;= n; i ++ ) cin &gt;&gt; a[i];
+    //从1~i一共有多少个数
+    for (int i = 1; i &lt;= n; i ++ ) add(i, 1);
+
+    for (int i = n; i &gt;= 1; i -- )
+    {
+        //一个数之前有a[i]个数，则当前数是第a[i] + 1个
+        int k = a[i] + 1;
+        int l = 1, r = n;
+        while (l &lt; r)
+        {
+            int mid = l + r &gt;&gt; 1;
+            //如果包括自己一共有k个，则当前数就是第k个数
+            //因为找的是第一个满足k个的位置，所以要求左边界
+            if (sum(mid) &gt;= k) r = mid;
+            else l = mid + 1;
+        }
+        add(l, -1);
+        a[i] = l;
+    }
+
+    for (int i = 1; i &lt;= n; i ++ )
+        cout &lt;&lt; a[i] &lt;&lt; endl;
+
+    return 0;
+}
 </code></pre>
 
         </div>
