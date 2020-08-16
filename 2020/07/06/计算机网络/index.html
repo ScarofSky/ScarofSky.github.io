@@ -349,7 +349,7 @@
 <li>数据传输结束后，客户端的应用进程发出连接释放报文段，并停止发送数据，客户端进入FIN_WAIT_1状态，此时客户端依然可以接收服务器发送来的数据。</li>
 <li>服务器接收到FIN后，发送一个ACK给客户端，确认序号为收到的序号+1，服务器进入CLOSE_WAIT状态。客户端收到后进入FIN_WAIT_2状态。</li>
 <li>当服务器没有数据要发送时，服务器发送一个FIN报文，此时服务器进入LAST_ACK状态，等待客户端的确认</li>
-<li>客户端收到服务器的FIN报文后，给服务器发送一个ACK报文，确认序列号为收到的序号+1。此时客户端进入TIME_WAIT状态，等待2MSL（MSL：报文段最大生存时间），然后关闭连接。</li>
+<li>客户端收到服务器的FIN报文后，给服务器发送一个ACK报文，确认序列号为收到的序号+1。此时客户端进入TIME_WAIT状态，等待2MSL（MSL：报文段最大生存时间），然后关闭连接。其中MSL是任何报文在网络上存在的最长时间，超过这个时间的报文将被丢弃。等待2MSL时间主要目的是怕最后一个ACK包对方没收到，那么对方在超时后将重发第三次挥手的FIN包。</li>
 </ol>
 <p>图片理解：</p>
 <p><img src="https://i.loli.net/2020/07/08/RzkDXJysi3vYlSQ.png" alt></p>
@@ -379,7 +379,17 @@ real\_send\_window = min(rwnd, cwnd)</script><p>这里慢启动不是指报文�
 <p><img src="https://img-blog.csdnimg.cn/20190731184640178.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNDMxNDA2,size_16,color_FFFFFF,t_70" alt></p>
 <p><img src="https://img-blog.csdnimg.cn/20190731184935595.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNDMxNDA2,size_16,color_FFFFFF,t_70" alt></p>
 <p><a href="https://blog.csdn.net/qq_41431406/article/details/97926927" target="_blank" rel="noopener">CSDN.TCP拥塞控制（详解）</a></p>
-
+<h2 id="HTTP1-0-HTTP1-1-HTTP2-0的区别"><a href="#HTTP1-0-HTTP1-1-HTTP2-0的区别" class="headerlink" title="HTTP1.0/HTTP1.1/HTTP2.0的区别"></a>HTTP1.0/HTTP1.1/HTTP2.0的区别</h2><ol>
+<li>1.0和1.1的区别在于<strong>长连接</strong>的使用，1.0每次请求使用新的TCP连接，之后关闭。1.1实现单个TCP连接可以复用，但是无法并行，2.0增加了多路复用，可以并行发送HTTP请求。</li>
+<li>2.0使用二进制数据帧和流的概念，添加了二进制分帧层。1.0和1.1默认使用文本形式。二进制分帧层在发送过程中，将多个请求分成数据帧和头部帧，且拥有每一个<strong>请求的顺序号</strong>，在接收的过程中，可以进行组合，这样就可以在一个TCP连接中进行多个HTTP请求的发送。</li>
+</ol>
+<h2 id="HTTPS过程"><a href="#HTTPS过程" class="headerlink" title="HTTPS过程"></a>HTTPS过程</h2><h2 id="Cookie与Session"><a href="#Cookie与Session" class="headerlink" title="Cookie与Session"></a>Cookie与Session</h2><p>Cookie和Session都是来解决http协议中无状态的问题，可以使得当前连接状态被存储。都是用来验证客户端的身份的一种信息，但是这两者的区别主要在以下几点：</p>
+<ol>
+<li>Cookie存储在本地，Session存储在服务器上。</li>
+<li>Cookie有maxAge，Session是临时性的，当网页关闭时Session立刻消失。</li>
+</ol>
+<p><a href="https://www.cnblogs.com/l199616j/p/11195667.html" target="_blank" rel="noopener">Blog.cookie和session的详解和区别</a></p>
+<h2 id="HTTP中PUT和POST的区别"><a href="#HTTP中PUT和POST的区别" class="headerlink" title="HTTP中PUT和POST的区别"></a>HTTP中PUT和POST的区别</h2>
         </div>
         <!-- .entry-content -->
         <div class="single-reward">

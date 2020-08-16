@@ -341,20 +341,28 @@
         <div class="entry-content">
           <h1 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h1><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>双指针算法一般都可以暴力求解，但是暴力求解的时间复杂度一般为O(n^2)，通过优化使用双指针可以将其时间复杂度降低为O(n)。优化的本质是寻找i和j变化的<strong>单调性</strong>，如果某个指针在单调条件之下不可能再继续遍历，就可以省略那些遍历。</p>
 <p>有些情况下，需要先构造性质比较好的数列，之后才能应用双指针算法。</p>
+<p>双指针算法主要有2种：</p>
+<ol>
+<li>两个指针均从左端点开始，维护一个窗口。当窗口内元素满足某一性质的时候可以计算答案，如果不满足性质的时候，左侧窗口指针开始收缩，直到满足性质或者左右指针重合，之后再计算答案。这里一般维护的是<strong>个数等信息</strong>，因为需要右指针右移增大，而左指针右移减小才行。</li>
+<li>左指针从左开始，右指针从右开始。维护的窗口一般都是<strong>单调的</strong>，性质是维护<strong>两者之和</strong>，这样左指针右移后和会增大，右指针左移后和会减小。</li>
+</ol>
 <h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">for (int i = 0, j = 0; i &lt; n; i ++ )
 {
     //如果要维护集合，在这里维护即可
     while (j &lt; i &amp;&amp; check(i, j)) j ++ ;
+    //while(j &lt;= i &amp;&amp; check(i, j))可以判断当i == j时是否还有不满足性质的情况要被剔除
     //具体逻辑
 }
 </code></pre>
 <h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/description/801/" target="_blank" rel="noopener">AW.799 最长连续不重复子序列（简单）</a></p>
 <p><a href="https://www.acwing.com/problem/content/802/" target="_blank" rel="noopener">AW.800 数组元素的目标和（简单）</a></p>
 <p>两个序列上的双指针，需要考虑如何构造单调性</p>
-<p><a href="https://leetcode-cn.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/" target="_blank" rel="noopener">LC.5450 满足条件的子序列数目（中等）</a></p>
+<p><a href="https://leetcode-cn.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/" target="_blank" rel="noopener">LC.1498 满足条件的子序列数目（中等）</a></p>
 <p>周赛第三题，需要先进行排序，再考虑双指针算法</p>
 <p><a href="https://leetcode-cn.com/problems/longest-subarray-of-1s-after-deleting-one-element/" target="_blank" rel="noopener">LC.5434 删掉一个元素以后全为1的最长子数组（中等）</a></p>
-<p>简单双指针或者说滑动窗口应用</p>
+<p>简单双指针2应用</p>
+<p><a href="https://leetcode-cn.com/problems/find-a-value-of-a-mysterious-function-closest-to-target/" target="_blank" rel="noopener">LC.5467 找到最接近目标的函数值（困难）</a></p>
+<p>线段树 + 双指针，这里只需要关注双指针的写法</p>
 
         </div>
         <!-- .entry-content -->

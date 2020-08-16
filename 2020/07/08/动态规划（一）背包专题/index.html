@@ -549,7 +549,7 @@ int main()
             cin &gt;&gt; v[i][j] &gt;&gt; w[i][j];
     }
 
-    //先循环物品，再循环体积，再循环组内物品
+    //先循环物品组，再循环体积，再循环组内物品
     for (int i = 1; i &lt;= n; i ++ )
         for (int j = m; j &gt;= 0; j -- )
             for (int k = 0; k &lt; s[i]; k ++ )

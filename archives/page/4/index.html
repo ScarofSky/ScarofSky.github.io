@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">C++原理与使用技巧 | 天の痕的博客</title>
+  <title itemprop="name">archive_a | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -303,169 +303,494 @@
   </div>
 </header>
 
-      <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
-<div class="pattern-center-blank"></div>
-
-  <div class="pattern-center single-center">
-    <!-- 有配图默认渲染第一张 -->
-    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/30/JTwzA4QFtGfs5ed.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/30/JTwzA4QFtGfs5ed.jpg">
-    </div>
-    <header class="pattern-header single-header">
-      <h1 class="entry-title">
-      C++原理与使用技巧</h1>
-      <p class="entry-census">
-        <span>
-          <a href="https://scarofsky.github.io">
-            <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.1/img/custom/avatar.jpg">
-          </a>
-        </span>
-        <span>
-          <a href="https://scarofsky.github.io">天の痕</a>
-        </span>
-        <span class="bull">
-        ·</span>
-        2020-6-25<span class="bull">
-        ·</span>
-      <span id="busuanzi_value_page_pv"></span>次阅读</p>
-    </header>
-  </div>
-
+      <div class="blank" style="padding-top: 75px;">
+</div>
 <div id="content" class="site-content">
-  <div id="primary" class="content-area">
-    <main id="main" class="site-main" role="main">
-      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
-        <div class="toc"></div>
-        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
-        
-        <div class="entry-content">
-          <h1 id="C-原理与使用技巧"><a href="#C-原理与使用技巧" class="headerlink" title="C++原理与使用技巧"></a>C++原理与使用技巧</h1><h2 id="C-语法相关"><a href="#C-语法相关" class="headerlink" title="C++语法相关"></a>C++语法相关</h2><h3 id="static关键字的使用"><a href="#static关键字的使用" class="headerlink" title="static关键字的使用"></a>static关键字的使用</h3><ol>
-<li>函数体内的static作用域是当前函数，表示该变量在下次这个函数调用时，不重新分配，还是上次执行之后的值。</li>
-<li>在模块内（一个cpp文件之内）的static全局变量，可以被模块内的所有函数访问，但是模块外的其他函数无法访问。（<strong>全局静态变量</strong>）。全局和静态不同，全局变量在另一个cpp里可以使用extern来引入，而静态变量不允许被其他cpp引入。</li>
-<li>在模块内的static函数只能被当前模块的其他函数调用，外部无法调用。函数的实现使用static修饰，那么这个函数只可在本cpp内使用，不会同其他cpp中的同名函数引起冲突。</li>
-<li>类中的static成员变量属于整个类所有，对类的所有对象，调用都是同一个。</li>
-<li>类中的static成员函数属于整个类所有，函数不接受this指针，因此只能访问static成员变量。</li>
-</ol>
-<p>总结：静态的变量和函数都是将变量或者函数限定在了当前cpp文件之中，局部则是多次调用复用。类的静态表示全类共有的东西。</p>
-<h3 id="C-C-中指针和引用的区别"><a href="#C-C-中指针和引用的区别" class="headerlink" title="C/C++ 中指针和引用的区别"></a>C/C++ 中指针和引用的区别</h3><ol>
-<li>指针有自己的一块空间，而引用只是一个别名；</li>
-<li>使用sizeof看一个指针的大小是4，而引用则是被引用对象的大小；</li>
-<li>指针可以被初始化为NULL，而引用必须被初始化且必须是一个已有对象的引用；</li>
-<li>作为参数传递时，指针需要被解引用(*操作)才可以对对象进行操作，而直接对引 用的修改都会改变引用所指向的对象；</li>
-<li>可以有const指针，但是没有const引用；</li>
-<li>指针在使用中可以指向其它对象，但是引用只能是一个对象的引用，<strong>不能被改变</strong>；</li>
-<li>指针可以有多级指针（**p），而引用只有一级；</li>
-<li>指针和引用使用++运算符的意义不一样，指针是指向下一个地址，引用代表所引用对象值+1；</li>
-<li>如果返回动态内存分配的对象或者内存，必须使用指针，引用可能引起内存泄露。</li>
-</ol>
-<h3 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h3><p>C++里面的四个智能指针: auto_ptr, shared_ptr, weak_ptr, unique_ptr 其中后三个是c++11支持，并且第一个已经被11弃用。unique_ptr是多个指针不能同时指向一个对象，shared_ptr可以指向同一个。weak_ptr不会改变shared_ptr的引用计数。</p>
-<p>智能指针主要用于管理在堆上分配的内存，它将普通的指针封装为一个栈对象。当栈对象的生存周期结束后，会在析构函数中释放掉申请的内存，从而<strong>防止内存泄漏</strong>。C++ 11中最常用的智能指针类型为shared_ptr,它采用引用计数的方法，记录当前内存资源被多少个智能指针引用。该引用计数的内存在堆上分配。当新增一个时引用计数加1，当过期时引用计数减一。只有引用计数为0时，智能指针才会自动释放引用的内存资源。对shared_ptr进行初始化时不能将一个普通指针直接赋值给智能指针，因为一个是指针，一个是类。可以通过make_shared函数或者通过构造函数传入普通指针。并可以通过get函数获得普通指针。</p>
-<p>当两个对象相互使用一个shared_ptr成员变量指向对方，会造成循环引用，使引用计数失效，从而导致内存泄漏。（因为引用计数不会为0）为了解决循环引用导致的内存泄漏，引入了weak_ptr弱指针，weak_ptr的构造函数不会修改引用计数的值，从而不会对对象的内存进行管理，其类似一个普通指针，但不指向引用计数的共享内存，但是其可以检测到所管理的对象是否已经被释放，从而避免非法访问。</p>
-<p><a href="https://blog.csdn.net/c_base_jin/article/details/79440999" target="_blank" rel="noopener">c++11 weak_ptr使用</a></p>
-<h2 id="C-STL相关"><a href="#C-STL相关" class="headerlink" title="C++STL相关"></a>C++STL相关</h2><h3 id="map和set的区别以及底层实现"><a href="#map和set的区别以及底层实现" class="headerlink" title="map和set的区别以及底层实现"></a>map和set的区别以及底层实现</h3><p>map和set都是C++的关联容器，其底层实现都是<strong>红黑树</strong>（RB-Tree）。由于 map 和set所开放的各种操作接口，RB-tree 也都提供了，所以几乎所有的 map 和set的操作行为，都只是转调 RB-tree 的操作行为。</p>
-<p>map和set区别在于：</p>
-<ol>
-<li>map中的元素是key-value（关键字—值）对：关键字起到索引的作用，值则表示与索引相关联的数据；Set与之相对就是关键字的简单集合，set中每个元素只包含一个关键字。</li>
-<li>set的迭代器是const的，不允许修改元素的值；map允许修改value，但不允许修改key。其原因是因为map和set是根据关键字排序来保证其有序性的，如果允许修改key的话，那么首先需要删除该键，然后调节平衡，再插入修改后的键值，调节平衡，如此一来，严重破坏了map和set的结构，导致iterator失效，不知道应该指向改变前的位置，还是指向改变后的位置。所以STL中将set的迭代器设置成const，不允许修改迭代器的值；而map的迭代器则不允许修改key值，允许修改value值。</li>
-<li>map支持下标操作，set不支持下标操作。map可以用key做下标，map的下标运算符[ ]将关键码作为下标去执行查找，如果关键码不存在，则插入一个具有该关键码和mapped_type类型默认值的元素至map中，因此下标运算符[ ]在map应用中需要慎用，const_map不能用，只希望确定某一个关键值是否存在而不希望插入元素时也不应该使用，mapped_type类型没有默认值也不应该使用。如果find能解决需要，尽可能用find。</li>
-</ol>
-
-        </div>
-        <!-- .entry-content -->
-        <div class="single-reward">
-          <div class="reward-open">赏
-            <div class="reward-main">
-              <ul class="reward-row">
-                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/donate/AliPayQR.jpg"></li>
-                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/donate/WeChanQR.jpg"></li>
-              </ul>
+  <div id="main">
+    <header class="page-header">
+      <h1 class="cat-title">
+      归档</h1>
+      <span class="cat-des">
+        <p>
+        Archives</p>
+      </span>
+    </header>
+    <div id="main-part">
+      <article class="art">
+        <div class="art-main">
+          <div class="art-content">
+            <div id="archives">
+              <p style="text-align:right;">
+                [<span id="al_expand_collapse" style="cursor: s-resize;">
+                全部展开/收缩</span>
+              ]</p>
+              
+              
+              
+              
+              
+                
+                <h3 class="al_year">2020年</h3>
+              
+              
+                
+                <ul class="al_mon_list">
+                  <li class="al_li">
+                    <span class="al_mon" style="cursor: s-resize;">
+                      08月(<span id="post-num">
+                      3</span>
+                    篇文章)</span>
+                    <ul class="al_post_list" style="">
+              
+                      <li>
+                        <a href="/2020/08/03/C++原理/">
+                          <span style="color:#0bf;">
+                          03日22:19:08</span>
+                          C++原理
+                        </a>
+                      </li>
+                      
+                    </ul>
+                  </li>
+                </ul>
+              
+              
+              
+              
+              
+              
+                
+                <ul class="al_mon_list">
+                  <li class="al_li">
+                    <span class="al_mon" style="cursor: s-resize;">
+                      07月(<span id="post-num">
+                      3</span>
+                    篇文章)</span>
+                    <ul class="al_post_list" style="">
+              
+                      <li>
+                        <a href="/2020/07/23/博弈论/">
+                          <span style="color:#0bf;">
+                          23日20:50:01</span>
+                          博弈论
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/07/20/sprintf和sscanf/">
+                          <span style="color:#0bf;">
+                          20日12:18:08</span>
+                          sprintf和sscanf
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/07/20/链表/">
+                          <span style="color:#0bf;">
+                          20日12:18:08</span>
+                          链表
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/07/17/线段树/">
+                          <span style="color:#0bf;">
+                          17日15:20:12</span>
+                          线段树
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/07/16/二分查找/">
+                          <span style="color:#0bf;">
+                          16日21:41:30</span>
+                          二分查找
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/07/15/单调栈与单调队列/">
+                          <span style="color:#0bf;">
+                          15日22:58:03</span>
+                          单调栈与单调队列
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/07/14/数据库/">
+                          <span style="color:#0bf;">
+                          14日21:05:08</span>
+                          数据库
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/07/14/有向图的强联通分量/">
+                          <span style="color:#0bf;">
+                          14日14:44:08</span>
+                          有向图的强联通分量
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/07/14/Trie树/">
+                          <span style="color:#0bf;">
+                          14日14:41:01</span>
+                          Trie树
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/07/11/离散化/">
+                          <span style="color:#0bf;">
+                          11日21:48:11</span>
+                          离散化
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/07/11/树状数组/">
+                          <span style="color:#0bf;">
+                          11日21:48:04</span>
+                          树状数组
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/07/08/动态规划（一）背包专题/">
+                          <span style="color:#0bf;">
+                          08日15:26:40</span>
+                          动态规划（一）背包专题
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/07/06/计算机网络/">
+                          <span style="color:#0bf;">
+                          06日15:14:17</span>
+                          计算机网络
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/07/05/最短路径算法/">
+                          <span style="color:#0bf;">
+                          05日16:20:29</span>
+                          最短路径算法
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/07/01/DFS/">
+                          <span style="color:#0bf;">
+                          01日21:03:53</span>
+                          DFS
+                        </a>
+                      </li>
+                      
+                    </ul>
+                  </li>
+                </ul>
+              
+              
+              
+              
+              
+              
+                
+                <ul class="al_mon_list">
+                  <li class="al_li">
+                    <span class="al_mon" style="cursor: s-resize;">
+                      06月(<span id="post-num">
+                      3</span>
+                    篇文章)</span>
+                    <ul class="al_post_list" style="">
+              
+                      <li>
+                        <a href="/2020/06/30/操作系统/">
+                          <span style="color:#0bf;">
+                          30日15:56:08</span>
+                          操作系统
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/06/30/动态规划（二）其他DP/">
+                          <span style="color:#0bf;">
+                          30日15:30:01</span>
+                          动态规划（二）其他DP
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/06/28/最小生成树算法/">
+                          <span style="color:#0bf;">
+                          28日18:34:07</span>
+                          最小生成树算法
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/06/28/双指针/">
+                          <span style="color:#0bf;">
+                          28日14:09:29</span>
+                          双指针
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/06/27/题库题解/">
+                          <span style="color:#0bf;">
+                          27日14:56:30</span>
+                          题库题解
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/06/25/C++ STL使用技巧/">
+                          <span style="color:#0bf;">
+                          25日17:44:08</span>
+                          C++ STL使用技巧
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/06/18/从《广场协议》看近代日本经济/">
+                          <span style="color:#0bf;">
+                          18日13:24:25</span>
+                          从《广场协议》看近代日本经济
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/06/15/高精度/">
+                          <span style="color:#0bf;">
+                          15日16:20:48</span>
+                          高精度
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/06/15/BFS/">
+                          <span style="color:#0bf;">
+                          15日16:05:03</span>
+                          BFS
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/06/11/快速幂/">
+                          <span style="color:#0bf;">
+                          11日14:12:16</span>
+                          快速幂
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/06/08/KMP算法/">
+                          <span style="color:#0bf;">
+                          08日22:02:01</span>
+                          KMP算法
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/06/04/位运算/">
+                          <span style="color:#0bf;">
+                          04日14:26:01</span>
+                          位运算
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/06/04/欧几里得算法/">
+                          <span style="color:#0bf;">
+                          04日14:26:01</span>
+                          欧几里得算法
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/06/04/高级数据结构/">
+                          <span style="color:#0bf;">
+                          04日14:26:01</span>
+                          数据结构
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/06/01/生活/">
+                          <span style="color:#0bf;">
+                          01日22:16:01</span>
+                          生活
+                        </a>
+                      </li>
+                      
+              
+              
+              
+              
+              
+                      <li>
+                        <a href="/2020/06/01/读书/">
+                          <span style="color:#0bf;">
+                          01日22:16:01</span>
+                          读书笔记
+                        </a>
+                      </li>
+                      
+                    </ul>
+                  </li>
+                </ul>
+              
+              
             </div>
           </div>
         </div>
-        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
-        <footer class="post-footer">
-          <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow"><i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
-          <div class="post-tags">
-          </div>
-          <div class="post-share">
-            <div class="social-share sharehidden share-component"></div>
-            <i class="iconfont show-share icon-forward"></i>
-          </div>
-        </footer><!-- .entry-footer -->
       </article>
-      <!-- #post-## -->
-      <div class="toc" style="background: none;"></div>
-      <section class="post-squares nextprev">
-        
-          
-            <div class="post-nepre half previous">
-          
-            <a href="/2020/06/27/题库题解/" rel="prev">
-              <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/15/R6HiqNrF74yvBjh.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/15/R6HiqNrF74yvBjh.jpg">
-              </div>
-              <span class="label">
-              Previous Post</span>
-              <div class="info">
-                <h3>
-                题库题解</h3>
-                <hr>
-              </div>
-            </a>
-          </div>
-        
-        
-          
-            <div class="post-nepre half next">
-          
-            <a href="/2020/06/18/从《广场协议》看近代日本经济/" rel="next">
-              <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/18/ZGIg2YCMFNRpXzO.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/18/ZGIg2YCMFNRpXzO.jpg">
-              </div>
-              <span class="label">
-              Next Post</span>
-              <div class="info">
-                <h3>
-                从《广场协议》看近代日本经济</h3>
-                <hr>
-              </div>
-            </a>
-          </div>
-        
-      </section>
-      
-<div id="vcomments"></div>
-<script>
-  window.onload = function(){
-      var valine = new Valine();
-      valine.init({
-        el: '#vcomments',
-        appId: "Eg4LiBqPfNMfvhhF7RBt3YdV-gzGzoHsz",
-        appKey: "f5OCYpX4S5HM1oOfq90Yo91S",
-        path: window.location.pathname,
-        placeholder: "你是我一生只会遇见一次的惊喜 ..."
-      })
-  }
-</script>
-
-      <section class="author-profile">
-        <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
-          <a href="https://scarofsky.github.io" class="profile gravatar"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.1/img/custom/avatar.jpg" itemprop="image" alt="天の痕" height="70" width="70"></a>
-          <div class="meta">
-            <span class="title">Author</span>
-            <h3 itemprop="name">
-            <a href="https://scarofsky.github.io" itemprop="url" rel="author">天の痕</a>
-            </h3>
-          </div>
-        </div>
-        <hr>
-        <p><i class="iconfont icon-write"></i>庄敬日强，功不唐捐。</p>
-      </section>
-    </main><!-- #main -->
-  </div><!-- #primary -->
+    </div>
+  </div>
 </div>
-
-
 
     </div>    
     <div class="ins-search">

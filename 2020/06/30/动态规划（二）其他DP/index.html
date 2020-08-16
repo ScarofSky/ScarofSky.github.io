@@ -339,8 +339,8 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <h1 id="其他DP"><a href="#其他DP" class="headerlink" title="其他DP"></a>其他DP</h1><h2 id="区间dp"><a href="#区间dp" class="headerlink" title="区间dp"></a>区间dp</h2><p>区间DP是在区间上进行动态规划，本质是用更小区间的最优解来求更大区间的最优解。一般的模板都是这样的：</p>
-<pre><code class="lang-c++">for (int len = 2; len &lt;= n; len ++ )
+          <h1 id="其他DP"><a href="#其他DP" class="headerlink" title="其他DP"></a>其他DP</h1><h2 id="区间dp"><a href="#区间dp" class="headerlink" title="区间dp"></a>区间dp</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>区间DP是在区间上进行动态规划，本质是用更小区间的最优解来求更大区间的最优解。</p>
+<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">for (int len = 2; len &lt;= n; len ++ )
     for (int i = 1; i + len - 1 &lt;= n; i ++ )
     {
         int j = i + len - 1;
@@ -348,18 +348,58 @@
             f[i][j] = max(f[i][j], f[i][k] + f[k][j] + ****);
     }
 </code></pre>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/284/" target="_blank" rel="noopener">AW.284 石子合并（简单）</a></p>
 <h2 id="状压dp"><a href="#状压dp" class="headerlink" title="状压dp"></a>状压dp</h2><p>状压DP分为两类，一类是棋盘式（基于连通性）的模型，另一类是基于集合。</p>
-<p>  棋盘式：蒙德里安的梦想这道题，是求把N<em>M的棋盘分割成若干个1</em>2的的长方形，有多少种方案。通过将每一列看成一个状态，其中放了小块的格子为1，没放的为0，这样可以通过枚举所有的状态到状态的转移来进行计数。</p>
-<p>  基于集合：最短哈密尔顿路径，给定一张 n 个点的带权无向图，点从 0~n-1 标号，求起点 0 到终点 n-1 的最短Hamilton路径。 Hamilton路径的定义是从 0 到 n-1 不重不漏地经过每个点恰好一次。对所有点构成的集合考虑，已经走过的点为1，还没有到达过的点为0，可以确定一个n位状态state，但如果需要从一个点转移到下一个点，则还需要记录当前停在了哪一个点上。因此用f[state][j]表示到达j号点时，已经走过的状态为state的路径集合中的最小值。</p>
+<h3 id="棋盘式原理"><a href="#棋盘式原理" class="headerlink" title="棋盘式原理"></a>棋盘式原理</h3><p>蒙德里安的梦想这道题，是求把N<em>M的棋盘分割成若干个1</em>2的的长方形，有多少种方案。通过将每一列看成一个状态，其中放了小块的格子为1，没放的为0，这样可以通过枚举所有的状态到状态的转移来进行计数。</p>
+<h3 id="基于集合原理"><a href="#基于集合原理" class="headerlink" title="基于集合原理"></a>基于集合原理</h3><p>最短哈密尔顿路径，给定一张 n 个点的带权无向图，点从 0~n-1 标号，求起点 0 到终点 n-1 的最短Hamilton路径。 Hamilton路径的定义是从 0 到 n-1 不重不漏地经过每个点恰好一次。对所有点构成的集合考虑，已经走过的点为1，还没有到达过的点为0，可以确定一个n位状态state，但如果需要从一个点转移到下一个点，则还需要记录当前停在了哪一个点上。因此用<code>f[state][j]</code>表示到达j号点时，已经走过的状态为state的路径集合中的最小值。</p>
 <p>  因此可以得到状态转移方程：</p>
 <script type="math/tex; mode=display">
-f[state][j] = min(f[state][j], f[state - (1 << k)][k] + w[k][j]);</script><h2 id="LIS问题"><a href="#LIS问题" class="headerlink" title="LIS问题"></a>LIS问题</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>LIS问题有两种解法，基于动态规划定义f[i]为以i结尾的最长上升子序列的最大长度。如果基于贪心，将i之前所有上升子序列长度存储下来，则可以发现其必然是单调上升的，因此可以通过二分来优化时间复杂度为O(nlogn）。</p>
+f[state][j] = min(f[state][j], f[state - (1 << k)][k] + w[k][j]), state >> k \ \& \ 1 = 1</script><p>当然如果从终点考虑，这样的转移方程也是合法的：</p>
+<script type="math/tex; mode=display">
+f[i \ \| \ (1 << k)][k] = min(f[i \ \| \ (1 << k)][k], f[i][j] + d[j][k]), state >> k\  \& \ 1 = 0</script><h3 id="基于集合模板"><a href="#基于集合模板" class="headerlink" title="基于集合模板"></a>基于集合模板</h3><pre><code class="lang-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const long N = 21, M = 1 &lt;&lt; N;
+int n;
+
+int f[M][N];
+int d[N][N];
+
+int main()
+{
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i ++ )
+        for (int j = 0; j &lt; n; j ++ )
+            scanf(&quot;%d&quot;, &amp;d[i][j]);
+
+
+    memset(f, 0x3f, sizeof f);
+    f[1][0] = 0;
+
+    for (int i = 0; i &lt; 1 &lt;&lt; n; i ++ )
+        for (int j = 0; j &lt; n; j ++ )
+            if (i &gt;&gt; j &amp; 1)
+                for (int k = 0; k &lt; n; k ++ )
+                    //if (i &gt;&gt; k &amp; 1)
+                        //f[i][j] = min(f[i][j], f[i - (1 &lt;&lt; j)][k] + d[k][j]);
+                    if (!(i &gt;&gt; k &amp; 1))
+                        f[i | (1 &lt;&lt; k)][k] = min(f[i | (1 &lt;&lt; k)][k], f[i][j] + d[j][k]);
+
+    cout &lt;&lt; f[(1 &lt;&lt; n) - 1][n - 1] &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+<h2 id="LIS问题"><a href="#LIS问题" class="headerlink" title="LIS问题"></a>LIS问题</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>LIS问题有两种解法，基于动态规划定义f[i]为以i结尾的最长上升子序列的最大长度。如果基于贪心，将i之前所有上升子序列长度存储下来，则可以发现其必然是单调上升的，因此可以通过二分来优化时间复杂度为O(nlogn）。</p>
 <p>关于贪心解法的证明：</p>
 <ol>
 <li>首先我们发现，在求解LIS问题时，如果a b c序列，c可以接到a后边即c &gt; a，那么如果b &lt; a则c一定也可以接到b后边。因此在这种思想的指导下，我们可以存储i位置之前所有长度的上升子序列的最后一位的<strong>最小值</strong>。</li>
 <li>其次，对于上述存储方式，我们发现应该是单调递增的。因为如果长度为x的末尾的值，大于长度x + 1末尾的值，则在长度x + 1的情况下，一定存在一个长度为x的序列，其末尾值又严格小于现在x的末尾的值，由此发现不是最小值，矛盾，因此一定是严格上升的。</li>
 </ol>
-<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">//基于DP的O(n^2)解法
+<h3 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">//基于DP的O(n^2)解法
 for (int i = 1; i &lt;= n; i ++ )
 {
     f[i] = 1;
@@ -389,10 +429,10 @@ for (int i = 0; i &lt; n; i ++ )
 
 cout &lt;&lt; len &lt;&lt; endl;
 </code></pre>
-<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://leetcode-cn.com/problems/maximum-length-of-repeated-subarray/" target="_blank" rel="noopener">LC.718 最长重复子数组（中等）</a></p>
+<h3 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h3><p><a href="https://leetcode-cn.com/problems/maximum-length-of-repeated-subarray/" target="_blank" rel="noopener">LC.718 最长重复子数组（中等）</a></p>
 <p>LIS + LCS的混合定义，和下边的LCS问题一起参考</p>
-<h2 id="LCS问题"><a href="#LCS问题" class="headerlink" title="LCS问题"></a>LCS问题</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>一般两个序列的匹配问题可以考虑是不是LCS问题。这里<code>f[i][j]</code>的定义是匹配到A序列的第i个字符和B序列的第j个字符位置时，最长公共子序列的长度。如此定义不需要考虑是否当前最后一位被选择，因为如果最后一位字符两个序列不相同，则最长就是再之前的匹配结果<code>f[i - 1][j]</code>和<code>f[i][j - 1]</code>中的最大值。这里没有连续性的要求。</p>
-<h3 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">//下方例题1
+<h2 id="LCS问题"><a href="#LCS问题" class="headerlink" title="LCS问题"></a>LCS问题</h2><h3 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h3><p>一般两个序列的匹配问题可以考虑是不是LCS问题。这里<code>f[i][j]</code>的定义是匹配到A序列的第i个字符和B序列的第j个字符位置时，最长公共子序列的长度。如此定义不需要考虑是否当前最后一位被选择，因为如果最后一位字符两个序列不相同，则最长就是再之前的匹配结果<code>f[i - 1][j]</code>和<code>f[i][j - 1]</code>中的最大值。这里没有连续性的要求。</p>
+<h3 id="模板-2"><a href="#模板-2" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">//下方例题1
 #include &lt;iostream&gt;
 #include &lt;cstring&gt;
 
@@ -441,7 +481,7 @@ public:
     }
 };
 </code></pre>
-<h3 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/description/899/" target="_blank" rel="noopener">AW.899 最长公共子序列（简单）</a></p>
+<h3 id="例题-2"><a href="#例题-2" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/description/899/" target="_blank" rel="noopener">AW.899 最长公共子序列（简单）</a></p>
 <p><a href="https://leetcode-cn.com/problems/max-dot-product-of-two-subsequences/" target="_blank" rel="noopener">LC.1458 两个子序列的最大点积（困难）</a></p>
 
         </div>

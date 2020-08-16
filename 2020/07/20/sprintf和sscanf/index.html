@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">天の痕的博客</title>
+  <title itemprop="name">sprintf和sscanf | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -303,463 +303,202 @@
   </div>
 </header>
 
-      <div class="blank" style="padding-top: 0px;"></div>
+      <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+  <div class="pattern-center single-center">
+    <!-- 有配图默认渲染第一张 -->
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/08/16/BElNxnMeh5Ofp9I.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/16/BElNxnMeh5Ofp9I.jpg">
+    </div>
+    <header class="pattern-header single-header">
+      <h1 class="entry-title">
+      sprintf和sscanf</h1>
+      <p class="entry-census">
+        <span>
+          <a href="https://scarofsky.github.io">
+            <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.1/img/custom/avatar.jpg">
+          </a>
+        </span>
+        <span>
+          <a href="https://scarofsky.github.io">天の痕</a>
+        </span>
+        <span class="bull">
+        ·</span>
+        2020-7-20<span class="bull">
+        ·</span>
+      <span id="busuanzi_value_page_pv"></span>次阅读</p>
+    </header>
+  </div>
+
 <div id="content" class="site-content">
-  
-  <div class="notice" style="margin-top:60px">
-    <i class="iconfont icon-notification">
-    </i>
-    <div class="notice-content">已经基本迁移完毕，欢迎大家来参观~</div>
-  </div>
-  
-  <div class="top-feature-row">
-  <h1 class="fes-title" style="font-family: 'Ubuntu', sans-serif;">
-  <i class="fa fa-anchor" aria-hidden="true">
-  </i>
-  START:DASH!!</h1>
-  
-  <div class="top-feature-v2">
-    <div class="the-feature square from_left_and_right">
-      <a href="https://leetcode-cn.com/u/over-lord/" target="_blank">
-        <div class="img">
-          <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/startdash/leetcode.jpg">
-        </div>
-        <div class="info">
-          <h3>Leetcode</h3>
-          <p>博主的Leetcode</p>
-        </div>
-      </a>
-    </div>
-  </div>
-  
-  <div class="top-feature-v2">
-    <div class="the-feature square from_left_and_right">
-      <a href="/theme-sakura/" target="_blank">
-        <div class="img">
-          <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/startdash/sakura.md.png">
-        </div>
-        <div class="info">
-          <h3>Sakura</h3>
-          <p>本站 hexo 主题</p>
-        </div>
-      </a>
-    </div>
-  </div>
-  
-</div>
   <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
-      <h1 class="main-title" style="font-family: 'Ubuntu', sans-serif;">
-      <i class="fa fa-envira" aria-hidden="true"></i>
-      Discovery</h1>
+      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
+        
+        <div class="entry-content">
+          <h1 id="sprintf和sscanf"><a href="#sprintf和sscanf" class="headerlink" title="sprintf和sscanf"></a>sprintf和sscanf</h1><h2 id="sprintf和sscanf-1"><a href="#sprintf和sscanf-1" class="headerlink" title="sprintf和sscanf"></a>sprintf和sscanf</h2><p>函数原型：</p>
+<pre><code class="lang-c++">int sprintf(char *str, const char *format, ...);
+int sscanf(const char *str, const char *format, ...);
+//成功返回成功匹配的和赋值的个数，如果达到文件末尾或发生错误，返回EOF
+</code></pre>
+<ul>
+<li>str：指向字符数组的指针，该数组存储了C字符串</li>
+<li>format：是一个字符串，format标签是<code>%[flags][width][.precision][length]specifier</code>形式</li>
+</ul>
+<h2 id="format字段"><a href="#format字段" class="headerlink" title="format字段"></a>format字段</h2><p>specifier举例子来说：</p>
+<ul>
+<li>%e是使用e字符的科学计数法。</li>
+<li>%E是使用E字符的科学计数法。</li>
+<li>%o是有符号八进制。</li>
+<li>%u是无符号十进制。</li>
+<li>%x是无符号十六进制。</li>
+<li>%X是无符号十六进制大写字母。</li>
+<li>%p是指针地址。</li>
+<li>%n是无输出。</li>
+<li>%%是%字符（转义）。</li>
+</ul>
+<p>flags举例子来说</p>
+<ul>
+<li>-是在给定的字段宽度内左对齐，默认是右对齐</li>
+<li>+是强制在结果之前显示加号或减号，默认只有负数有负号</li>
+<li>0是指定填充padding的数字左边放置0，而不是空格</li>
+</ul>
+<p>width举例子来说</p>
+<ul>
+<li>某个数：比如2，表示要输出的最小数目，如果输出更短，用空格补位，如果更长不会被截断</li>
+<li>*：宽度未指定。</li>
+</ul>
+<h2 id="附加参数"><a href="#附加参数" class="headerlink" title="附加参数"></a>附加参数</h2><p><strong>附加参数</strong> 表示这个函数接受一系列的指针作为附加参数，每一个指针都指向一个对象，对象类型由 format 字符串中相应的 % 标签指定，参数与 % 标签的顺序相同。</p>
+<p><a href="https://www.cnblogs.com/edver/p/8419807.html" target="_blank" rel="noopener">Blog.Edver.C语言中可变参数的用法</a></p>
+<h2 id="使用中的例子"><a href="#使用中的例子" class="headerlink" title="使用中的例子"></a>使用中的例子</h2><pre><code class="lang-c++">#include &lt;stdio.h&gt;
+
+int main()
+{
+    char in[] = &quot;hello 123 -4.50 0x3f3f3f 011&quot;;
+    char out[50];
+    char arg1[6];
+    int arg2;
+    float arg3;
+    int arg4;
+    int arg5;
+
+    //%*s表示跳过了第一个参数
+    sscanf(in, &quot;%*s %d %f %x %o&quot;, &amp;arg2, &amp;arg3, &amp;arg4, &amp;arg5);
+
+    sscanf(in, &quot;%s %d %f %x %o&quot;, arg1, &amp;arg2, &amp;arg3, &amp;arg4, &amp;arg5);
+    //%05d表示不足5位补0，%+d表示正数有+号不省略
+    sprintf(out, &quot;%s,%05d,%+f,%+d,%o\n&quot;, arg1, arg2, arg3, arg4, arg5);
+    printf(&quot;%s&quot;, out);
+
+    sprintf(out, &quot;%p,%-5d,%f,%+x,%o\n&quot;, arg1, arg2, arg3, arg4, arg5);
+    printf(&quot;%s&quot;, out);
+    return 0;
+}
+
+//输出的结果
+//hello,00123,-4.500000,+4144959,11
+//0x7fff14a2366a,123  ,-4.500000,3f3f3f,11
+</code></pre>
+
+        </div>
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/donate/AliPayQR.jpg"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/donate/WeChanQR.jpg"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+        <footer class="post-footer">
+          <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow"><i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+          <div class="post-tags">
+          </div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+          
+            <div class="post-nepre half previous">
+          
+            <a href="/2020/07/23/博弈论/" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/16/Gvz9dAnLIJQKTXZ.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/08/16/Gvz9dAnLIJQKTXZ.jpg">
+              </div>
+              <span class="label">
+              Previous Post</span>
+              <div class="info">
+                <h3>
+                博弈论</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+        
+          
+            <div class="post-nepre half next">
+          
+            <a href="/2020/07/20/链表/" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/16/vrjsHtauP16WX75.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/08/16/vrjsHtauP16WX75.jpg">
+              </div>
+              <span class="label">
+              Next Post</span>
+              <div class="info">
+                <h3>
+                链表</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
       
-  <!-- 首页默认取最最新文章集 -->
-  
-    
-<article  class="post post-list-thumb post-list-thumb-left"  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
+<div id="vcomments"></div>
+<script>
+  window.onload = function(){
+      var valine = new Valine();
+      valine.init({
+        el: '#vcomments',
+        appId: "Eg4LiBqPfNMfvhhF7RBt3YdV-gzGzoHsz",
+        appKey: "f5OCYpX4S5HM1oOfq90Yo91S",
+        path: window.location.pathname,
+        placeholder: "你是我一生只会遇见一次的惊喜 ..."
+      })
+  }
+</script>
 
-  <div class="post-thumb">
-    <a href="/2020/08/03/C++原理/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/30/JTwzA4QFtGfs5ed.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-8-3 22:08</div>
-      <a href="/2020/08/03/C++原理/" class="post-title">
-        <h3>C++原理</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>C++原理</p>
-        <div class="post-bottom">
-          <a href="/2020/08/03/C++原理/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+          <a href="https://scarofsky.github.io" class="profile gravatar"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.1/img/custom/avatar.jpg" itemprop="image" alt="天の痕" height="70" width="70"></a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+            <a href="https://scarofsky.github.io" itemprop="url" rel="author">天の痕</a>
+            </h3>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/23/博弈论/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/16/Gvz9dAnLIJQKTXZ.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-23 20:07</div>
-      <a href="/2020/07/23/博弈论/" class="post-title">
-        <h3>博弈论</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>博弈论</p>
-        <div class="post-bottom">
-          <a href="/2020/07/23/博弈论/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb post-list-thumb-left"  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/20/sprintf和sscanf/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/16/BElNxnMeh5Ofp9I.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-20 12:07</div>
-      <a href="/2020/07/20/sprintf和sscanf/" class="post-title">
-        <h3>sprintf和sscanf</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>sprintf sscanf</p>
-        <div class="post-bottom">
-          <a href="/2020/07/20/sprintf和sscanf/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/20/链表/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/16/vrjsHtauP16WX75.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-20 12:07</div>
-      <a href="/2020/07/20/链表/" class="post-title">
-        <h3>链表</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>链表</p>
-        <div class="post-bottom">
-          <a href="/2020/07/20/链表/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb post-list-thumb-left"  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/17/线段树/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/h9jEUfZqngcweu7.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-17 15:07</div>
-      <a href="/2020/07/17/线段树/" class="post-title">
-        <h3>线段树</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>线段树</p>
-        <div class="post-bottom">
-          <a href="/2020/07/17/线段树/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/16/二分查找/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/BUkJ5s7SDhxmzAI.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-16 21:07</div>
-      <a href="/2020/07/16/二分查找/" class="post-title">
-        <h3>二分查找</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>二分查找模板和常见套路</p>
-        <div class="post-bottom">
-          <a href="/2020/07/16/二分查找/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb post-list-thumb-left"  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/15/单调栈与单调队列/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dptoeG2n78wNqS1.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-15 22:07</div>
-      <a href="/2020/07/15/单调栈与单调队列/" class="post-title">
-        <h3>单调栈与单调队列</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>单调栈和单调队列总结</p>
-        <div class="post-bottom">
-          <a href="/2020/07/15/单调栈与单调队列/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/14/数据库/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/ajZRFkDBVPsNLdy.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-14 21:07</div>
-      <a href="/2020/07/14/数据库/" class="post-title">
-        <h3>数据库</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>数据库知识</p>
-        <div class="post-bottom">
-          <a href="/2020/07/14/数据库/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb post-list-thumb-left"  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/14/有向图的强联通分量/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/N9XS6GObA7mMlyt.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-14 14:07</div>
-      <a href="/2020/07/14/有向图的强联通分量/" class="post-title">
-        <h3>有向图的强联通分量</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>Tarjan算法求有向图的强联通分量</p>
-        <div class="post-bottom">
-          <a href="/2020/07/14/有向图的强联通分量/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/14/Trie树/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/kU4ox7WGnaqJ6YS.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-14 14:07</div>
-      <a href="/2020/07/14/Trie树/" class="post-title">
-        <h3>Trie树</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>Trie树</p>
-        <div class="post-bottom">
-          <a href="/2020/07/14/Trie树/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-
-
-    </main>
-      <!-- 首页默认取最最新文章集 -->
-    <!-- 
-      <nav class="navigator">
-        
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-right"></i></a>
-      </nav>
-     -->
-  </div>
-  
-    <div id="pagination"><a href="/page/2/" class="">Previous</a></div>
-  
+        <hr>
+        <p><i class="iconfont icon-write"></i>庄敬日强，功不唐捐。</p>
+      </section>
+    </main><!-- #main -->
+  </div><!-- #primary -->
 </div>
+
+
 
     </div>    
     <div class="ins-search">

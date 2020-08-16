@@ -681,7 +681,7 @@ false, & otherwise\\
 \right. \\
 otherwise = \left\{
 \begin{array}
-f[i - 1][j]\ or\ f[i][j - 2],& matches(s[i], p[j - 1)\\
+f[i - 1][j]\ or\ f[i][j - 2],& matches(s[i], p[j - 1])\\
 f[i][j - 2], & otherwise\\
 \end{array}
 \right.\\
@@ -689,39 +689,33 @@ f[i][j - 2], & otherwise\\
 \right.</script><pre><code class="lang-c++">class Solution {
 public:
     bool isMatch(string s, string p) {
+        // 将s与p加上一个空格来对齐下标和个数
+        s = &#39; &#39; + s;
+        p = &#39; &#39; + p;
         int n = s.size(), m = p.size();
-        vector&lt;vector&lt;bool&gt;&gt; dp(n + 1, vector&lt;bool&gt;(m + 1, false));
+        vector&lt;vector&lt;bool&gt;&gt; f(n, vector&lt;bool&gt;(m, false));
 
-        dp[0][0] = true;
+        //空串和空串一定匹配
+        f[0][0] = true;
+        //空串可以匹配所有p中形如a*的前缀
+        for (int j = 1; j &lt; m; j ++ )
+            if (p[j] == &#39;*&#39;) f[0][j] = f[0][j - 2];
 
-        for (int j = 1; j &lt;= m; j ++ )
-        {
-            if (p[j - 1] == &#39;*&#39;) dp[0][j] = dp[0][j - 2];
-            else dp[0][j] = false;
-        }
-
-        for (int i = 1; i &lt;= n; i ++ )
-            for (int j = 1; j &lt;= m; j ++ )
+        for (int i = 1; i &lt; n; i ++ )
+            for (int j = 1; j &lt; m; j ++ )
             {
-                if (p[j - 1] != &#39;*&#39;)
-                {
-                    if (equal(s[i - 1], p[j - 1])) dp[i][j] = dp[i - 1][j - 1];
-                    else dp[i][j] = false;
-                }
+                   //如果不是*则需要看前一个是什么以及当前是否匹配
+                if (p[j] != &#39;*&#39;) f[i][j] = f[i - 1][j - 1] &amp;&amp; (s[i] == p[j] || p[j] == &#39;.&#39;);
                 else
                 {
-                    if (j &gt;= 2) dp[i][j] = dp[i][j - 2];
-                    if (j &gt;= 2 &amp;&amp; equal(s[i - 1], p[j - 2])) dp[i][j] = (dp[i][j] || dp[i - 1][j]);
+                    //如果是*则需要考虑p的前一个和当前是否匹配，如果匹配，有两种选择
+                    if (s[i] == p[j - 1] || p[j - 1] == &#39;.&#39;) f[i][j] = f[i - 1][j] || f[i][j - 2];
+                    //否则只能p轮空
+                    else f[i][j] = f[i][j - 2];
                 }
             }
 
-        return dp[n][m];
-    }
-
-    bool equal(char a, char b)
-    {
-        if (b == &#39;.&#39;) return true;
-        else return a == b;
+        return f[n - 1][m - 1];
     }
 };
 </code></pre>
@@ -1344,7 +1338,7 @@ public:
     }
 };
 </code></pre>
-<p><a href="https://www.acwing.com/problem/content/245/" target="_blank" rel="noopener">AW.244 谜一样的牛（简答）</a></p>
+<p><a href="https://www.acwing.com/problem/content/245/" target="_blank" rel="noopener">AW.244 谜一样的牛（简单）</a></p>
 <p>树状数组 + 二分查找。树状数组存储个数的话，存储的是从1~x的所有数个数，如果一定要存储小于x的所有数个数，逻辑会麻烦一些，因此不要那么存。将查找一个数之前有x个数的位置，转换为查找当前数是第x + 1个数，就能符合上述逻辑。</p>
 <pre><code class="lang-c++">#include &lt;iostream&gt;
 #include &lt;cstring&gt;
@@ -1405,6 +1399,631 @@ int main()
     return 0;
 }
 </code></pre>
+<p><a href="https://leetcode-cn.com/problems/nge-tou-zi-de-dian-shu-lcof/" target="_blank" rel="noopener">LC.剑指offer 60.n个骰子的点数</a></p>
+<p>这题的解决方式不难，但是对于状态定义和思考方式比较值得借鉴，并借此总结一下DP的状态思考。</p>
+<p>动态规划状态思考方式主要抓住以下几个方面，会更容易思考清楚：</p>
+<ol>
+<li>首先要举例子，将题目的情况写几个简单的例子，考虑其中能否将当前问题递归为更小问题解决的可能（最优子结构）。</li>
+<li>其次要寻找<strong>独立变量</strong>，通过独立变量，能将题目中抽象出来的某个状态确定下来。比如骰子这题就是骰子个数和总共的点数，这两个变量可以确定当前投一次骰子后的状态。（确定状态）</li>
+<li>最后要思考<strong>最后一步</strong>。这里需要和当前状态一起思考，上一个可能的状态到当前状态变化在哪？最后一步做了什么？这里说白了就是在思考<strong>状态是如何转移的</strong>。比如这题就是最后一个骰子的点数，并且根据总点数，可以得到上一次的总点数，这样就可以确信状态定义也是正确的了。（确定状态转移方程）</li>
+</ol>
+<pre><code class="lang-c++">//f[i][j]表示第i个骰子时，点数总和为j的概率
+class Solution {
+public:
+    vector&lt;double&gt; twoSum(int n) {
+        vector&lt;vector&lt;double&gt;&gt; f(n + 1, vector&lt;double&gt;(6 * n + 1));
+
+        for (int j = 1; j &lt;= 6; j ++ ) f[1][j] = 1 / 6.0;
+
+        for (int i = 2; i &lt;= n; i ++ )
+            for (int j = i; j &lt;= 6 * i; j ++ )
+            {
+                double t = 0;
+                for (int k = 1; k &lt;= 6; k ++ )
+                {
+                    if (j - k &gt;= 1) t += f[i - 1][j - k];
+                }
+                f[i][j] = t / 6.0;
+            }
+
+        vector&lt;double&gt; ans;
+        for (int j = n; j &lt;= 6 * n; j ++ )
+            ans.push_back(f[n][j]);
+
+        return ans;
+    }
+};
+
+//另一种写法，枚举方案数
+class Solution {
+public:
+    vector&lt;double&gt; twoSum(int n) {
+        /*
+        dp[i][j] 表示扔i个骰子总和为j的情况下，所有的方案数
+        i从0到n, j从n到6n
+        dp[0][n] = 1;
+        dp[i][j] += dp[i - 1][j - k], 1 &lt;= k &lt;= 6
+        */
+
+        double tot = (double)pow(6, n);
+        int dp[n + 1][6 * n + 1];
+        memset(dp, 0, sizeof dp);
+        dp[0][0] = 1;
+        for (int i = 1; i &lt;= n; i ++ )
+            for (int j = i; j &lt;= 6 * i; j ++ )
+                for (int k = 1; k &lt;= 6; k ++ )
+                {
+                    if (j &gt;= k) dp[i][j] += dp[i - 1][j - k];
+                }
+
+        vector&lt;double&gt; ans;
+        for (int i = n; i &lt;= 6 * n; i ++ )
+        {
+            double cur = dp[n][i] / tot;
+            ans.push_back(cur);
+        }
+
+        return ans;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/find-a-value-of-a-mysterious-function-closest-to-target/" target="_blank" rel="noopener">LC.5467 找到最接近目标值的函数值（困难）</a></p>
+<p>线段树 + 双指针，线段树用来快速查询区间与结果，双指针利用了区间内与的单调递减的性质，将区间的枚举变成了O(n)的操作。如果看到需要每次枚举区间，可以想一想前缀和、双指针 + 单调性、区间DP、线段树（主要是区间查找）。</p>
+<pre><code class="lang-c++">const int N = 100010;
+
+struct Node
+{
+    int l, r;
+    int t;
+}tr[N * 4];
+
+class Solution {
+public:
+    void pushup(int u)
+    {
+        tr[u].t = tr[u &lt;&lt; 1].t &amp; tr[u &lt;&lt; 1 | 1].t;
+    }
+
+    void build(int u, int l, int r, vector&lt;int&gt;&amp; arr)
+    {
+        //模板这样写不容易错，不会在else里面少一部分lr的初始化
+        tr[u] = {l, r};
+        if (l == r) tr[u].t = arr[l - 1];
+        else
+        {
+            int mid = l + r &gt;&gt; 1;
+            build(u &lt;&lt; 1, l, mid, arr), build(u &lt;&lt; 1 | 1, mid + 1, r, arr);
+            pushup(u);
+        }
+    }
+
+    int query(int u, int l, int r)
+    {
+        if (tr[u].l &gt;= l &amp;&amp; tr[u].r &lt;= r) return tr[u].t;
+
+        int mid = tr[u].l + tr[u].r &gt;&gt; 1;
+        //ret查找值一定要初始化，要一个不影响答案的值，否则下边的两个if有可能会使用随机值，尤其是第二个
+        int ret = INT_MAX;
+        //这里要明白lr是查询区间，如果l &lt; mid表示在左子节点中也有需要查找的部分，要继续递归
+        if (l &lt;= mid) ret = query(u &lt;&lt; 1, l, r);
+        //如果r &gt; mid表示右子节点有需要查找的部分，要继续递归
+        if (r &gt; mid) ret = ret &amp; query(u &lt;&lt; 1 | 1, l, r);
+        return ret;
+    }
+    int closestToTarget(vector&lt;int&gt;&amp; arr, int target) {
+        build(1, 1, arr.size(), arr);
+        int ans = 2e9;
+        //双指针模板，要熟练使用
+        for (int l = 1, r = 1; r &lt;= arr.size(); r ++ )
+        {
+            //l = r时是单个数本身，如果不满足移动l指针，则会导致左右指针错过，之后的更新答案是无意义的
+            while (l &lt; r &amp;&amp; query(1, l, r) &lt; target) l ++ ;
+            ans = min(ans, abs(target - query(1, l, r)));
+        }
+
+        return ans;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/burst-balloons/" target="_blank" rel="noopener">LC.312 戳气球（困难）</a></p>
+<p>区间DP的题，定义<code>f[i][j]</code>为i到j这个区间内，所有戳气球的方案组合下能达到的最大值。之后枚举当前区间内最后一个被戳的气球。这题可以从dfs入手，思考记忆化搜索和动态规划。</p>
+<pre><code class="lang-c++">//记忆化搜索
+class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; f;
+    int dfs(vector&lt;int&gt;&amp; nums, int l, int r)
+    {
+        if (l &gt; r) return 0;
+        if (f[l][r] != -1) return f[l][r];
+
+        for (int i = l; i &lt;= r; i ++ )
+        {
+            int left = dfs(nums, l, i - 1);
+            int right = dfs(nums, i + 1, r);
+            f[l][r] = max(f[l][r], left + right + nums[i] * nums[l - 1] * nums[r + 1]);
+        }
+
+        return f[l][r];
+    }
+
+    int maxCoins(vector&lt;int&gt;&amp; nums) {
+        int n = nums.size();
+        f = vector&lt;vector&lt;int&gt;&gt;(n + 2, vector&lt;int&gt;(n + 2, -1));
+        vector&lt;int&gt; tmp(n + 2);
+        tmp[0] = tmp[n + 1] = 1;
+        for (int i = 0; i &lt; nums.size(); i ++ ) tmp[i + 1] = nums[i];
+
+        return dfs(tmp, 1, n);
+    }
+};
+
+//动态规划解法
+class Solution {
+public:
+    int maxCoins(vector&lt;int&gt;&amp; nums) {
+        int n = nums.size();
+        vector&lt;vector&lt;int&gt;&gt; f(n + 2, vector&lt;int&gt;(n + 2, 0));
+        vector&lt;int&gt; tmp(n + 2);
+        tmp[0] = tmp[n + 1] = 1;
+
+        for (int i = 1; i &lt;= n; i ++ ) tmp[i] = nums[i - 1];
+        //这里len可以从1开始，因为之前初始化所有f为0，因此当i &gt; k - 1时答案是0
+        for (int len = 1; len &lt;= n; len ++ )
+            for (int i = 1; i + len - 1 &lt;= n; i ++ )
+            {
+                int j = i + len - 1;
+                for (int k = i; k &lt;= j; k ++ )
+                    f[i][j] = max(f[i][j], f[i][k - 1] + f[k + 1][j] + tmp[k] * tmp[i - 1] * tmp[j + 1]);    
+            }
+
+        return f[1][n];
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/reformat-date/" target="_blank" rel="noopener">LC.1507 转变日期格式（简单）</a></p>
+<p>主要考察C和C++字符串处理API的使用，要注意观察格式，转换会更容易一些。</p>
+<pre><code class="lang-c++">//C语言的sprintf 和sscanf版本
+class Solution {
+public:
+    string reformatDate(string date) {
+        int day, month = 0, year;
+        char month_s[4];
+        sscanf(date.c_str(), &quot;%d%*s %s %d&quot;, &amp;day, month_s, &amp;year);
+        string months[] = {&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;};
+        for (int i = 0; i &lt; 12; i ++ )
+            if (months[i] == month_s)
+            {
+                month = i + 1;
+                break;
+            }
+        char res[20];
+        sprintf(res, &quot;%04d-%02d-%02d&quot;, year, month, day);
+        return res;
+    }
+};
+//C++的stringstream版本
+class Solution {
+public:
+    string reformatDate(string date) {
+        string months[] = {&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;};
+        stringstream ssin(date);
+        string cur;
+        string day, month, year;
+        int cnt = 0;
+        while (ssin &gt;&gt; cur)
+        {
+            cnt ++ ;
+            if (cnt == 1){
+                while (!isdigit(cur.back())) cur.pop_back();
+                day = cur;
+            }
+            else if (cnt == 2)
+            {
+                for (int i = 0; i &lt; 12; i ++ )
+                    if (months[i] == cur)
+                    {
+                        month = to_string(i + 1);
+                        break;
+                    }
+            }
+            else year = cur;
+        }
+
+        string ans = year + &quot;-&quot;;
+        if (month.size() &lt; 2) ans += &quot;0&quot;;
+        ans += month + &quot;-&quot;;
+        if (day.size() &lt; 2) ans += &quot;0&quot;;
+        ans += day;
+
+        return ans;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/range-sum-of-sorted-subarray-sums/" target="_blank" rel="noopener">LC.1508 子数组和排序后的区间和（中等）</a></p>
+<p>这道题的正解可以做到O(nlogM)，M是所有元素区间和的和。方法是使用前缀和 + 双指针 + 二分查找。</p>
+<p>首先可以看到这题数组中的所有数都是正整数，这意味着区间和是单调递增的。当区间和是单调递增的时候，我们可以用双指针算法来计算当前区间和的和，通过公式可以转换为区间和的前缀和，同时可以统计所有区间和小于某个x的和的个数，可以通过个数来找到第k个区间和。</p>
+<p>计算区间和的区间和可以通过如下公式推导：</p>
+<script type="math/tex; mode=display">
+(s[i] - s[j]) + (s[i] - s[j + 1]) + ... + (s[i] - s[i - 1])\\
+= s[i] * (i - j) - (s[j] + s[j + 1] + ... + s[i - 1])\\
+= s[i] * (i - j) - (ss[i - 1] - s[j - 1]), j >= 1</script><pre><code class="lang-c++">typedef long long LL;
+typedef pair&lt;int, LL&gt; PIL;
+class Solution {
+public:
+    int n;
+    vector&lt;int&gt; s, ss;
+
+    int mod = 1e9 + 7;
+    PIL get(LL mid)
+    {
+        int cnt = 0;
+        LL sum = 0;
+        for (int i = 1, j = 0; i &lt;= n; i ++ )
+        {
+            while (j &lt; i &amp;&amp; s[i] - s[j] &gt; mid) j ++ ;
+            cnt += i - j;
+            sum += s[i] * (i - j) - ss[i - 1];
+            if (j) sum += ss[j - 1];
+        }
+        return {cnt, sum};
+    }
+
+    LL f(int x)
+    {
+        LL l = 0, r = ss.back();
+        while (l &lt; r)
+        {
+            LL mid = l + r &gt;&gt; 1;
+            //t.first表示查找到的个数，也就是新数列中该数的位置。
+            auto t = get(mid);
+            if (t.first &gt;= x) r = mid;
+            else l = mid + 1;
+        }
+        auto t = get(l);
+        //t.second通过双指针计算出来的是所有 &lt;=mid 的区间和之和，如果有相同值，都会被计算进去
+        //由于t.first可能不是连续的，比如第k - 1的位置计算出的t.first &lt; x，而k位置计算出来的t.first &gt; x，最终二分是有结果，但是t.first并不是正好要查找的x位置，所以要减去所有重复元素的重复计算，要找最小的满足值
+        LL v = t.second;
+        v = v - (t.first - x) * l;
+
+        return v;
+    }
+
+    int rangeSum(vector&lt;int&gt;&amp; nums, int _n, int left, int right) {
+        n = _n;
+        s.resize(n + 1), ss.resize(n + 1);
+        //计算区间的前缀和，以及前缀和的前缀和
+        for (int i = 1; i &lt;= n; i ++ )
+        {
+            s[i] = s[i - 1] + nums[i - 1];
+            ss[i] = ss[i - 1] + s[i];
+        }
+        //通过前缀和思想，可以将答案等同于新数列中1~right的和减去1~left - 1的和
+        //这样不用写两次二分，代码重用，问题归一化
+        LL ans = f(right) - f(left - 1);
+        int ret = ans % mod;
+        return ret;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/unique-binary-search-trees-ii/" target="_blank" rel="noopener">LC.95 不同的二叉搜索树（中等）</a></p>
+<p>递归的建树，判断空子树的情况，每次新建root节点。</p>
+<pre><code class="lang-c++">/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector&lt;TreeNode*&gt; generateTrees(int n) {
+        if (n == 0) return vector&lt;TreeNode*&gt;{};
+        return build(1, n);
+    }
+
+    vector&lt;TreeNode*&gt; build(int l, int r)
+    {
+        vector&lt;TreeNode*&gt; ans;
+        //放一个空指针，省掉了下方的一些讨论
+        if (l &gt; r) 
+        {
+            ans.push_back(nullptr);
+            return ans;
+        }
+        else
+        {
+            for (int i = l; i &lt;= r; i ++ )
+            {
+                auto left = build(l, i - 1);
+                auto right = build(i + 1, r);
+                for (int j = 0; j &lt; left.size(); j ++ )
+                    for (int k = 0; k &lt; right.size(); k ++ )
+                    {
+                        TreeNode* root = new TreeNode(i);
+                        root -&gt;left = left[j], root -&gt; right = right[k];
+                        ans.push_back(root);
+                    }
+            }
+            return ans;
+        }
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/" target="_blank" rel="noopener">LC.剑指offer11.旋转数组的最小值（简单）</a></p>
+<p>这个题二分的时候数组mid的值有可能和左右两边的边界相等，导致无法判断是收缩左边界还是右边界。这里可以在无法判断的时候有边界-1，这样就可以缓慢缩小范围。</p>
+<pre><code class="lang-c++">class Solution {
+public:
+    int minArray(vector&lt;int&gt;&amp; numbers) {
+        int n = numbers.size();
+        int l = 0, r = n - 1;
+        while (l &lt; r)
+        {
+            int mid = l + r &gt;&gt; 1;
+            if (numbers[mid] &lt; numbers[r]) r = mid;
+            else if (numbers[mid] &gt; numbers[r]) l = mid + 1;
+            else r = r - 1;
+        }
+
+        return numbers[r];
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/split-array-largest-sum/" target="_blank" rel="noopener">LC.410 分割数组的最大值（困难）</a></p>
+<p>有两种方法，动态规划和二分。</p>
+<p>动态规划中<code>f[i][j]</code>定义为前i个数字分为j组时最大和的最小值。假设原来是min(max(a1,b1), max(a2, b2), max(a3, b3))，现在要求的是min(max(a1, b1, c), max(a2, b2, c), max(a3, b3, c))，这时如果c &lt; min(max(a1,b1), max(a2, b2), max(a3, b3))，那么现在的和不变，还是之前的和，如果c &gt;= min(max(a1,b1), max(a2, b2), max(a3, b3))，那么最小的那个max肯定被更新了，并且所有小于c的max项都变成了c，这样最小值就是c了。因此在求min的时候，新的min(max(a1, b1, c), max(a2, b2, c), max(a3, b3, c)) = min(min(max(a1,b1), max(a2, b2), max(a3, b3)),c)。</p>
+<p>求极小化极大的问题，可以使用二分。通过贪心直接可以统计是不是分成m份可以使得有一种方法，所有的和都小于某一个值x。如果能够验证可以找到这种方法，那么比x大的值都可以找到分割方法，因此右边界收缩，否则左边界收缩。</p>
+<p><a href="https://leetcode-cn.com/problems/split-array-largest-sum/solution/fen-ge-shu-zu-de-zui-da-zhi-by-leetcode-solution/" target="_blank" rel="noopener">题解</a></p>
+<pre><code class="lang-c++">//动态规划
+typedef long long LL;
+class Solution {
+public:
+    int splitArray(vector&lt;int&gt;&amp; nums, int m) {
+        int n = nums.size();
+        vector&lt;LL&gt; sum(n + 1, 0);
+        for (int i = 1; i &lt;= n; i ++ ) sum[i] = sum[i - 1] + nums[i - 1];
+
+        vector&lt;vector&lt;LL&gt;&gt; f(n + 1, vector&lt;LL&gt;(m + 1, LONG_MAX));
+
+        f[0][0] = 0;
+
+        for (int i = 1; i &lt;= n; i ++ )
+            for (int j = 1; j &lt;= m; j ++ )
+            {
+                if (j &gt; i) continue;
+                for (int k = 1; i - k &gt;= j - 1; k ++ )
+                {
+                    f[i][j] = min(f[i][j],max(f[i - k][j - 1], sum[i] - sum[i - k]));
+                }
+            }
+
+        return f[n][m];
+    }
+};
+
+//二分查找
+typedef long long LL;
+class Solution {
+public:
+    bool check(vector&lt;int&gt;&amp; nums, LL x, int m)
+    {
+        LL sum = 0;
+        int cnt = 1;
+        for (int i = 0; i &lt; nums.size(); i ++ )
+        {
+            if (sum + nums[i] &gt; x)
+            {
+                cnt ++ ;
+                sum = nums[i];
+            }
+            else sum += nums[i];
+        }
+
+        return cnt &lt;= m;
+    }
+    int splitArray(vector&lt;int&gt;&amp; nums, int m) {
+        LL sum = 0;
+        LL l = 0, r;
+        for (auto i : nums) sum += i;
+        //这里l一定要取数组中最大值，否则当mid小于maxv时，统计个数会错误
+        for (LL i : nums) l = max(l, i);
+        r = sum;
+        while (l &lt; r)
+        {
+            LL mid = l + r &gt;&gt; 1;
+            if (check(nums, mid, m)) r = mid;
+            else l = mid + 1;
+        }
+
+        return l;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/xun-bao/" target="_blank" rel="noopener">LC.LCP13 寻宝（困难）</a></p>
+<p>非常难的一道题，综合了BFS、状压DP求哈密尔顿路径，需要设计好实现方式，包括如何查找下标和序号。但是写出来非常有成就感。</p>
+<pre><code class="lang-c++">const int INF = 0x3f3f3f3f / 2;
+class Solution {
+public:
+    int cnt = 0;
+    int id_cnt = 0;
+    unordered_map&lt;int, int&gt; id;
+    int n, m;
+
+    //bfs过程，求解某一个M到其他所有位置的最短距离
+    void bfs(vector&lt;string&gt;&amp; maze, vector&lt;vector&lt;int&gt;&gt;&amp; dist, int x, int y)
+    {
+        //需要存储一个当前点位置，和到当前点为止的最短距离
+        queue&lt;pair&lt;int, pair&lt;int, int&gt;&gt;&gt; q;
+        dist[x][y] = 0;
+        q.push({0, {x, y}});
+
+        while (q.size())
+        {
+            int dx[] = {0, 1, 0, -1}, dy[] = {1, 0, -1, 0};
+            auto t = q.front();
+            q.pop();
+
+            int len = t.first;
+            int xx = t.second.first, yy = t.second.second;
+            //遍历上下左右四个方向
+            for (int i = 0; i &lt; 4; i ++ )
+            {
+                int a = xx + dx[i], b = yy + dy[i];
+                if (a &lt; 0 || a &gt;= n || b &lt; 0 || b &gt;= m) continue;
+                if (maze[a][b] == &#39;#&#39;) continue;
+                //如果遍历过了就直接下一个位置，不重复遍历
+                if (dist[a][b] != INF) continue;
+                //最短距离 + 1
+                dist[a][b] = len + 1;
+                q.push({len + 1, {a, b}});
+            }
+        }
+    }
+
+    int minimalSteps(vector&lt;string&gt;&amp; maze) {
+        n = maze.size(), m = maze[0].size();
+        //这里要记录一下T的位置，因为最终答案要从最后一个M走到T，不需要再去O了
+        //因此应该是所有的遍历完全的情况，加上到T的距离之和的最短是答案
+        int fi = 0, fj = 0;
+        //因为后边要用状压DP求哈密尔顿路径，所以要记录S点在{S, M}矩阵中的编号
+        int id_s = 0;
+        //为了方便起见，将所有方格内的点编上编号，其中编号从0开始
+        //这样可以将二维坐标变成1维，并且可以还原回去
+        vector&lt;vector&lt;int&gt;&gt; g(n, vector&lt;int&gt;(m));
+        for (int i = 0; i &lt; n; i ++ )
+            for (int j = 0; j &lt; m; j ++ )
+            {
+                //编上编号
+                g[i][j] = cnt;
+                //如果是S或者M，那么要加到哈密尔顿路径中需要遍历的点的集合中
+                if (maze[i][j] == &#39;S&#39; || maze[i][j] == &#39;M&#39;)
+                {
+                    if (maze[i][j] == &#39;S&#39;) id_s = id_cnt;
+                    //用哈希表进行一个映射，从而可以用邻接矩阵中的id_cnt查找g中的编号
+                    id[id_cnt ++ ] = cnt;
+                }
+                else if (maze[i][j] == &#39;T&#39;)
+                    fi = i, fj = j;
+                cnt ++ ;
+            }
+
+        //这里是邻接矩阵，将所有{S,M}依次编号，之后方便进行状压DP求解
+        vector&lt;vector&lt;int&gt;&gt; d(id_cnt, vector&lt;int&gt;(id_cnt, INF));
+
+        //自己到自己的距离为0
+        for (int i = 0; i &lt; id_cnt; i ++ )
+            d[i][i] = 0;
+
+        for (int i = 0; i &lt; n; i ++ )
+            for (int j = 0; j &lt; m; j ++ )
+                //如果是O，则需要求O到所有{S, M}集合的距离，M -&gt; O -&gt; M的距离对需要枚举
+                if (maze[i][j] == &#39;O&#39;)
+                {
+                    vector&lt;vector&lt;int&gt;&gt; dist(n, vector&lt;int&gt;(m, INF));
+                    bfs(maze, dist, i, j);
+
+                    //枚举所有M -&gt; O -&gt; M的距离，其中每对的最小值作为哈密尔顿路径权重值
+                    for (int u = 0; u &lt; id_cnt; u ++ )
+                        for (int v = u + 1; v &lt; id_cnt; v ++ )
+                        {
+                            int p1 = id[u], p2 = id[v];
+                            //将g中的坐标还原回去，这样才能得到对应距离下标x, y
+                            int x1 = p1 / m, y1 = p1 % m;
+                            int x2 = p2 / m, y2 = p2 % m;
+
+                            d[v][u] = d[u][v] = min(d[u][v], dist[x1][y1] + dist[x2][y2]);
+                        }
+                }
+
+        //计算所有点到终点T的距离，这里T是需要特殊区别于S和M的，因为T不需要去搬石头
+        vector&lt;vector&lt;int&gt;&gt; dist_T(n, vector&lt;int&gt;(m, INF));
+        bfs(maze, dist_T, fi, fj);
+        int ans = INF;
+
+        //状压DP求解哈密尔顿路径
+        vector&lt;vector&lt;int&gt;&gt; f(1 &lt;&lt; id_cnt, vector&lt;int&gt;(id_cnt, INF));
+
+        //id_s是编号，f[i][j]表示状态为i的情况下，处于j时，所走过的最短路径
+        f[1 &lt;&lt; id_s][id_s] = 0;
+
+        //枚举所有状态
+        for (int i = 0; i &lt; 1 &lt;&lt; id_cnt; i ++ )
+            //枚举所有停靠点
+            for (int j = 0; j &lt; id_cnt; j ++ )
+                //如果当前点是被走到的
+                if (i &gt;&gt; j &amp; 1)
+                    //枚举停靠点
+                    for (int k = 0; k &lt; id_cnt; k ++ )
+                        //停靠点不能被走到
+                        if (!(i &gt;&gt; k &amp; 1))
+                            //那么当前点可以走到停靠点，状态为f[i | (1 &lt;&lt; k)][k]
+                            f[i | (1 &lt;&lt; k)][k] = min(f[i | (1 &lt;&lt; k)][k], f[i][j] + d[j][k]);
+
+        //枚举所有可以停靠的点，且状态为全部为1，即都走过一遍
+        for (int j = 0; j &lt; id_cnt; j ++ )
+        {
+            int p = id[j];
+            int x = p / m, y = p % m; 
+            //从某个停靠点走到T终点的最小值就是答案
+            ans = min(ans, f[(1 &lt;&lt; id_cnt) - 1][j] + dist_T[x][y]);
+        }
+        //如果答案太大，说明是不可达
+        //这里INF设置为 0x3f3f3f3f / 2防止溢出
+        if (ans &gt;= INF) return -1;
+        else return ans;
+    }   
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/find-two-non-overlapping-sub-arrays-each-with-target-sum/" target="_blank" rel="noopener">LC.1477 找两个和为目标值且不重叠的子数组</a></p>
+<p>这题因为数据范围中确定了所有的值都是正整数，因此和只能越来越大，有单调性，因此可以使用双指针算法进行求解。但是对于一个比较普通的情况，如果值是可正可负的，那么需要更加通解的方法，下一题就使用了这种方法。</p>
+<pre><code class="lang-c++">
+
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/remove-boxes/" target="_blank" rel="noopener">LC.546 移除盒子</a></p>
+<p>比较有特点的DP定义，三维dp。最开始的思路认为和戳气球一样，是一个区间dp，但是仔细思考之后，发现区间dp要求区间是闭合的，这样每次子问题的递归可以考虑成连续的，但是这题中每次考虑区间和子问题时，会导致中间有一部分无法使用，从而子问题无法简单递归。这里dp数组的定义为<strong>从l到r区间中，并且在r位置之后还有k个和a[r]元素相同的元素</strong>。这样每次状态转移就可以变成连续的，即：</p>
+<script type="math/tex; mode=display">
+f[l][r][k] = max(f[l][r - 1][0] + (k + 1)^2 * (k + 1)^2, max(f[l][i][k + 1] + f[i + 1][r - 1][0]),if(a[i] == a[r])), i ∈[l, r - 1];</script><p>这里有两项，第一项是将r元素和后边的k个元素一起计算然后再计算之前的元素部分；第二项就是枚举分割点位置，从l到r - 1枚举，并且只有当中间的元素和a[r]相同时才可以继承当前的k个元素的子问题，并且加上当前不继承部分的单独计算问题，即<code>f[i + 1][r - 1][0]</code>。</p>
+<p>这题的dp设计思路告诉我们，当某些区间dp无法很好表示子问题的时候，可以考虑将区间中某些性质表示为第三维度，从而更好的去确定一个状态，从而递归子状态。</p>
+<pre><code class="lang-c++">class Solution {
+public:
+    int dp[110][110][110];
+
+    int removeBoxes(vector&lt;int&gt;&amp; boxes) {
+        memset(dp, 0, sizeof dp);
+        int n = boxes.size();
+        return dfs(boxes, 0, n - 1, 0);    
+    }
+
+    int dfs(vector&lt;int&gt;&amp; boxes, int l, int r, int k)
+    {
+        if (l &gt; r) return 0;
+        if (dp[l][r][k]) return dp[l][r][k];
+
+        //加速用的，注销也可以AC
+        //当右边有连续和相同元素时，可以将问题递归为更简单的子问题
+        while (r &gt; l &amp;&amp; boxes[r] == boxes[r - 1])
+        {
+            r -- , k ++ ;
+        }
+        //先计算状态转移方程第一项
+        dp[l][r][k] = dfs(boxes, l, r - 1, 0) + (k + 1) * (k + 1);
+        for (int i = l; i &lt; r; i ++ )
+        {
+            //当前位置和r位置下元素相同的时候才计算
+            if (boxes[i] == boxes[r])
+            {
+                //取max
+                dp[l][r][k] = max(dp[l][r][k], dfs(boxes, l, i, k + 1) + dfs(boxes, i + 1, r - 1, 0));
+            }
+        }
+
+        return dp[l][r][k];
+    }
+};
+</code></pre>
 
         </div>
         <!-- .entry-content -->
@@ -1454,15 +2073,15 @@ int main()
           
             <div class="post-nepre half next">
           
-            <a href="/2020/06/25/C++原理与使用技巧/" rel="next">
+            <a href="/2020/06/25/C++ STL使用技巧/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/30/JTwzA4QFtGfs5ed.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/06/30/JTwzA4QFtGfs5ed.jpg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/16/OpG7SawVoLmCWx5.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/08/16/OpG7SawVoLmCWx5.jpg">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                C++原理与使用技巧</h3>
+                C++ STL使用技巧</h3>
                 <hr>
               </div>
             </a>

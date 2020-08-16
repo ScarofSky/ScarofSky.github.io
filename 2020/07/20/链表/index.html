@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">天の痕的博客</title>
+  <title itemprop="name">链表 | 天の痕的博客</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -303,463 +303,473 @@
   </div>
 </header>
 
-      <div class="blank" style="padding-top: 0px;"></div>
+      <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+  <div class="pattern-center single-center">
+    <!-- 有配图默认渲染第一张 -->
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/08/16/vrjsHtauP16WX75.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/16/vrjsHtauP16WX75.jpg">
+    </div>
+    <header class="pattern-header single-header">
+      <h1 class="entry-title">
+      链表</h1>
+      <p class="entry-census">
+        <span>
+          <a href="https://scarofsky.github.io">
+            <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.1/img/custom/avatar.jpg">
+          </a>
+        </span>
+        <span>
+          <a href="https://scarofsky.github.io">天の痕</a>
+        </span>
+        <span class="bull">
+        ·</span>
+        2020-7-20<span class="bull">
+        ·</span>
+      <span id="busuanzi_value_page_pv"></span>次阅读</p>
+    </header>
+  </div>
+
 <div id="content" class="site-content">
-  
-  <div class="notice" style="margin-top:60px">
-    <i class="iconfont icon-notification">
-    </i>
-    <div class="notice-content">已经基本迁移完毕，欢迎大家来参观~</div>
-  </div>
-  
-  <div class="top-feature-row">
-  <h1 class="fes-title" style="font-family: 'Ubuntu', sans-serif;">
-  <i class="fa fa-anchor" aria-hidden="true">
-  </i>
-  START:DASH!!</h1>
-  
-  <div class="top-feature-v2">
-    <div class="the-feature square from_left_and_right">
-      <a href="https://leetcode-cn.com/u/over-lord/" target="_blank">
-        <div class="img">
-          <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/startdash/leetcode.jpg">
-        </div>
-        <div class="info">
-          <h3>Leetcode</h3>
-          <p>博主的Leetcode</p>
-        </div>
-      </a>
-    </div>
-  </div>
-  
-  <div class="top-feature-v2">
-    <div class="the-feature square from_left_and_right">
-      <a href="/theme-sakura/" target="_blank">
-        <div class="img">
-          <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/startdash/sakura.md.png">
-        </div>
-        <div class="info">
-          <h3>Sakura</h3>
-          <p>本站 hexo 主题</p>
-        </div>
-      </a>
-    </div>
-  </div>
-  
-</div>
   <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
-      <h1 class="main-title" style="font-family: 'Ubuntu', sans-serif;">
-      <i class="fa fa-envira" aria-hidden="true"></i>
-      Discovery</h1>
+      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
+        
+        <div class="entry-content">
+          <h1 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h1><h2 id="链表的构建"><a href="#链表的构建" class="headerlink" title="链表的构建"></a>链表的构建</h2><p>链表主要有两种实现方式，第一种是Leetcode上的实现方式，使用new创建新节点，速度慢，使用指针操作。第二种是数组模拟链表，速度较快，但是面试中一般不会使用这种。</p>
+<h2 id="链表的基本操作"><a href="#链表的基本操作" class="headerlink" title="链表的基本操作"></a>链表的基本操作</h2><p>链表的基本操作有：在头结点之前插入节点、在头结点之后的某个节点之前插入数据、删除某个节点。</p>
+<pre><code class="lang-c++">//Leetcode的节点定义
+struct ListNode{
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+
+//删除某个节点
+class Solution {
+public:
+    ListNode* deleteNode(ListNode* head, int val) {
+        //使用有哑节点处理删除头结点的情况
+        ListNode *h = new ListNode(-1);
+        h -&gt; next = head;
+        ListNode *pre = h, *p = pre -&gt; next;
+        //使用pre节点可以减少一次遍历，直接将两个指针到应有的位置
+        while (p &amp;&amp; p -&gt; val != val) p = p -&gt; next, pre = pre -&gt; next;
+        //判断一下边界情况，如果没有要查找的值就返回
+        if (p == nullptr) return head;
+        //核心语句，将pre的下一个指向p的下一个，相当于跳过了p
+        pre -&gt; next = p -&gt; next;
+        return h -&gt; next;
+    }
+};
+
+//在链表头插入节点
+ListNode * add(ListNode *head, int x)
+{
+    ListNode *t = new ListNode(x);
+    t -&gt; next = head;
+    return t;
+}
+
+//在链表中按照大小顺序插入节点
+ListNode * addPos(ListNode* head, int x)
+{
+    //哑节点
+    ListNode *h = new ListNode(-1);
+    h -&gt; next = head;
+    ListNode *p = h;
+    //遍历到某个节点的下一个如果值还是大于当前节点，并且不为空就继续
+    while (p -&gt; next &amp;&amp; p -&gt; next -&gt; val &lt; x) p = p -&gt; next;
+    //新建一个节点，赋值
+    ListNode *t = new ListNode(x);
+    //核心语句，将p的后边插入当前新节点t，以为有哑结点，所以相当于在head之前插入也是可以的
+    t -&gt; next = p -&gt; next;
+    p -&gt; next = t;
+
+    return h -&gt; next;
+}
+
+//Acwing中使用数组模拟链表的模板
+const int N = 100010;
+//单链表定义，h = -1
+int e[N], ne[N], idx;
+int h = -1;
+//双向链表定义
+int e[N], r[N], l[N], idx;
+int head = 0, tail = 1;
+
+//单链表添加元素到链表头
+void add_to_head(int x)
+{
+    e[idx] = x, ne[idx] = h, h = idx ++ ;
+}
+//单链表删除插入时的第k + 1个元素,需要特殊判断头节点删除的情况
+void remove(int k)
+{
+    ne[k] = ne[ne[k]];
+}
+
+//双向链表初始化
+void init()
+{
+    r[0] = 1, l[1] = 0;
+    idx = 2;
+}
+
+//双向链表添加元素第k个元素右边
+void insert(int k, x)
+{
+    e[idx] = x;
+    //将idx元素左边就是第k个，右边元素是k原来右边的元素
+    l[idx] = k, r[idx] = r[k];
+    //右边元素是r[k],其向左的指针l[r[k]]是现在的idx
+    //k现在右边的是idx
+    l[r[k]] = idx, r[k] = idx ++ ;
+}
+
+//删除输入的第k个数
+void remove(int k)
+{
+    l[r[k]] = l[k];
+    r[l[k]] = r[k];
+}
+</code></pre>
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><p><a href="https://leetcode-cn.com/problems/insertion-sort-list/" target="_blank" rel="noopener">LC.147 对链表进行插入排序（中等）</a></p>
+<pre><code class="lang-c++">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+//不带哑结点的原地插入
+class Solution {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        if (!head || !head -&gt; next) return head;
+
+        ListNode* p = head -&gt; next;
+        while (p)
+        {
+            ListNode* t = p;
+            p = p -&gt; next;
+            ListNode* pre = head;
+            while (pre -&gt; next != t) pre = pre -&gt; next;
+            pre -&gt; next = t -&gt; next;
+            //要判断一下是否要插入到头节点之前
+            if (t -&gt; val &lt;= head -&gt; val)
+            {
+                t -&gt; next = head;
+                head = t;
+            }
+            //如果需要插入到头结点之后，判断当前节点的下一个值是否还是小于当前插入节点值，如果小于则还需要再向前走一个位置
+            else
+            {
+                ListNode* s = head;
+                while (s -&gt; next != p &amp;&amp; s -&gt; next -&gt; val &lt; t -&gt; val) s = s -&gt; next;
+                t -&gt; next = s -&gt; next;
+                s -&gt; next = t;
+            }
+        }
+
+        return head;
+    }
+};
+
+//带哑结点的插入，省去的判断是否是链表头的操作
+class Solution {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        if (!head || !head -&gt; next) return head;
+
+        ListNode *h = new ListNode(-1);
+        ListNode *p = head -&gt; next;
+        h -&gt; next = head;
+        head = h;
+
+        //因为有哑结点存在，所以不需要判断头结点
+        while (p)
+        {
+            ListNode *t = p;
+            p = p -&gt; next;
+            ListNode *pre = head;
+            while (pre -&gt; next != t) pre = pre -&gt; next;
+            pre -&gt; next = t -&gt; next;
+
+            ListNode *s = head;
+            while (s -&gt; next != p &amp;&amp; s -&gt; next -&gt; val &lt; t -&gt; val) s = s -&gt; next;
+            t -&gt; next = s -&gt; next;
+            s -&gt; next = t;
+        }
+
+        return head -&gt; next;
+    }
+};
+
+//直接新建链表，挨个插入，省去删除操作
+class Solution {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        if (!head || !head -&gt; next) return head;
+
+        ListNode *h = new ListNode(-1);
+        ListNode *p = head;
+        while (p)
+        {
+            ListNode *t = p;
+            p = p -&gt; next;
+
+            ListNode *s = h;
+            while (s -&gt; next &amp;&amp; s -&gt; next -&gt; val &lt; t -&gt; val) s = s -&gt; next;
+            t -&gt; next = s -&gt; next;
+            s -&gt; next = t;
+        }
+
+        return h -&gt; next;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof/" target="_blank" rel="noopener">LC.剑指offer24.反转链表（简单）</a></p>
+<p>反转链表要熟悉递归和迭代两种方式，递归写起来很优美，但是有些复杂，迭代需要更多的指针。</p>
+<pre><code class="lang-c++">//递归方式，简洁但是得稍微思考一下边界条件和每一步所做的修改顺序
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !head -&gt; next) return head;
+        ListNode *h = reverseList(head -&gt; next);
+        head -&gt; next -&gt; next = head;
+        head -&gt; next = nullptr;
+        return h;
+    }
+};
+//迭代方式（哑节点），最简单无脑的方式，新建一个链表，每次头插
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !head -&gt; next) return head;
+        ListNode *h = new ListNode(-1);
+        while (head)
+        {
+            ListNode *t = head;
+            head = head -&gt; next;
+            t -&gt; next = h -&gt; next;
+            h -&gt; next = t;
+        }
+
+        return h -&gt; next;
+    }
+};
+//迭代方式（原地修改），效率比较低，每次使用三个指针，认为第一个指针pre最开始指向nullptr
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !head -&gt; next) return head;
+
+        ListNode * pre = nullptr, *cur = head;
+        while (cur)
+        {
+            ListNode * nxt = cur -&gt; next;
+            cur -&gt; next = pre;
+            pre = cur;
+            cur = nxt;
+        }
+
+        return pre;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists-lcci/" target="_blank" rel="noopener">LC.相交链表（简单）</a></p>
+<pre><code class="lang-c++">//基础方法，将长的加到短的长度，再去判断
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if (!headA || !headB) return nullptr;
+        int lena = 0, lenb = 0;
+        ListNode *p = headA, *q = headB;
+        while (p) p = p -&gt; next, lena ++ ;
+        while (q) q = q -&gt; next, lenb ++ ;
+
+        while (lena &gt; lenb) headA = headA -&gt; next, lena --;
+        while (lena &lt; lenb) headB = headB -&gt; next, lenb --;
+
+        while (headA &amp;&amp; headA != headB) headA = headA -&gt; next, headB = headB -&gt; next;
+        return headA;
+    }
+};
+
+//双指针算法，要将空指针看做两个链表一定相交的地方，并且空指针是真实能走到可停留的位置
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if (!headA || !headB) return nullptr;
+        ListNode *a = headA, *b = headB;
+        while (a != b)
+        {
+            if (!a) a = headB;
+            else a = a -&gt; next;
+            if (!b) b = headA;
+            else b = b -&gt; next;
+        }
+
+        return a;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/middle-of-the-linked-list/" target="_blank" rel="noopener">LC.876 链表的中间节点（简单）</a></p>
+<pre><code class="lang-c++">//快慢指针经典应用
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        ListNode *fast = head, *slow = head;
+        while (fast &amp;&amp; fast -&gt; next)
+        {
+            slow = slow -&gt; next;
+            fast = fast -&gt; next -&gt; next;
+        }
+
+        return slow;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/palindrome-linked-list-lcci/" target="_blank" rel="noopener">LC.回文链表（简单）</a></p>
+<pre><code class="lang-c++">class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        ListNode *fast = head, *slow = head;
+        //快慢指针寻找链表中点
+        while (fast &amp;&amp; fast -&gt; next)
+        {
+            slow = slow -&gt; next;
+            fast = fast -&gt; next;
+            if (fast) fast = fast -&gt; next;
+        }
+
+        ListNode *r = reverse(slow);
+
+        //从两端开始依次比较，如果有一个方向的指针空了，表示两指针已经相遇
+        ListNode *l = head;
+        while (l &amp;&amp; r)
+        {
+            if (l -&gt; val != r -&gt; val) return false;
+            l = l -&gt; next, r = r -&gt; next;
+        }
+
+        return true;
+    }
+
+    //反转链表
+    ListNode *reverse(ListNode *head)
+    {
+        if (!head || !head -&gt; next) return head;
+        ListNode *h = reverse(head -&gt; next);
+        head -&gt; next -&gt; next = head;
+        head -&gt; next = nullptr;
+
+        return h;
+    }
+};
+</code></pre>
+
+        </div>
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/donate/AliPayQR.jpg"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/donate/WeChanQR.jpg"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+        <footer class="post-footer">
+          <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow"><i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+          <div class="post-tags">
+          </div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+          
+            <div class="post-nepre half previous">
+          
+            <a href="/2020/07/20/sprintf和sscanf/" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/16/BElNxnMeh5Ofp9I.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/08/16/BElNxnMeh5Ofp9I.jpg">
+              </div>
+              <span class="label">
+              Previous Post</span>
+              <div class="info">
+                <h3>
+                sprintf和sscanf</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+        
+          
+            <div class="post-nepre half next">
+          
+            <a href="/2020/07/17/线段树/" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/h9jEUfZqngcweu7.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/07/17/h9jEUfZqngcweu7.jpg">
+              </div>
+              <span class="label">
+              Next Post</span>
+              <div class="info">
+                <h3>
+                线段树</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
       
-  <!-- 首页默认取最最新文章集 -->
-  
-    
-<article  class="post post-list-thumb post-list-thumb-left"  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
+<div id="vcomments"></div>
+<script>
+  window.onload = function(){
+      var valine = new Valine();
+      valine.init({
+        el: '#vcomments',
+        appId: "Eg4LiBqPfNMfvhhF7RBt3YdV-gzGzoHsz",
+        appKey: "f5OCYpX4S5HM1oOfq90Yo91S",
+        path: window.location.pathname,
+        placeholder: "你是我一生只会遇见一次的惊喜 ..."
+      })
+  }
+</script>
 
-  <div class="post-thumb">
-    <a href="/2020/08/03/C++原理/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/30/JTwzA4QFtGfs5ed.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-8-3 22:08</div>
-      <a href="/2020/08/03/C++原理/" class="post-title">
-        <h3>C++原理</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>C++原理</p>
-        <div class="post-bottom">
-          <a href="/2020/08/03/C++原理/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+          <a href="https://scarofsky.github.io" class="profile gravatar"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.1/img/custom/avatar.jpg" itemprop="image" alt="天の痕" height="70" width="70"></a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+            <a href="https://scarofsky.github.io" itemprop="url" rel="author">天の痕</a>
+            </h3>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/23/博弈论/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/16/Gvz9dAnLIJQKTXZ.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-23 20:07</div>
-      <a href="/2020/07/23/博弈论/" class="post-title">
-        <h3>博弈论</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>博弈论</p>
-        <div class="post-bottom">
-          <a href="/2020/07/23/博弈论/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb post-list-thumb-left"  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/20/sprintf和sscanf/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/16/BElNxnMeh5Ofp9I.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-20 12:07</div>
-      <a href="/2020/07/20/sprintf和sscanf/" class="post-title">
-        <h3>sprintf和sscanf</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>sprintf sscanf</p>
-        <div class="post-bottom">
-          <a href="/2020/07/20/sprintf和sscanf/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/20/链表/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/16/vrjsHtauP16WX75.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-20 12:07</div>
-      <a href="/2020/07/20/链表/" class="post-title">
-        <h3>链表</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>链表</p>
-        <div class="post-bottom">
-          <a href="/2020/07/20/链表/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb post-list-thumb-left"  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/17/线段树/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/h9jEUfZqngcweu7.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-17 15:07</div>
-      <a href="/2020/07/17/线段树/" class="post-title">
-        <h3>线段树</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>线段树</p>
-        <div class="post-bottom">
-          <a href="/2020/07/17/线段树/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/16/二分查找/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/BUkJ5s7SDhxmzAI.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-16 21:07</div>
-      <a href="/2020/07/16/二分查找/" class="post-title">
-        <h3>二分查找</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>二分查找模板和常见套路</p>
-        <div class="post-bottom">
-          <a href="/2020/07/16/二分查找/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb post-list-thumb-left"  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/15/单调栈与单调队列/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/04/dptoeG2n78wNqS1.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-15 22:07</div>
-      <a href="/2020/07/15/单调栈与单调队列/" class="post-title">
-        <h3>单调栈与单调队列</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>单调栈和单调队列总结</p>
-        <div class="post-bottom">
-          <a href="/2020/07/15/单调栈与单调队列/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/14/数据库/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/ajZRFkDBVPsNLdy.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-14 21:07</div>
-      <a href="/2020/07/14/数据库/" class="post-title">
-        <h3>数据库</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>数据库知识</p>
-        <div class="post-bottom">
-          <a href="/2020/07/14/数据库/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb post-list-thumb-left"  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/14/有向图的强联通分量/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/N9XS6GObA7mMlyt.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-14 14:07</div>
-      <a href="/2020/07/14/有向图的强联通分量/" class="post-title">
-        <h3>有向图的强联通分量</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>Tarjan算法求有向图的强联通分量</p>
-        <div class="post-bottom">
-          <a href="/2020/07/14/有向图的强联通分量/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-    
-<article  class="post post-list-thumb" itemscope="" itemtype="https://schema.org/BlogPosting">
-
-  <div class="post-thumb">
-    <a href="/2020/07/14/Trie树/">
-      <img class="lazyload" onerror="imgError(this,3)" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/07/17/kU4ox7WGnaqJ6YS.jpg">
-    </a>
-  </div>
-  <div class="post-content-wrap">
-    <div class="post-content">
-      <div class="post-date">
-        <i class="iconfont icon-time">
-        </i>2020-7-14 14:07</div>
-      <a href="/2020/07/14/Trie树/" class="post-title">
-        <h3>Trie树</h3>
-      </a>
-      <div class="post-meta">
-        <span><i class="fa fa-tags"></i>
-        
-        </span>
-        <span>
-          <i class="iconfont icon-file"></i>
-          
-            <a href="/categories/技术/">技术</a>
-          
-        </span>
-      </div>
-      <div class="float-content">
-        <p>Trie树</p>
-        <div class="post-bottom">
-          <a href="/2020/07/14/Trie树/" class="button-normal">
-            <i class="iconfont icon-caidan"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</article>
-  
-
-
-    </main>
-      <!-- 首页默认取最最新文章集 -->
-    <!-- 
-      <nav class="navigator">
-        
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-right"></i></a>
-      </nav>
-     -->
-  </div>
-  
-    <div id="pagination"><a href="/page/2/" class="">Previous</a></div>
-  
+        <hr>
+        <p><i class="iconfont icon-write"></i>庄敬日强，功不唐捐。</p>
+      </section>
+    </main><!-- #main -->
+  </div><!-- #primary -->
 </div>
+
+
 
     </div>    
     <div class="ins-search">

@@ -371,6 +371,21 @@
 </ol>
 <p>好好看看下边的博客，里面图片比较容易理解。</p>
 <p><a href="https://www.cnblogs.com/shan-kylin/p/9543294.html" target="_blank" rel="noopener">Blog.ZhuoQiLin 数据库的四大特性以及四个隔离级别和引发的问题</a></p>
+<h2 id="B树和B-树"><a href="#B树和B-树" class="headerlink" title="B树和B+树"></a>B树和B+树</h2><h3 id="B树"><a href="#B树" class="headerlink" title="B树"></a>B树</h3><p>B树是2-3树的一种扩展，用于对数据的排序和快速查找（时间复杂度为O(logn)）。B树是一颗多路平衡查找树，并且满足以下的定义，其中m是B树的阶数：</p>
+<ol>
+<li>每个节点最多有m - 1个关键字（键值对）。</li>
+<li>根节点最少可以只有1个关键字。</li>
+<li>非根节点至少有m / 2个关键字。</li>
+<li>每个节点中的所有关键字都按照从下到大的顺序排列，每个关键字的左子树中的所有关键字都小于它，而右子树中的都大于它。</li>
+<li>所有叶子节点都位于同一层，即根节点到每个叶子节点的长度都相同。</li>
+<li>每一个节点都存有索引和数据（这点和B+树不一样，因此特别说明）。</li>
+</ol>
+<h3 id="B-树"><a href="#B-树" class="headerlink" title="B+树"></a>B+树</h3><p>相比于B树，B+树有两种类型的节点：<strong>内部节点</strong>（也称索引节点）和<strong>叶子节点</strong>。其中内部节点是不存储数据的，只存储索引，数据都存储在叶子节点。内部节点中的key都从小到大排列，左子树的key都更小，右子树都更大。叶子节点也是有序的。<strong>每个叶子节点都存有相邻叶子节点的指针</strong>，这样可以从一个叶子节点直接找到另一个叶子节点。父节点存有右孩子的第一个元组的索引。</p>
+<p>插入操作简单来说，就是如果大于等于m个了，就将中间的作为索引放到父节点，然后右边多一个。</p>
+<p>删除操作相比于B树更加容易，只需要从左右边兄弟节点结元素，并且修改父亲的索引即可，如果借不到，就合并，之后还是修改父亲索引。</p>
+<p><a href="https://segmentfault.com/a/1190000020416577" target="_blank" rel="noopener">Blog.SF 面试官问你B树和B+树，就把这篇文章丢给他</a></p>
+<h2 id="MySql常用语句"><a href="#MySql常用语句" class="headerlink" title="MySql常用语句"></a>MySql常用语句</h2><pre><code class="lang-sql">select * from mydb
+</code></pre>
 
         </div>
         <!-- .entry-content -->
