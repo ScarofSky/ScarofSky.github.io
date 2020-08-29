@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="/"/>
-  <updated>2020-08-14T05:42:58.461Z</updated>
+  <updated>2020-08-28T15:53:38.316Z</updated>
   <id>/</id>
   
   <author>
@@ -17,9 +17,49 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>2020年秋招攻略</title>
+    <link href="/2020/08/25/%E9%9A%8F%E7%AC%94/2020%E5%B9%B4%E7%A7%8B%E6%8B%9B%E6%94%BB%E7%95%A5/"/>
+    <id>/2020/08/25/随笔/2020年秋招攻略/</id>
+    <published>2020-08-25T05:24:25.000Z</published>
+    <updated>2020-08-28T15:53:38.316Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="2020年秋招攻略"><a href="#2020年秋招攻略" class="headerlink" title="2020年秋招攻略"></a>2020年秋招攻略</h1><p>2020年秋招在7月到9月之间已经进行到了最为白热化的阶段。我从2019年8月29日开始第一次刷Leetcode准备秋招为止，已经过了整整一年的时间。从一脸懵逼到现在的熟悉，很有感触。这里进行记录，如果能够帮助之后秋招的学弟学妹，就感到非常欣慰了。由于我的专业是计算机视觉（神经网络那一套东西），从2018年开始招聘形势逐年恶化，很多岗位饱和，因此竞争压力很大，没有CVPR等顶会论文很难找到像样的算法工程师职位，所以只好转开发。如果有很多论文的大佬，后边就不用看了，算法考察点和开发区别比较大。</p><h2 id="秋招流程"><a href="#秋招流程" class="headerlink" title="秋招流程"></a>秋招流程</h2><h3 id="暑期实习"><a href="#暑期实习" class="headerlink" title="暑期实习"></a>暑期实习</h3><p>在正式秋招开始之前，也就是2020年的3月到5月之间，一部分公司会开启暑期实习。通过去公司进行1-3个月的暑期实习，最终会有大概率（50%以上）发放offer。这个暑期实习不同于其他时间的实习，是公司专门为有意向来公司工作的同学提供的快捷通道，一般也要经过2-3次的面试才可以进入。</p><h3 id="提前批"><a href="#提前批" class="headerlink" title="提前批"></a>提前批</h3><p>所谓提前批，是秋招的一部分。提前批一般在秋招之前，从6月下旬开始公司会陆续开启提前批的投递和面试，一般7月中旬就结束了。提前批比较好的一点是绝大多数没有笔试，只有面试，可以减少复习的量。但是时间相对也更早，没有足够的复习时间。提前批的难度不统一，有的是大佬专享，招的是大佬；有的和正式批几乎一样，甚至更简单一点，因公司而异。</p><h3 id="春招与秋招"><a href="#春招与秋招" class="headerlink" title="春招与秋招"></a>春招与秋招</h3><p>假设我是2021年毕业的毕业生，总共可以参加的校园招聘一共有两场，分别是秋招和次年春招，也就是2020年7月到9月之间的招聘和2021年1月到3月的招聘。其中HC(head count，就是招聘名额)最多的，是2020年秋招，基本上绝大多数的人毕业之后都在这个时间段期间找到了工作，次年就可以去上班当社畜了。所谓春招，更像是秋招的补录，因此如果能在秋招找到工作，无疑是更加主动和稳妥的。但是即便没有找到，也不要慌，春招还有一些 机会，一定要把握住。</p><h2 id="秋招准备"><a href="#秋招准备" class="headerlink" title="秋招准备"></a>秋招准备</h2><h3 id="简历准备"><a href="#简历准备" class="headerlink" title="简历准备"></a>简历准备</h3><p>首先，如果没有实习经历的同学非常推荐去参加暑期实习，如果实习最终拿到了offer，那么血赚；如果没有拿到offer，也有一段大厂的实习经历，这非常重要。</p><p>这里就要说到简历的准备，一般来说简历要干净整洁，并且必要的信息一定要全面，包括自己的联系方式，邮箱（北航的同学不建议留学校邮箱，因为安全问题可能offer邮件会被屏蔽），还有获得过的学校内的奖项。因为校招很多时候看重的不是你项目经历，学校的那些项目，大家也心知肚明是什么情况，如果能够入企业法眼，那真的是万里挑一的好项目了。校招更看重的是你的基础是否牢靠，能力是否足够、值得继续进一步的培养。因此，不用担心自己简历上项目不够优秀，只要在学校中有所建树，学习足够扎实，是没有太大问题的，包括面试过程中，也不会一直问项目相关的问题，往往项目只是一个提问的出发点。当然，如果有实习经历的同学，一定要写上去，而且对于做过的事情要写的详细一点，并且烂熟于心，当面试官无论从哪个方向提问，都要能回答上才行。</p><h3 id="笔试准备"><a href="#笔试准备" class="headerlink" title="笔试准备"></a>笔试准备</h3><p>此部分ACMer可以略过，不需要看。</p><p>秋招在你投递简历之后，分为笔试和面试两部分。一般来说如果学校水平不是很差，都会给你笔试的机会，简历是可以通过的。相比于面试，笔试一般是1-2小时的编程题，2-3道。有些公司会加上单向选择题，主要考察基础知识。其中笔试主要有区分度的部分是编程，这里编程的难度高于面试中的难度，甚至有一部分会达到竞赛难度。但是不用怕，因为打过竞赛的毕竟是少数，所以只要3题中能AC一道题，就可以稳稳的拿到面试通知。亲测有效。</p><p>如果想进行学习和练习，推荐Acwing的算法提高课，以及各大OJ，一般笔试的难度是其中简单和中等的难度。</p><h3 id="面试算法题准备"><a href="#面试算法题准备" class="headerlink" title="面试算法题准备"></a>面试算法题准备</h3><p>此部分ACMer依然可以跳过，你已经是大佬了，受我一拜。</p><p>众所周知，国内互联网企业招聘喜欢在面试过程中让应聘者做一些算法题，来考察其思维能力与习惯，以及写代码的能力。从最开始只要求应聘者写简单的快速排序与二分，到现在面试中也可能出动态规划的问题，面试的难度在客观上是增加了的。因此我们也需要应对的学习并且准备一下面试时常考的算法题。我大学时数据结构与算法学的并不是非常牢固（和打比赛的ACMer相比更是差远了），因此我认为最重要的任务就是这一部分。经过一段时间的刷题，我总结出当前比较好的刷题方式和顺序：</p><ol><li>Leetcode刷200道easy和medium难度的算法题，不要碰hard难度的题，打击信心且无意义，主要是找手感，并且熟悉一些所用语言的语法，我主要是用C++，因此之后也用C++举例。如果基础较好，可以跳过此部分。</li><li>推荐去www.acwing.com报名学习算法基础课（价格200块，有时候会有优惠），将双指针、二分、快排、前缀和等较为简单的部分进行系统的学习，对动态规划和贪心问题有初步的理解，熟练编写DFS和BFS。一般来说每道题刷2遍+总结可以达到这种状态。如果不想花太多钱，也可以买《算法竞赛入门经典》来看，作者刘汝佳。</li><li>继续刷Leetcode，主要关注medium以及以上的题目，可以尝试挑战hard题目来锻炼自己思维的简洁性。对于已经做过一遍的题目，这时要仔细思考，精简代码，并且进一步理解其含义，不仅仅是AC，要尝试用多种方法求解。</li><li>面试开始前两周左右可以开始刷《剑指offer》，其实之前也可以在Leetcode上刷，但因为面试中很大概率（60%以上）会出剑指offer上的原题，因此可以在面试之前刷，突击效果会好一些。</li></ol><p>另外很推荐Acwing全家桶系列，从语法基础课、算法基础课、算法提高课到算法进阶课，如果能将这些耐心学完，基本上可以和ACMer做朋友了。我本人是学了算法基础课和算法提高课，感觉受益良多。</p><h3 id="计算机通识知识准备"><a href="#计算机通识知识准备" class="headerlink" title="计算机通识知识准备"></a>计算机通识知识准备</h3><p>除了算法题之外，我们还需要准备计算机通识知识。所谓计算机通识知识，可以认为是大学中的基础课。一般来说，大学中的《计算机网络》、《数据库》、《操作系统》这几门课中的知识，都会在面试中出现。因为我面试的岗位有C++开发工程师，所以也会出现一些关于C++语言相关的问题，当然如果是Java开发等，都会有响应的问题。</p><p>如果大学时期这些基础课你都认认真真的学习了，那么现在复习起来，更加轻松。如果没有学习，需要多预留出一部分时间，这样才更为妥当。复习的方式因人而异，但是我并不推荐拿起课本一页一页的看，一个是时间来不及，另外很少有人能够坚持下来。我推荐的学习顺序如下：</p><ol><li>上牛客网寻找面经，针对面经中的问题，一个一个的过，如果当前问题你无法清晰简洁的回答上来，那么就将其记录下来。如果能够清晰简洁的回答，但是多次出现，也需要进行记录。</li><li>对于所有记录下来的问题，分门别类的进行复习和总结。将其相关的知识和概念，总结成知识体系。</li></ol><p>以上需要多次反复复习，并且一定要注意细节问题，有些时候面试官会在细节方面深究，多问几个为什么。</p><h2 id="时间分配"><a href="#时间分配" class="headerlink" title="时间分配"></a>时间分配</h2><p>对于准备的时间分配，我大部分放在了算法的学习上，其余的放在了通识知识的准备。这个因人而异，但是总体来说，要针对自己的短板进行准备。12个月中，除了2月份过年懒了，其余时间基本上保证每天1-2道Leetcode题目的频率，每天1h左右的计算机通识知识的学习，弄懂1-2个知识点。这样最终完成了Acwing上245道题目和Leetcode上650道题目的学习，算法已经满足面试要求。对于毕业年级的同学，也要考虑毕业设计的时间花费，毕竟毕设做不完是不能毕业的，拿到什么offer都是扯淡了。</p><h2 id="面试技巧"><a href="#面试技巧" class="headerlink" title="面试技巧"></a>面试技巧</h2><p>我个人体会到的面试技巧无他，唯有真诚。说白了就是，会就是会，不会就是不会，不要不懂装懂，但是在被问道能力范围之外的情况时，可以思考一下，即如果是自己的话，会如何处理当前情况。面试技巧方面，可以多看看牛客上的面经，会有很大的启发。另外，一定要保持一个乐观和自信的心态，无论你做的东西有多low，将其讲清楚也是也是一项比较重要的能力。不用紧张，事实上有些面试官不一定有你了解他问的这些问题，你只需要将你会的东西有逻辑的讲出来就很好了。</p><p>面试大多数公司会有三次技术面试，还有一部分会有HR面。技术面会首先从项目经历入手，然后开始问一些计算机通识知识，最后再做一道或者两道算法题。总共面试时间在1小时左右。面试的难度不一定一样，一般一面会简单一些，之后的二面和三面会更难一点，原因是一面都是你面试的部门的同事（有的挺水的），二面是部门leader，三面是更高一层次的工程师。但是这并不意味这算法题更难，可能只是问题更加无法准备，是比较独特的一些需要主动思考的问题。</p><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>写了这么多，不知道是否对你有帮助？说到底我也是一个蒟蒻（我挺喜欢这个词，弱且是菜），无论在什么情况下都是一个学习的过程，当一次面试有问题没有答上来的时候，可以记住这个问题，然后多学习一下，因为这就是你现在的短板。每当你补齐一块短板的时候，你离你预想的offer就又进了一步。还有就是心态一定要好，很多时候事情不是一蹴而就的，如果一两次的挫折让你灰心丧气，我认为是不可取的。我在面试的过程中，也挂过了好几家，都是算法题也没做出来，问题也没回答上，甚至有同学在三面被人挂掉两次。但继续往前走吧，人生也是如此，坚持学习，虚心请教，努力思考，那么最终的结果就不必要问了，正是“但问耕耘，莫问收获，庄敬日强，功不唐捐”。</p><p>最后 ，希望你能在秋招中获得一个满意的offer！</p>]]></content>
+    
+    <summary type="html">
+    
+      如何在秋招时获取一个满意的Offer？
+    
+    </summary>
+    
+      <category term="随笔" scheme="/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>位运算</title>
+    <link href="/2020/08/23/%E7%AE%97%E6%B3%95/%E4%BD%8D%E8%BF%90%E7%AE%97/"/>
+    <id>/2020/08/23/算法/位运算/</id>
+    <published>2020-08-23T05:23:01.000Z</published>
+    <updated>2020-08-29T12:37:04.367Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h1><h2 id="亦或运算"><a href="#亦或运算" class="headerlink" title="亦或运算"></a>亦或运算</h2><p>&emsp;&emsp;亦或运算本质是定义了一组操作，0^0 = 0, 1^1 = 0, 1^0 = 1, 0^1 = 1，描述为相同为0，不同为1。从定义来看，可以判断两个数是否相同，如果为0则相同，为1则不同。进一步，由于有结合律，可以消除一个序列中所有相同的数组，即a^b^c = (a^b)^c = a^(b^c)。在进一步思考，其实所有能够满足上述运算规律的情况都可以用亦或运算来实现，简单有效。比如无进位二进制加法，实际上与0+0 = 0, 1+1 = 0, 1+0 = 1, 0+1 = 1相同。奇偶性检验，如果我们把奇数看做1，偶数看做0，则有0+0 = 0, 1+1 = 0, 1 + 0 = 1, 0 + 1 = 1，和亦或操作一样。凡是有两个相反、相对的状态，都可以抽象为 0 和 1。另外对于奇偶性一般都会有简单的考察：奇数+奇数 = 偶数，以及奇数 - 1 = 偶数这两条基本性质。</p><p>​     状态压缩题目中一般应用按位与、或和亦或运算会将状态之间的转换变得容易很多。包括如果想取得某一位的状态，可以用 i &gt;&gt; j &amp; 1来计算。</p><h2 id="与运算"><a href="#与运算" class="headerlink" title="与运算"></a>与运算</h2><p>与运算的简单性质：</p><ol><li>按位与之后，当前位有一个0则以后一直是0。</li><li>基于上述运算，可以得知与运算有连续运算单调性质，每次与运算的结果不大于原先两个数。</li></ol><p>与运算的应用：</p><p><a href="https://leetcode-cn.com/problems/bitwise-and-of-numbers-range/" target="_blank" rel="noopener">LC.201 数字范围按位与（中等）</a></p><pre><code class="lang-c++">//找到前缀，因为连续，所以后边一定都是0class Solution {public:    int rangeBitwiseAnd(int m, int n) {        int shift = 0;        while (m &lt; n)        {            m &gt;&gt;= 1;            n &gt;&gt;= 1;            ++ shift;        }        return m &lt;&lt; shift;    }};//Brian Kernighan 算法，就是除去最后一位1的算法，n &amp; (n - 1);//和lowbit操作可以对比来看class Solution {public:    int rangeBitwiseAnd(int m, int n) {        while (m &lt; n) n = n &amp; (n - 1);        return n;    }};</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      位运算
+    
+    </summary>
+    
+      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>C++原理</title>
-    <link href="/2020/08/03/C++%E5%8E%9F%E7%90%86/"/>
-    <id>/2020/08/03/C++原理/</id>
+    <link href="/2020/08/03/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/C++%E5%8E%9F%E7%90%86/"/>
+    <id>/2020/08/03/计算机基础知识/C++原理/</id>
     <published>2020-08-03T14:19:08.000Z</published>
     <updated>2020-08-14T05:42:58.461Z</updated>
     
@@ -38,8 +78,8 @@
   
   <entry>
     <title>博弈论</title>
-    <link href="/2020/07/23/%E5%8D%9A%E5%BC%88%E8%AE%BA/"/>
-    <id>/2020/07/23/博弈论/</id>
+    <link href="/2020/07/23/%E7%AE%97%E6%B3%95/%E5%8D%9A%E5%BC%88%E8%AE%BA/"/>
+    <id>/2020/07/23/算法/博弈论/</id>
     <published>2020-07-23T12:50:01.000Z</published>
     <updated>2020-08-16T05:34:42.565Z</updated>
     
@@ -57,29 +97,9 @@
   </entry>
   
   <entry>
-    <title>sprintf和sscanf</title>
-    <link href="/2020/07/20/sprintf%E5%92%8Csscanf/"/>
-    <id>/2020/07/20/sprintf和sscanf/</id>
-    <published>2020-07-20T04:18:08.000Z</published>
-    <updated>2020-08-16T05:30:57.612Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="sprintf和sscanf"><a href="#sprintf和sscanf" class="headerlink" title="sprintf和sscanf"></a>sprintf和sscanf</h1><h2 id="sprintf和sscanf-1"><a href="#sprintf和sscanf-1" class="headerlink" title="sprintf和sscanf"></a>sprintf和sscanf</h2><p>函数原型：</p><pre><code class="lang-c++">int sprintf(char *str, const char *format, ...);int sscanf(const char *str, const char *format, ...);//成功返回成功匹配的和赋值的个数，如果达到文件末尾或发生错误，返回EOF</code></pre><ul><li>str：指向字符数组的指针，该数组存储了C字符串</li><li>format：是一个字符串，format标签是<code>%[flags][width][.precision][length]specifier</code>形式</li></ul><h2 id="format字段"><a href="#format字段" class="headerlink" title="format字段"></a>format字段</h2><p>specifier举例子来说：</p><ul><li>%e是使用e字符的科学计数法。</li><li>%E是使用E字符的科学计数法。</li><li>%o是有符号八进制。</li><li>%u是无符号十进制。</li><li>%x是无符号十六进制。</li><li>%X是无符号十六进制大写字母。</li><li>%p是指针地址。</li><li>%n是无输出。</li><li>%%是%字符（转义）。</li></ul><p>flags举例子来说</p><ul><li>-是在给定的字段宽度内左对齐，默认是右对齐</li><li>+是强制在结果之前显示加号或减号，默认只有负数有负号</li><li>0是指定填充padding的数字左边放置0，而不是空格</li></ul><p>width举例子来说</p><ul><li>某个数：比如2，表示要输出的最小数目，如果输出更短，用空格补位，如果更长不会被截断</li><li>*：宽度未指定。</li></ul><h2 id="附加参数"><a href="#附加参数" class="headerlink" title="附加参数"></a>附加参数</h2><p><strong>附加参数</strong> 表示这个函数接受一系列的指针作为附加参数，每一个指针都指向一个对象，对象类型由 format 字符串中相应的 % 标签指定，参数与 % 标签的顺序相同。</p><p><a href="https://www.cnblogs.com/edver/p/8419807.html" target="_blank" rel="noopener">Blog.Edver.C语言中可变参数的用法</a></p><h2 id="使用中的例子"><a href="#使用中的例子" class="headerlink" title="使用中的例子"></a>使用中的例子</h2><pre><code class="lang-c++">#include &lt;stdio.h&gt;int main(){    char in[] = &quot;hello 123 -4.50 0x3f3f3f 011&quot;;    char out[50];    char arg1[6];    int arg2;    float arg3;    int arg4;    int arg5;    //%*s表示跳过了第一个参数    sscanf(in, &quot;%*s %d %f %x %o&quot;, &amp;arg2, &amp;arg3, &amp;arg4, &amp;arg5);    sscanf(in, &quot;%s %d %f %x %o&quot;, arg1, &amp;arg2, &amp;arg3, &amp;arg4, &amp;arg5);    //%05d表示不足5位补0，%+d表示正数有+号不省略    sprintf(out, &quot;%s,%05d,%+f,%+d,%o\n&quot;, arg1, arg2, arg3, arg4, arg5);    printf(&quot;%s&quot;, out);    sprintf(out, &quot;%p,%-5d,%f,%+x,%o\n&quot;, arg1, arg2, arg3, arg4, arg5);    printf(&quot;%s&quot;, out);    return 0;}//输出的结果//hello,00123,-4.500000,+4144959,11//0x7fff14a2366a,123  ,-4.500000,3f3f3f,11</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      sprintf sscanf
-    
-    </summary>
-    
-      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-  </entry>
-  
-  <entry>
     <title>链表</title>
-    <link href="/2020/07/20/%E9%93%BE%E8%A1%A8/"/>
-    <id>/2020/07/20/链表/</id>
+    <link href="/2020/07/20/%E7%AE%97%E6%B3%95/%E9%93%BE%E8%A1%A8/"/>
+    <id>/2020/07/20/算法/链表/</id>
     <published>2020-07-20T04:18:08.000Z</published>
     <updated>2020-08-16T05:34:01.500Z</updated>
     
@@ -97,9 +117,29 @@
   </entry>
   
   <entry>
+    <title>sprintf和sscanf</title>
+    <link href="/2020/07/20/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/sprintf%E5%92%8Csscanf/"/>
+    <id>/2020/07/20/计算机基础知识/sprintf和sscanf/</id>
+    <published>2020-07-20T04:18:08.000Z</published>
+    <updated>2020-08-16T05:30:57.612Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="sprintf和sscanf"><a href="#sprintf和sscanf" class="headerlink" title="sprintf和sscanf"></a>sprintf和sscanf</h1><h2 id="sprintf和sscanf-1"><a href="#sprintf和sscanf-1" class="headerlink" title="sprintf和sscanf"></a>sprintf和sscanf</h2><p>函数原型：</p><pre><code class="lang-c++">int sprintf(char *str, const char *format, ...);int sscanf(const char *str, const char *format, ...);//成功返回成功匹配的和赋值的个数，如果达到文件末尾或发生错误，返回EOF</code></pre><ul><li>str：指向字符数组的指针，该数组存储了C字符串</li><li>format：是一个字符串，format标签是<code>%[flags][width][.precision][length]specifier</code>形式</li></ul><h2 id="format字段"><a href="#format字段" class="headerlink" title="format字段"></a>format字段</h2><p>specifier举例子来说：</p><ul><li>%e是使用e字符的科学计数法。</li><li>%E是使用E字符的科学计数法。</li><li>%o是有符号八进制。</li><li>%u是无符号十进制。</li><li>%x是无符号十六进制。</li><li>%X是无符号十六进制大写字母。</li><li>%p是指针地址。</li><li>%n是无输出。</li><li>%%是%字符（转义）。</li></ul><p>flags举例子来说</p><ul><li>-是在给定的字段宽度内左对齐，默认是右对齐</li><li>+是强制在结果之前显示加号或减号，默认只有负数有负号</li><li>0是指定填充padding的数字左边放置0，而不是空格</li></ul><p>width举例子来说</p><ul><li>某个数：比如2，表示要输出的最小数目，如果输出更短，用空格补位，如果更长不会被截断</li><li>*：宽度未指定。</li></ul><h2 id="附加参数"><a href="#附加参数" class="headerlink" title="附加参数"></a>附加参数</h2><p><strong>附加参数</strong> 表示这个函数接受一系列的指针作为附加参数，每一个指针都指向一个对象，对象类型由 format 字符串中相应的 % 标签指定，参数与 % 标签的顺序相同。</p><p><a href="https://www.cnblogs.com/edver/p/8419807.html" target="_blank" rel="noopener">Blog.Edver.C语言中可变参数的用法</a></p><h2 id="使用中的例子"><a href="#使用中的例子" class="headerlink" title="使用中的例子"></a>使用中的例子</h2><pre><code class="lang-c++">#include &lt;stdio.h&gt;int main(){    char in[] = &quot;hello 123 -4.50 0x3f3f3f 011&quot;;    char out[50];    char arg1[6];    int arg2;    float arg3;    int arg4;    int arg5;    //%*s表示跳过了第一个参数    sscanf(in, &quot;%*s %d %f %x %o&quot;, &amp;arg2, &amp;arg3, &amp;arg4, &amp;arg5);    sscanf(in, &quot;%s %d %f %x %o&quot;, arg1, &amp;arg2, &amp;arg3, &amp;arg4, &amp;arg5);    //%05d表示不足5位补0，%+d表示正数有+号不省略    sprintf(out, &quot;%s,%05d,%+f,%+d,%o\n&quot;, arg1, arg2, arg3, arg4, arg5);    printf(&quot;%s&quot;, out);    sprintf(out, &quot;%p,%-5d,%f,%+x,%o\n&quot;, arg1, arg2, arg3, arg4, arg5);    printf(&quot;%s&quot;, out);    return 0;}//输出的结果//hello,00123,-4.500000,+4144959,11//0x7fff14a2366a,123  ,-4.500000,3f3f3f,11</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      sprintf sscanf
+    
+    </summary>
+    
+      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>线段树</title>
-    <link href="/2020/07/17/%E7%BA%BF%E6%AE%B5%E6%A0%91/"/>
-    <id>/2020/07/17/线段树/</id>
+    <link href="/2020/07/17/%E7%AE%97%E6%B3%95/%E7%BA%BF%E6%AE%B5%E6%A0%91/"/>
+    <id>/2020/07/17/算法/线段树/</id>
     <published>2020-07-17T07:20:12.000Z</published>
     <updated>2020-07-19T14:57:47.498Z</updated>
     
@@ -118,8 +158,8 @@
   
   <entry>
     <title>二分查找</title>
-    <link href="/2020/07/16/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
-    <id>/2020/07/16/二分查找/</id>
+    <link href="/2020/07/16/%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
+    <id>/2020/07/16/算法/二分查找/</id>
     <published>2020-07-16T13:41:30.000Z</published>
     <updated>2020-07-30T03:55:54.690Z</updated>
     
@@ -138,8 +178,8 @@
   
   <entry>
     <title>单调栈与单调队列</title>
-    <link href="/2020/07/15/%E5%8D%95%E8%B0%83%E6%A0%88%E4%B8%8E%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/"/>
-    <id>/2020/07/15/单调栈与单调队列/</id>
+    <link href="/2020/07/15/%E7%AE%97%E6%B3%95/%E5%8D%95%E8%B0%83%E6%A0%88%E4%B8%8E%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/"/>
+    <id>/2020/07/15/算法/单调栈与单调队列/</id>
     <published>2020-07-15T14:58:03.000Z</published>
     <updated>2020-07-15T09:57:08.108Z</updated>
     
@@ -158,12 +198,12 @@
   
   <entry>
     <title>数据库</title>
-    <link href="/2020/07/14/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    <id>/2020/07/14/数据库/</id>
+    <link href="/2020/07/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <id>/2020/07/14/计算机基础知识/数据库/</id>
     <published>2020-07-14T13:05:08.000Z</published>
-    <updated>2020-08-08T14:02:05.287Z</updated>
+    <updated>2020-08-19T13:55:57.671Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="数据库知识"><a href="#数据库知识" class="headerlink" title="数据库知识"></a>数据库知识</h1><h2 id="事物的四个特性"><a href="#事物的四个特性" class="headerlink" title="事物的四个特性"></a>事物的四个特性</h2><p>事务（Transaction）是由一系列对系统中数据进行访问与更新的操作所组成的一个程序执行逻辑单元。事务是DBMS中最基础的单位，事务不可分割。ACID：原子性、一致性、隔离性、持久性。</p><ol><li><p>A: 原子性（Atomicity)。原子性是指事务包含的所有操作<strong>要么全部成功，要么全部失败</strong>回滚，因此事务的操作如果成功就必须要<strong>完全应用到数据库</strong>，如果操作失败则<strong>不能对数据库有任何影响</strong>。</p></li><li><p>C:一致性（Consistency)。一致性是指事务必须使数据库从一个一致性状态变换到另一个一致性状态，也就是说一个事务执行之前和执行之后都必须处于一致性状态。</p><p>拿转账来说，假设用户A和用户B两者的钱加起来一共是5000，那么不管A和B之间如何转账，转几次账，事务结束后两个用户的钱相加起来应该还得是5000，这就是事务的一致性。</p></li><li><p>I:隔离性（Isolation）。隔离性是当多个用户并发访问数据库时，比如操作同一张表时，数据库为每一个用户开启的事务，不能被其他事务的操作所干扰，多个并发事务之间要相互隔离。</p></li><li><p>D:持久性（Durability）。持久性是指一个事务一旦被提交了，那么对数据库中的数据的改变就是永久性的，即便是在数据库系统遇到故障的情况下也不会丢失提交事务的操作。</p></li></ol><h2 id="脏读、幻读和不可重复读"><a href="#脏读、幻读和不可重复读" class="headerlink" title="脏读、幻读和不可重复读"></a>脏读、幻读和不可重复读</h2><p>这几种情况在读取和写入数据库的时候会产生，事务虽然有原子性，但是读写的并发并不影响原子性，因此最终导致了以下的数据并发问题。解决这几种错误的数据库现象，需要了解<strong>数据库的事务隔离级别</strong>，下方有详细介绍。</p><ul><li>脏读：事务A读取的事务B中尚未提交的数据，如果事务B回滚，则<strong>A读取使用了错误的数据</strong>。比如我给你转了100万，但是我还没有提交，此时你查询自己账户，多了100万，很开心。然后我发现转错人了，回滚了事物。然后你100万就没了。 在过程中你查到了没有提交事物的数据（多出的100万），这就是脏读。</li><li>不可重复读：指在对于数据库中的某个数据，一个事务范围内<strong>多次查询却返回了不同的数据值</strong>（这里主要指某一表项的修改），这是由于在查询间隔，被另一个事务修改并提交了。这里的不可重复读主要说的是数据库表的某一项，和幻读的区别在于<strong>幻读是数据库内表中的查询不一致</strong>。在某些情况下，不可重复读并不是问题，比如我们多次查询某个数据当然以最后查询得到的结果为主。但在另一些情况下就有可能发生问题，例如<strong>同一个事物前后两次</strong>查询同一个数据，期望两次读的内容是一样的，但是因为读的过程中，因为另一个事务写了该数据，导致不可重复读。</li><li>幻读：在事务A的多次读取构成中，事务B对数据（这里主要指的是<strong>表内的插入操作</strong>）进行了新增操作，导致事务A多次读取的数据不一样，好像出现了幻觉一样。不可重复度是表项的update操作，幻读是对表内的insert操作。比如第一次读取表内是10个查询结果，在第二次查询之前，另一个事务加了一条（因为不是对同一个数据项写入，不是不可重复读），这时再次查询就变成了11个，不一致了。</li><li>第一类事务丢失（回滚丢失）：A和B在同时写一个数据，B事务已经提交，修改了数据，然后<strong>A事务因为某种原因回滚了</strong>，导致B事务的提交因A事务的回滚而丢失了。举例子来说，比如我有1000元。买一个东西，花了100元。然后我朋友给我转了1000元。理论上这两个事物（转账和买东西）正常的话，我应该还有1900元。 但是现在两个事物A和B同时进行，第一步都先查询我余额还有1000元，然后B事物给我转了1000元，提交了，理论上我还有2000元。然后我买东西，100元的，买到一半，我事物回滚，就回滚成了1000元(少了1000）。如果我不回滚，也提交了，我就还剩900元（也就是下面介绍的第二类事物丢失，覆盖丢失，也是少了1000）。</li><li>第二类事务丢失（提交覆盖丢失）：A和B同时执行事务，两个事务同时取到一个数据，B事务首先提交，但是A事务接下来又提交，这样就覆盖了B事务。</li></ul><p><a href="https://blog.csdn.net/qq_35206244/article/details/82493215" target="_blank" rel="noopener">CSDN.数据库ACID四大特性及脏读，不可重复读，幻读，事物丢失</a></p><p><a href="https://blog.csdn.net/ITWANGBOIT/article/details/102953327" target="_blank" rel="noopener">CSDN.对数据库幻读的理解</a></p><p><a href="https://blog.csdn.net/paopaopotter/article/details/79259686" target="_blank" rel="noopener">CSDN.数据库第一类第二类丢失更新</a></p><h2 id="数据库的事务隔离级别"><a href="#数据库的事务隔离级别" class="headerlink" title="数据库的事务隔离级别"></a>数据库的事务隔离级别</h2><p>事务的隔离级别实际上就是用锁来处理并发操作中，对于数据读写之后的不一致情况。下方的加锁的等级从低到高，而且加锁越多，数据库的效率越低，因为如果串行化就没有并发了。</p><ol><li>未提交读（Read uncommitted)。写操作加锁，读操作不加锁，禁止第一类丢失更新，但是其他数据并发问题还会发生。</li><li>提交读（Read committed)。写操作加写锁，读操作加读锁。禁止第一类丢失更新和脏读。指你已经开始读了数据，然后一个事物开始写，然后写的事物不提交的话，是不能进行读的事物，避免了脏读。</li><li>可重复读（Read repeatable)。对于读操作加读锁到事务结束，其他事务的更新操作只能等到事务结束之后进行。和提交 读的区别在于，提交读的读操作是加读锁到本次读操作结束，可重复读的锁粒度更大。禁止两类丢失更新，禁止脏读和不可 重复度，但是可能出现幻读.一个事物读的时候，我们把两次读看成整体，在读的过程中，不允许写的操作，这样就可以禁止不可重复读。就是两次读操作不允许其他事物。这是大部分关系数据库的<strong>默认隔离级别</strong>。</li><li>序列化（Serializable)。对表级读和写加锁。读操作加表级读锁至事务结束。可以禁止幻读。</li></ol><p>好好看看下边的博客，里面图片比较容易理解。</p><p><a href="https://www.cnblogs.com/shan-kylin/p/9543294.html" target="_blank" rel="noopener">Blog.ZhuoQiLin 数据库的四大特性以及四个隔离级别和引发的问题</a></p><h2 id="B树和B-树"><a href="#B树和B-树" class="headerlink" title="B树和B+树"></a>B树和B+树</h2><h3 id="B树"><a href="#B树" class="headerlink" title="B树"></a>B树</h3><p>B树是2-3树的一种扩展，用于对数据的排序和快速查找（时间复杂度为O(logn)）。B树是一颗多路平衡查找树，并且满足以下的定义，其中m是B树的阶数：</p><ol><li>每个节点最多有m - 1个关键字（键值对）。</li><li>根节点最少可以只有1个关键字。</li><li>非根节点至少有m / 2个关键字。</li><li>每个节点中的所有关键字都按照从下到大的顺序排列，每个关键字的左子树中的所有关键字都小于它，而右子树中的都大于它。</li><li>所有叶子节点都位于同一层，即根节点到每个叶子节点的长度都相同。</li><li>每一个节点都存有索引和数据（这点和B+树不一样，因此特别说明）。</li></ol><h3 id="B-树"><a href="#B-树" class="headerlink" title="B+树"></a>B+树</h3><p>相比于B树，B+树有两种类型的节点：<strong>内部节点</strong>（也称索引节点）和<strong>叶子节点</strong>。其中内部节点是不存储数据的，只存储索引，数据都存储在叶子节点。内部节点中的key都从小到大排列，左子树的key都更小，右子树都更大。叶子节点也是有序的。<strong>每个叶子节点都存有相邻叶子节点的指针</strong>，这样可以从一个叶子节点直接找到另一个叶子节点。父节点存有右孩子的第一个元组的索引。</p><p>插入操作简单来说，就是如果大于等于m个了，就将中间的作为索引放到父节点，然后右边多一个。</p><p>删除操作相比于B树更加容易，只需要从左右边兄弟节点结元素，并且修改父亲的索引即可，如果借不到，就合并，之后还是修改父亲索引。</p><p><a href="https://segmentfault.com/a/1190000020416577" target="_blank" rel="noopener">Blog.SF 面试官问你B树和B+树，就把这篇文章丢给他</a></p><h2 id="MySql常用语句"><a href="#MySql常用语句" class="headerlink" title="MySql常用语句"></a>MySql常用语句</h2><pre><code class="lang-sql">select * from mydb</code></pre>]]></content>
+    <content type="html"><![CDATA[<h1 id="数据库知识"><a href="#数据库知识" class="headerlink" title="数据库知识"></a>数据库知识</h1><h2 id="事物的四个特性"><a href="#事物的四个特性" class="headerlink" title="事物的四个特性"></a>事物的四个特性</h2><p>事务（Transaction）是由一系列对系统中数据进行访问与更新的操作所组成的一个程序执行逻辑单元。事务是DBMS中最基础的单位，事务不可分割。ACID：原子性、一致性、隔离性、持久性。</p><ol><li><p>A: 原子性（Atomicity)。原子性是指事务包含的所有操作<strong>要么全部成功，要么全部失败</strong>回滚，因此事务的操作如果成功就必须要<strong>完全应用到数据库</strong>，如果操作失败则<strong>不能对数据库有任何影响</strong>。</p></li><li><p>C:一致性（Consistency)。一致性是指事务必须使数据库从一个一致性状态变换到另一个一致性状态，也就是说一个事务执行之前和执行之后都必须处于一致性状态。</p><p>拿转账来说，假设用户A和用户B两者的钱加起来一共是5000，那么不管A和B之间如何转账，转几次账，事务结束后两个用户的钱相加起来应该还得是5000，这就是事务的一致性。</p></li><li><p>I:隔离性（Isolation）。隔离性是当多个用户并发访问数据库时，比如操作同一张表时，数据库为每一个用户开启的事务，不能被其他事务的操作所干扰，多个并发事务之间要相互隔离。</p></li><li><p>D:持久性（Durability）。持久性是指一个事务一旦被提交了，那么对数据库中的数据的改变就是永久性的，即便是在数据库系统遇到故障的情况下也不会丢失提交事务的操作。</p></li></ol><h2 id="脏读、幻读和不可重复读"><a href="#脏读、幻读和不可重复读" class="headerlink" title="脏读、幻读和不可重复读"></a>脏读、幻读和不可重复读</h2><p>这几种情况在读取和写入数据库的时候会产生，事务虽然有原子性，但是读写的并发并不影响原子性，因此最终导致了以下的数据并发问题。解决这几种错误的数据库现象，需要了解<strong>数据库的事务隔离级别</strong>，下方有详细介绍。</p><ul><li>脏读：事务A读取的事务B中尚未提交的数据，如果事务B回滚，则<strong>A读取使用了错误的数据</strong>。比如我给你转了100万，但是我还没有提交，此时你查询自己账户，多了100万，很开心。然后我发现转错人了，回滚了事物。然后你100万就没了。 在过程中你查到了没有提交事物的数据（多出的100万），这就是脏读。</li><li>不可重复读：指在对于数据库中的某个数据，一个事务范围内<strong>多次查询却返回了不同的数据值</strong>（这里主要指某一表项的修改），这是由于在查询间隔，被另一个事务修改并提交了。这里的不可重复读主要说的是数据库表的某一项，和幻读的区别在于<strong>幻读是数据库内表中的查询不一致</strong>。在某些情况下，不可重复读并不是问题，比如我们多次查询某个数据当然以最后查询得到的结果为主。但在另一些情况下就有可能发生问题，例如<strong>同一个事物前后两次</strong>查询同一个数据，期望两次读的内容是一样的，但是因为读的过程中，因为另一个事务写了该数据，导致不可重复读。</li><li>幻读：在事务A的多次读取构成中，事务B对数据（这里主要指的是<strong>表内的插入操作</strong>）进行了新增操作，导致事务A多次读取的数据不一样，好像出现了幻觉一样。不可重复度是表项的update操作，幻读是对表内的insert操作。比如第一次读取表内是10个查询结果，在第二次查询之前，另一个事务加了一条（因为不是对同一个数据项写入，不是不可重复读），这时再次查询就变成了11个，不一致了。</li><li>第一类事务丢失（回滚丢失）：A和B在同时写一个数据，B事务已经提交，修改了数据，然后<strong>A事务因为某种原因回滚了</strong>，导致B事务的提交因A事务的回滚而丢失了。举例子来说，比如我有1000元。买一个东西，花了100元。然后我朋友给我转了1000元。理论上这两个事物（转账和买东西）正常的话，我应该还有1900元。 但是现在两个事物A和B同时进行，第一步都先查询我余额还有1000元，然后B事物给我转了1000元，提交了，理论上我还有2000元。然后我买东西，100元的，买到一半，我事物回滚，就回滚成了1000元(少了1000）。如果我不回滚，也提交了，我就还剩900元（也就是下面介绍的第二类事物丢失，覆盖丢失，也是少了1000）。</li><li>第二类事务丢失（提交覆盖丢失）：A和B同时执行事务，两个事务同时取到一个数据，B事务首先提交，但是A事务接下来又提交，这样就覆盖了B事务。</li></ul><p><a href="https://blog.csdn.net/qq_35206244/article/details/82493215" target="_blank" rel="noopener">CSDN.数据库ACID四大特性及脏读，不可重复读，幻读，事物丢失</a></p><p><a href="https://blog.csdn.net/ITWANGBOIT/article/details/102953327" target="_blank" rel="noopener">CSDN.对数据库幻读的理解</a></p><p><a href="https://blog.csdn.net/paopaopotter/article/details/79259686" target="_blank" rel="noopener">CSDN.数据库第一类第二类丢失更新</a></p><h2 id="数据库的事务隔离级别"><a href="#数据库的事务隔离级别" class="headerlink" title="数据库的事务隔离级别"></a>数据库的事务隔离级别</h2><p>事务的隔离级别实际上就是用锁来处理并发操作中，对于数据读写之后的不一致情况。下方的加锁的等级从低到高，而且加锁越多，数据库的效率越低，因为如果串行化就没有并发了。</p><ol><li>未提交读（Read uncommitted)。写操作加锁，读操作不加锁，禁止第一类丢失更新，但是其他数据并发问题还会发生。</li><li>提交读（Read committed)。写操作加写锁，读操作加读锁。禁止第一类丢失更新和脏读。指你已经开始读了数据，然后一个事物开始写，然后写的事物不提交的话，是不能进行读的事物，避免了脏读。</li><li>可重复读（Read repeatable)。对于读操作加读锁到事务结束，其他事务的更新操作只能等到事务结束之后进行。和提交 读的区别在于，提交读的读操作是加读锁到本次读操作结束，可重复读的锁粒度更大。禁止两类丢失更新，禁止脏读和不可 重复度，但是可能出现幻读.一个事物读的时候，我们把两次读看成整体，在读的过程中，不允许写的操作，这样就可以禁止不可重复读。就是两次读操作不允许其他事物。这是大部分关系数据库的<strong>默认隔离级别</strong>。</li><li>序列化（Serializable)。对表级读和写加锁。读操作加表级读锁至事务结束。可以禁止幻读。</li></ol><p>好好看看下边的博客，里面图片比较容易理解。</p><p><a href="https://www.cnblogs.com/shan-kylin/p/9543294.html" target="_blank" rel="noopener">Blog.ZhuoQiLin 数据库的四大特性以及四个隔离级别和引发的问题</a></p><h2 id="B树和B-树"><a href="#B树和B-树" class="headerlink" title="B树和B+树"></a>B树和B+树</h2><h3 id="B树"><a href="#B树" class="headerlink" title="B树"></a>B树</h3><p>B树是2-3树的一种扩展，用于对数据的排序和快速查找（时间复杂度为O(logn)）。B树是一颗多路平衡查找树，并且满足以下的定义，其中m是B树的阶数：</p><ol><li>每个节点最多有m - 1个关键字（键值对）。</li><li>根节点最少可以只有1个关键字。</li><li>非根节点至少有m / 2个关键字。</li><li>每个节点中的所有关键字都按照从下到大的顺序排列，每个关键字的左子树中的所有关键字都小于它，而右子树中的都大于它。</li><li>所有叶子节点都位于同一层，即根节点到每个叶子节点的长度都相同。</li><li>每一个节点都存有索引和数据（这点和B+树不一样，因此特别说明）。</li></ol><h3 id="B-树"><a href="#B-树" class="headerlink" title="B+树"></a>B+树</h3><p>相比于B树，B+树有两种类型的节点：<strong>内部节点</strong>（也称索引节点）和<strong>叶子节点</strong>。其中内部节点是不存储数据的，只存储索引，数据都存储在叶子节点。内部节点中的key都从小到大排列，左子树的key都更小，右子树都更大。叶子节点也是有序的。<strong>每个叶子节点都存有相邻叶子节点的指针</strong>，这样可以从一个叶子节点直接找到另一个叶子节点。父节点存有右孩子的第一个元组的索引。</p><p>插入操作简单来说，就是如果大于等于m个了，就将中间的作为索引放到父节点，然后右边多一个。</p><p>删除操作相比于B树更加容易，只需要从左右边兄弟节点结元素，并且修改父亲的索引即可，如果借不到，就合并，之后还是修改父亲索引。</p><p><a href="https://segmentfault.com/a/1190000020416577" target="_blank" rel="noopener">Blog.SF 面试官问你B树和B+树，就把这篇文章丢给他</a></p><h2 id="MySql常用语句"><a href="#MySql常用语句" class="headerlink" title="MySql常用语句"></a>MySql常用语句</h2><pre><code class="lang-sql">select Emailfrom Person--使用group by将所有不同Email分组group by Email--having子句作为挑选Email分组的条件having count(Email) &gt; 1select distinct p1.Email --自连接，将左边和右边的表一起查询from Person as p1 inner join Person as p2--条件是如下where子句where p1.Email = p2.Email and p1.Id != p2.Idselect A.Name as Customers--左连接，即便右边是空的也连接from Customers as A left join Orders as B--on语句，条件连接on A.Id = B.CustomerId--在连接之后的表中查询B.Id是空的情况where B.Id is null</code></pre><p><a href="https://leetcode-cn.com/problems/duplicate-emails/solution/" target="_blank" rel="noopener">LC.182 查找重复的电子邮箱（简单）</a></p><p><a href="https://leetcode-cn.com/problems/customers-who-never-order/" target="_blank" rel="noopener">LC.183 从不订购的客户（简单）</a></p>]]></content>
     
     <summary type="html">
     
@@ -178,8 +218,8 @@
   
   <entry>
     <title>有向图的强联通分量</title>
-    <link href="/2020/07/14/%E6%9C%89%E5%90%91%E5%9B%BE%E7%9A%84%E5%BC%BA%E8%81%94%E9%80%9A%E5%88%86%E9%87%8F/"/>
-    <id>/2020/07/14/有向图的强联通分量/</id>
+    <link href="/2020/07/14/%E7%AE%97%E6%B3%95/%E6%9C%89%E5%90%91%E5%9B%BE%E7%9A%84%E5%BC%BA%E8%81%94%E9%80%9A%E5%88%86%E9%87%8F/"/>
+    <id>/2020/07/14/算法/有向图的强联通分量/</id>
     <published>2020-07-14T06:44:08.000Z</published>
     <updated>2020-07-17T14:39:27.736Z</updated>
     
@@ -198,8 +238,8 @@
   
   <entry>
     <title>Trie树</title>
-    <link href="/2020/07/14/Trie%E6%A0%91/"/>
-    <id>/2020/07/14/Trie树/</id>
+    <link href="/2020/07/14/%E7%AE%97%E6%B3%95/Trie%E6%A0%91/"/>
+    <id>/2020/07/14/算法/Trie树/</id>
     <published>2020-07-14T06:41:01.000Z</published>
     <updated>2020-07-17T14:38:09.976Z</updated>
     
@@ -218,8 +258,8 @@
   
   <entry>
     <title>离散化</title>
-    <link href="/2020/07/11/%E7%A6%BB%E6%95%A3%E5%8C%96/"/>
-    <id>/2020/07/11/离散化/</id>
+    <link href="/2020/07/11/%E7%AE%97%E6%B3%95/%E7%A6%BB%E6%95%A3%E5%8C%96/"/>
+    <id>/2020/07/11/算法/离散化/</id>
     <published>2020-07-11T13:48:11.000Z</published>
     <updated>2020-07-11T13:48:10.809Z</updated>
     
@@ -238,8 +278,8 @@
   
   <entry>
     <title>树状数组</title>
-    <link href="/2020/07/11/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/"/>
-    <id>/2020/07/11/树状数组/</id>
+    <link href="/2020/07/11/%E7%AE%97%E6%B3%95/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/"/>
+    <id>/2020/07/11/算法/树状数组/</id>
     <published>2020-07-11T13:48:04.000Z</published>
     <updated>2020-07-17T14:35:20.572Z</updated>
     
@@ -258,8 +298,8 @@
   
   <entry>
     <title>动态规划（一）背包专题</title>
-    <link href="/2020/07/08/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%88%E4%B8%80%EF%BC%89%E8%83%8C%E5%8C%85%E4%B8%93%E9%A2%98/"/>
-    <id>/2020/07/08/动态规划（一）背包专题/</id>
+    <link href="/2020/07/08/%E7%AE%97%E6%B3%95/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%88%E4%B8%80%EF%BC%89%E8%83%8C%E5%8C%85%E4%B8%93%E9%A2%98/"/>
+    <id>/2020/07/08/算法/动态规划（一）背包专题/</id>
     <published>2020-07-08T07:26:40.000Z</published>
     <updated>2020-07-29T05:36:56.251Z</updated>
     
@@ -278,8 +318,8 @@
   
   <entry>
     <title>计算机网络</title>
-    <link href="/2020/07/06/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
-    <id>/2020/07/06/计算机网络/</id>
+    <link href="/2020/07/06/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    <id>/2020/07/06/计算机基础知识/计算机网络/</id>
     <published>2020-07-06T07:14:17.000Z</published>
     <updated>2020-08-16T01:53:31.134Z</updated>
     
@@ -298,8 +338,8 @@
   
   <entry>
     <title>最短路径算法</title>
-    <link href="/2020/07/05/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/"/>
-    <id>/2020/07/05/最短路径算法/</id>
+    <link href="/2020/07/05/%E7%AE%97%E6%B3%95/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%AE%97%E6%B3%95/"/>
+    <id>/2020/07/05/算法/最短路径算法/</id>
     <published>2020-07-05T08:20:29.000Z</published>
     <updated>2020-07-06T07:11:53.028Z</updated>
     
@@ -318,8 +358,8 @@
   
   <entry>
     <title>DFS</title>
-    <link href="/2020/07/01/DFS/"/>
-    <id>/2020/07/01/DFS/</id>
+    <link href="/2020/07/01/%E7%AE%97%E6%B3%95/DFS/"/>
+    <id>/2020/07/01/算法/DFS/</id>
     <published>2020-07-01T13:03:53.000Z</published>
     <updated>2020-07-01T13:38:54.731Z</updated>
     
@@ -338,8 +378,8 @@
   
   <entry>
     <title>操作系统</title>
-    <link href="/2020/06/30/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    <id>/2020/06/30/操作系统/</id>
+    <link href="/2020/06/30/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    <id>/2020/06/30/计算机基础知识/操作系统/</id>
     <published>2020-06-30T07:56:08.000Z</published>
     <updated>2020-08-07T05:29:52.711Z</updated>
     
@@ -358,8 +398,8 @@
   
   <entry>
     <title>动态规划（二）其他DP</title>
-    <link href="/2020/06/30/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%88%E4%BA%8C%EF%BC%89%E5%85%B6%E4%BB%96DP/"/>
-    <id>/2020/06/30/动态规划（二）其他DP/</id>
+    <link href="/2020/06/30/%E7%AE%97%E6%B3%95/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%EF%BC%88%E4%BA%8C%EF%BC%89%E5%85%B6%E4%BB%96DP/"/>
+    <id>/2020/06/30/算法/动态规划（二）其他DP/</id>
     <published>2020-06-30T07:30:01.000Z</published>
     <updated>2020-07-29T14:53:28.513Z</updated>
     
@@ -368,46 +408,6 @@
     <summary type="html">
     
       动态规划其他DP
-    
-    </summary>
-    
-      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>最小生成树算法</title>
-    <link href="/2020/06/28/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91%E7%AE%97%E6%B3%95/"/>
-    <id>/2020/06/28/最小生成树算法/</id>
-    <published>2020-06-28T10:34:07.000Z</published>
-    <updated>2020-06-28T10:36:33.553Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="最小生成树算法"><a href="#最小生成树算法" class="headerlink" title="最小生成树算法"></a>最小生成树算法</h1><h2 id="Prim"><a href="#Prim" class="headerlink" title="Prim"></a>Prim</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;用st数组维护一个集合，最开始为空，每次扩充一个距离当前集合最近的点进入集合，并且更新其他点到集合的最近距离。所有点到集合的初始最近距离为INF，将所有点均加入到集合时算法结束。如果某一次扩充的点到集合的最近距离为正无穷，则说明不存在最小生成树。时间复杂度为O(n^2)。</p><h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">#include &lt;iostream&gt;#include &lt;algorithm&gt;#include &lt;cstring&gt;using namespace std;const int N = 510, INF = 0x3f3f3f3f;int w[N][N];int dist[N];bool st[N];int n, m;int prim(){    int res = 0;    memset(dist, 0x3f, sizeof dist);    for (int i = 0; i &lt; n; i ++ )    {        int t = -1;        for (int j = 1; j &lt;= n; j ++ )            if (!st[j] &amp;&amp; (t == -1 || dist[t] &gt; dist[j]))                t = j;        if (i) res += dist[t];        if (i &amp;&amp; dist[t] == INF) return INF;        st[t] = true;        for (int j = 1; j &lt;= n; j ++ )            dist[j] = min(dist[j], w[t][j]);    }    return res;}int main(){    cin &gt;&gt; n &gt;&gt; m;    memset(w, 0x3f, sizeof w);    for (int i = 1; i &lt;= n; i ++ ) w[i][i] = 0;    for (int i = 0; i &lt; m; i ++ )    {        int a, b, c;        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;        w[a][b] = w[b][a] = min(w[a][b], c);    }    int t = prim();    if (t == INF) puts(&quot;impossible&quot;);    else cout &lt;&lt; t &lt;&lt; endl;}</code></pre><h2 id="Kruskal"><a href="#Kruskal" class="headerlink" title="Kruskal"></a>Kruskal</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>&emsp;&emsp;通过排序得到所有边的序列，从最小的边开始扩展，<strong>贪心</strong>的思路。维护一个<strong>并查集</strong>来确定两个点是否属于同一个集合，如果属于同一个集合的两个点还需要增加一条边，则该条边增加后则成环。因此维护一个计数器cnt，当算法结束之后，cnt如果小于n – 1则说明不存在有效的生成树，否则并查集维护的点就是当前生成树。时间复杂度因为用到了排序，因此是<strong>mlog(m)</strong>。</p><h3 id="模板-1"><a href="#模板-1" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">#include &lt;iostream&gt;#include &lt;cstring&gt;#include &lt;algorithm&gt;using namespace std;const int N = 100010, M = 200010;struct Edge{    int a, b, w;    bool operator &lt; (const Edge&amp; a) const    {        return w &lt; a.w;    }}edges[M];int n, m;int p[N];int find(int x){    if (p[x] != x) p[x] = find(p[x]);    return p[x];}void kruskal(){    int res = 0, cnt = 0;    for (int i = 1; i &lt;= n; i ++ ) p[i] = i;    for (int i = 0; i &lt; m; i ++ )    {        auto e = edges[i];        int a = e.a, b = e.b, w = e.w;        int pa = find(a), pb = find(b);        if (pa != pb)        {            res += w;            cnt ++ ;            p[pa] = pb;        }    }    if (cnt &lt; n - 1) cout &lt;&lt; &quot;impossible&quot; &lt;&lt; endl;    else cout &lt;&lt; res &lt;&lt; endl;}int main(){    cin &gt;&gt; n &gt;&gt; m;    for (int i = 0; i &lt; m; i ++ )    {        int a, b, c;        cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;        edges[i].a = a, edges[i].b = b, edges[i].w = c;    }    sort(edges, edges + m);    kruskal();    return 0;}</code></pre><h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/861/" target="_blank" rel="noopener">AW.859 Kruskal算法求最小生成树（简单）</a></p><p><a href="https://leetcode-cn.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/" target="_blank" rel="noopener">LC.1489 找到最小生成树中的关键边和伪关键边（困难）</a></p>]]></content>
-    
-    <summary type="html">
-    
-      最小生成树算法
-    
-    </summary>
-    
-      <category term="技术" scheme="/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>双指针</title>
-    <link href="/2020/06/28/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
-    <id>/2020/06/28/双指针/</id>
-    <published>2020-06-28T06:09:29.000Z</published>
-    <updated>2020-07-19T14:56:58.352Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h1><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>双指针算法一般都可以暴力求解，但是暴力求解的时间复杂度一般为O(n^2)，通过优化使用双指针可以将其时间复杂度降低为O(n)。优化的本质是寻找i和j变化的<strong>单调性</strong>，如果某个指针在单调条件之下不可能再继续遍历，就可以省略那些遍历。</p><p>有些情况下，需要先构造性质比较好的数列，之后才能应用双指针算法。</p><p>双指针算法主要有2种：</p><ol><li>两个指针均从左端点开始，维护一个窗口。当窗口内元素满足某一性质的时候可以计算答案，如果不满足性质的时候，左侧窗口指针开始收缩，直到满足性质或者左右指针重合，之后再计算答案。这里一般维护的是<strong>个数等信息</strong>，因为需要右指针右移增大，而左指针右移减小才行。</li><li>左指针从左开始，右指针从右开始。维护的窗口一般都是<strong>单调的</strong>，性质是维护<strong>两者之和</strong>，这样左指针右移后和会增大，右指针左移后和会减小。</li></ol><h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><pre><code class="lang-c++">for (int i = 0, j = 0; i &lt; n; i ++ ){    //如果要维护集合，在这里维护即可    while (j &lt; i &amp;&amp; check(i, j)) j ++ ;    //while(j &lt;= i &amp;&amp; check(i, j))可以判断当i == j时是否还有不满足性质的情况要被剔除    //具体逻辑}</code></pre><h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p><a href="https://www.acwing.com/problem/content/description/801/" target="_blank" rel="noopener">AW.799 最长连续不重复子序列（简单）</a></p><p><a href="https://www.acwing.com/problem/content/802/" target="_blank" rel="noopener">AW.800 数组元素的目标和（简单）</a></p><p>两个序列上的双指针，需要考虑如何构造单调性</p><p><a href="https://leetcode-cn.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/" target="_blank" rel="noopener">LC.1498 满足条件的子序列数目（中等）</a></p><p>周赛第三题，需要先进行排序，再考虑双指针算法</p><p><a href="https://leetcode-cn.com/problems/longest-subarray-of-1s-after-deleting-one-element/" target="_blank" rel="noopener">LC.5434 删掉一个元素以后全为1的最长子数组（中等）</a></p><p>简单双指针2应用</p><p><a href="https://leetcode-cn.com/problems/find-a-value-of-a-mysterious-function-closest-to-target/" target="_blank" rel="noopener">LC.5467 找到最接近目标的函数值（困难）</a></p><p>线段树 + 双指针，这里只需要关注双指针的写法</p>]]></content>
-    
-    <summary type="html">
-    
-      双指针算法
     
     </summary>
     

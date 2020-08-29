@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  
+  <title itemprop="name">C++原理 | 天の痕的博客</title>
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="stylesheet" id="saukra_css-css" href="/css/style.css" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/lib.min.css" media="all">
+  <link rel="stylesheet" href="/css/font.css" media="all">
+  <link rel="stylesheet" href="/css/insight.css" media="all">
+  <link rel="stylesheet" href="/css/jquery.fancybox.min.css" media="all">
+  <link rel="stylesheet" href="/css/zoom.css" media="all">
+  <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<!--   <link rel="stylesheet" id="saukra_css-css" href="https://2heng.xin/wp-content/cache/autoptimize/css/autoptimize_ad42a61f4c7d4bdd9f91afcff6b5dda5.css
+" type="text/css" media="all"> -->
+  <script>
+  /*Initial Variables*/
+  var mashiro_option = new Object();
+  var mashiro_global = new Object();
+  mashiro_option.NProgressON = true;
+  /* 
+   * 邮箱信息之类的东西可以填在这里，这些js变量基本都作用于sakura-app.js
+   * 这样的设置仅是为了方便在基于PHP开发的主题中设置js变量，既然移植到了Node上，我想或许可以精简这一逻辑吧
+   */
+  mashiro_option.email_domain = "";
+  mashiro_option.email_name = "";
+  mashiro_option.cookie_version_control = "";
+  mashiro_option.qzone_autocomplete = false;
+  mashiro_option.site_name = "天痕の轨迹线";
+  mashiro_option.author_name = "の轨迹线";
+  mashiro_option.site_url = "https://scarofsky.github.io";
+  mashiro_option.v_appId = "Eg4LiBqPfNMfvhhF7RBt3YdV-gzGzoHsz";
+  mashiro_option.v_appKey = "f5OCYpX4S5HM1oOfq90Yo91S";
+  mashiro_option.mathjax = "1";
+  mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/"; 
+  mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
+
+  // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+  // mashiro_option.float_player_on = true;
+
+  /*End of Initial Variables*/
+  </script>
+  <script type="text/javascript">
+  var bg = "https://cdn.jsdelivr.net/gh/ScarofSky/blogAssets@2.3/img/cover/cover0.jpg,https://cdn.jsdelivr.net/gh/ScarofSky/blogAssets@2.3/img/cover/cover1.jpg,https://cdn.jsdelivr.net/gh/ScarofSky/blogAssets@2.3/img/cover/cover2.jpg,https://cdn.jsdelivr.net/gh/ScarofSky/blogAssets@2.3/img/cover/cover3.jpg,https://cdn.jsdelivr.net/gh/ScarofSky/blogAssets@2.3/img/cover/cover4.jpg,https://cdn.jsdelivr.net/gh/ScarofSky/blogAssets@2.3/img/cover/cover5.jpg,https://cdn.jsdelivr.net/gh/ScarofSky/blogAssets@2.3/img/cover/cover6.jpg".split(",");
+  var bgindex = Math.floor(Math.random()*bg.length);
+  if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+    alert('朋友，IE浏览器未适配哦~');
+  }
+  </script>
+  <style type="text/css">
+  .hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}
+  </style>
+  <style type="text/css">.site-top .lower nav{display:block !important;}.author-profile i,.post-like a,.post-share .show-share,.sub-text,.we-info a,span.sitename,.post-more i:hover,#pagination a:hover,.post-content a:hover,.float-content i:hover{color:#FE9600}.feature i,.download,.navigator i:hover,.links ul li:before,.ar-time i,span.ar-circle,.object,.comment .comment-reply-link,.siren-checkbox-radio:checked + .siren-checkbox-radioInput:after{background:#FE9600}::-webkit-scrollbar-thumb{background:#FE9600}.download,.navigator i:hover,.link-title,.links ul li:hover,#pagination a:hover,.comment-respond input[type='submit']:hover{border-color:#FE9600}.entry-content a:hover,.site-info a:hover,.comment h4 a,#comments-navi a.prev,#comments-navi a.next,.comment h4 a:hover,.site-top ul li a:hover,.entry-title a:hover,#archives-temp h3,span.page-numbers.current,.sorry li a:hover,.site-title a:hover,i.iconfont.js-toggle-search.iconsearch:hover,.comment-respond input[type='submit']:hover{color:#FE9600}.comments .comments-main{display:block !important;}.comments .comments-hidden{display:none !important;}background-position:center center;background-attachment:inherit;}
+  </style>
+</head>
+</html>
+<body class="page-template page-template-user page-template-page-analytics page-template-userpage-analytics-php page page-id-1297 chinese-font serif isWebKit">
+  <div class="scrollbar" id="bar">
+  </div>
+  <a href="#" class="cd-top faa-float animated"></a>
+  <section id="main-container">
+    <div class="headertop ">
+  <div id="banner_wave_1"></div>
+  <div id="banner_wave_2"></div>
+  <figure id="centerbg" class="centerbg">
+    <div class="focusinfo no-select">
+      <div class="header-tou">
+        <a href="https://scarofsky.github.io">
+          <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/avatar.jpg">
+        </a>
+      </div>
+      <div class="header-info">
+        <p>庄敬日强、功不唐捐。</p>
+        <div class="top-social_v2">
+          <li id="bg-pre">
+            <img class="flipx" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/other/next-b.svg">
+          </li>
+          
+            
+              
+                <li>
+                  <a href="http://github.com/ScarofSky" target="_blank" class="social-github" title="github">
+                    <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/social/github.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li class="wechat">
+                  <a href="/#">
+                    <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/social/wechat.png">
+                  </a>
+                  <div class="wechatInner">
+                    <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/wechat.jpg">
+                  </div>
+                </li>
+              
+            
+          
+          <li id="bg-next">
+            <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/other/next-b.svg">
+          </li>
+        </div>
+      </div>
+    </div>
+  </figure>
+  <div id="video-container" style="">
+    <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+    </video>
+    <div id="video-btn" class="loadvideo videolive">
+    </div>
+    <div id="video-add">
+    </div>
+    <div class="video-stu">
+    </div>
+  </div>
+  <div class="headertop-down faa-float animated" onclick="headertop_down()">
+    <span>
+      <i class="fa fa-chevron-down" aria-hidden="true">
+      </i>
+    </span>
+  </div>
+</div>
+    <div id="page" class="site wrapper">
+      <header class="site-header no-select gizle sabit" role="banner">
+  <div class="site-top">
+    <div class="site-branding">
+      <span class="site-title">
+        <span class="logolink moe-mashiro">
+          <a href="/">
+            <span class="sakurasono">天痕</span>
+            <span class="shironeko">の轨迹线</span>
+          </a>
+        </span>
+      </span>
+    </div>
+    <div class="searchbox search-form-submit">
+      <i class="iconfont js-toggle-search iconsearch icon-search">
+      </i>
+    </div>
+    <div id="show-nav" class="showNav mobile-fit">
+      <div class="line line1">
+      </div>
+      <div class="line line2">
+      </div>
+      <div class="line line3">
+      </div>
+    </div>
+    <div class="lower-cantiner">
+      <div class="lower">
+        <nav class="mobile-fit-control hide">
+          <ul id="menu-new" class="menu">
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+                    首页
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+                    归档
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/categories/技术/">
+                          <i class="fa fa-code" aria-hidden="true"></i>
+                          技术
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/随笔/">
+                          <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                          随笔
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/读书/">
+                          <i class="fa fa-book" aria-hidden="true"></i>
+                          读书
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/生活/">
+                          <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                          生活
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="javascript:;">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+                    清单
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/bangumi/">
+                          <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                          番组
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/music/">
+                          <i class="fa fa-headphones" aria-hidden="true"></i>
+                          歌单
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/comment/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+                    留言板
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/links/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+                    友人帐
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/donate/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+                    赞赏
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+                    关于
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/about/">
+                          <i class="fa fa-meetup" aria-hidden="true"></i>
+                          我？
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/theme-sakura/">
+                          <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                          主题
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+  <div class="pattern-center single-center">
+    <!-- 有配图默认渲染第一张 -->
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/06/30/JTwzA4QFtGfs5ed.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/06/30/JTwzA4QFtGfs5ed.jpg">
+    </div>
+    <header class="pattern-header single-header">
+      <h1 class="entry-title">
+      C++原理</h1>
+      <p class="entry-census">
+        <span>
+          <a href="https://scarofsky.github.io">
+            <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.1/img/custom/avatar.jpg">
+          </a>
+        </span>
+        <span>
+          <a href="https://scarofsky.github.io">天の痕</a>
+        </span>
+        <span class="bull">
+        ·</span>
+        2020-8-3<span class="bull">
+        ·</span>
+      <span id="busuanzi_value_page_pv"></span>次阅读</p>
+    </header>
+  </div>
+
+<div id="content" class="site-content">
+  <div id="primary" class="content-area">
+    <main id="main" class="site-main" role="main">
+      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
+        
+        <div class="entry-content">
+          <h1 id="C-原理"><a href="#C-原理" class="headerlink" title="C++原理"></a>C++原理</h1><h2 id="C-运算符的优先级和结合性"><a href="#C-运算符的优先级和结合性" class="headerlink" title="C++运算符的优先级和结合性"></a>C++运算符的优先级和结合性</h2><p><a href="https://www.cnblogs.com/shangdawei/p/3883702.html" target="_blank" rel="noopener">Blog. ImProgrammer</a></p>
+<pre><code class="lang-c++">//一些典型应用场景，可以省去写括号
+if (i &gt;&gt; k &amp; 1);
+cnt = cnt * 2 % mod;
+cnt = (cnt + 2) % mod;
+int mid = l + r &gt;&gt; 1;
+//这里要注意，&amp;的优先级是低于 ==，==是7，&amp;是8，因此需要加括号才行
+while (j &amp;&amp; ((nums[j] &amp; 1) == 0)) j -- ;
+</code></pre>
+<h2 id="static关键字的使用"><a href="#static关键字的使用" class="headerlink" title="static关键字的使用"></a>static关键字的使用</h2><ol>
+<li>函数体内的static作用域是当前函数，表示该变量在下次这个函数调用时，不重新分配，还是上次执行之后的值。</li>
+<li>在模块内（一个cpp文件之内）的static全局变量，可以被模块内的所有函数访问，但是模块外的其他函数无法访问。（<strong>全局静态变量</strong>）。全局和静态不同，全局变量在另一个cpp里可以使用extern来引入，而静态变量不允许被其他cpp引入。</li>
+<li>在模块内的static函数只能被当前模块的其他函数调用，外部无法调用。函数的实现使用static修饰，那么这个函数只可在本cpp内使用，不会同其他cpp中的同名函数引起冲突。</li>
+<li>类中的static成员变量属于整个类所有，对类的所有对象，调用都是同一个。</li>
+<li>类中的static成员函数属于整个类所有，函数不接受this指针，因此只能访问static成员变量。</li>
+</ol>
+<p>总结：静态的变量和函数都是将变量或者函数限定在了当前cpp文件之中，局部则是多次调用复用。类的静态表示全类共有的东西。</p>
+<h2 id="C-C-中指针和引用的区别"><a href="#C-C-中指针和引用的区别" class="headerlink" title="C/C++ 中指针和引用的区别"></a>C/C++ 中指针和引用的区别</h2><ol>
+<li>指针有自己的一块空间，而引用只是一个别名；</li>
+<li>使用sizeof看一个指针的大小是4，而引用则是被引用对象的大小；</li>
+<li>指针可以被初始化为NULL，而引用必须被初始化且必须是一个已有对象的引用；</li>
+<li>作为参数传递时，指针需要被解引用(*操作)才可以对对象进行操作，而直接对引 用的修改都会改变引用所指向的对象；</li>
+<li>可以有const指针，但是没有const引用；</li>
+<li>指针在使用中可以指向其它对象，但是引用只能是一个对象的引用，<strong>不能被改变</strong>；</li>
+<li>指针可以有多级指针（**p），而引用只有一级；</li>
+<li>指针和引用使用++运算符的意义不一样，指针是指向下一个地址，引用代表所引用对象值+1；</li>
+<li>如果返回动态内存分配的对象或者内存，必须使用指针，引用可能引起内存泄露。</li>
+</ol>
+<h2 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>智能指针主要用于管理在堆上分配的内存，它将普通的指针封装为一个栈对象。当栈对象的生存周期结束后，会在析构函数中释放掉申请的内存，从而<strong>防止内存泄漏</strong>。</p>
+<p>C++里面的四个智能指针: auto_ptr, shared_ptr, weak_ptr, unique_ptr 其中后三个是c++11支持，并且第一个已经被11弃用。unique_ptr是多个指针不能同时指向一个对象，shared_ptr可以指向同一个。weak_ptr不会改变shared_ptr的引用计数。</p>
+<ol>
+<li>auto_ptr:C98标准中，所有的智能指针都只能用auto_ptr来实现，在C++11中已经被弃用。</li>
+<li>unique_ptr:这种指针只能指向一个对象，不能多个指针同时指向一个对象，体现在只能转移而不能简单赋值，构造函数中也不能通过值来直接构造。而shared_ptr刚好是可以进行赋值，这样可以多个指针指向同一个对象。</li>
+<li>shared_ptr:C++ 11中最常用的智能指针类型为shared_ptr,它采用引用计数的方法，记录当前内存资源被多少个智能指针引用。该引用计数的内存在堆上分配。当新增一个时引用计数加1，当过期时引用计数减一。只有引用计数为0时，智能指针才会自动释放引用的内存资源。对shared_ptr进行初始化时不能将一个普通指针直接赋值给智能指针，因为一个是指针，一个是类。可以通过make_shared函数或者通过构造函数传入普通指针。并可以通过get函数获得普通指针。</li>
+<li>weak_ptr:当两个对象相互使用一个shared_ptr成员变量指向对方，会造成循环引用，使引用计数失效，从而导致内存泄漏。（因为引用计数不会为0）为了解决循环引用导致的内存泄漏，引入了weak_ptr弱指针，weak_ptr的构造函数不会修改引用计数的值，从而不会对对象的内存进行管理，其类似一个普通指针，但不指向引用计数的共享内存，但是其可以检测到所管理的对象是否已经被释放，从而避免非法访问。</li>
+</ol>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><pre><code class="lang-c++">//unique_ptr使用
+#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+struct Task {
+    int mId;
+    Task(int id ) :mId(id) {
+        std::cout &lt;&lt; &quot;Task::Constructor&quot; &lt;&lt; std::endl;
+    }
+    ~Task() {
+        std::cout &lt;&lt; &quot;Task::Destructor&quot; &lt;&lt; std::endl;
+    }
+};
+
+int main()
+{
+    // 创建一个空指针
+    std::unique_ptr&lt;int&gt; ptr1;
+    // 通过原始指针创建 unique_ptr 实例
+    // 构造unique_ptr时用指针作为构造参数
+    std::unique_ptr&lt;Task&gt; taskPtr(new Task(23));
+
+    //通过 unique_ptr 访问其成员
+    int id = taskPtr-&gt;mId;
+    std::cout &lt;&lt; id &lt;&lt; std::endl;
+
+    return 0;
+}
+
+//上述代码的输出
+//Task::Constructor
+//23
+//Task::Destructor
+
+//shared_ptr使用
+#include &lt;iostream&gt;
+#include &lt;memory&gt;
+using namespace std;
+class A
+{
+public:
+    int i;
+    A(int n):i(n) { };
+    ~A() { cout &lt;&lt; i &lt;&lt; &quot; &quot; &lt;&lt; &quot;destructed&quot; &lt;&lt; endl; }
+};
+int main()
+{
+    shared_ptr&lt;A&gt; sp1(new A(2)); //A(2)由sp1托管，
+    shared_ptr&lt;A&gt; sp2(sp1);       //A(2)同时交由sp2托管
+    shared_ptr&lt;A&gt; sp3;
+    sp3 = sp2;   //A(2)同时交由sp3托管
+    cout &lt;&lt; sp1-&gt;i &lt;&lt; &quot;,&quot; &lt;&lt; sp2-&gt;i &lt;&lt;&quot;,&quot; &lt;&lt; sp3-&gt;i &lt;&lt; endl;
+    A * p = sp3.get();      // get返回托管的指针，p 指向 A(2)
+    cout &lt;&lt; p-&gt;i &lt;&lt; endl;  //输出 2
+    sp1.reset(new A(3));    // reset导致托管新的指针, 此时sp1托管A(3)
+    sp2.reset(new A(4));    // sp2托管A(4)
+    cout &lt;&lt; sp1-&gt;i &lt;&lt; endl; //输出 3
+    //这里体现了引用计数为0时执行delete，从而执行析构函数
+    sp3.reset(new A(5));    // sp3托管A(5),A(2)无人托管，被delete
+    cout &lt;&lt; &quot;end&quot; &lt;&lt; endl;
+    return 0;
+}
+
+//程序输出
+//2,2,2
+//2
+//3
+//2 destructed
+//end
+//5 destructed
+//4 destructed
+//3 destructed
+</code></pre>
+<p><a href="https://blog.csdn.net/c_base_jin/article/details/79440999" target="_blank" rel="noopener">c++11 weak_ptr使用</a></p>
+<h2 id="虚函数"><a href="#虚函数" class="headerlink" title="虚函数"></a>虚函数</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>在父类派生子类的时候，如果某一个方法<strong>父类希望子类在定义的时候重新实现</strong>，应该用<strong>virtual关键字</strong>将该方法定义为虚函数。如果子类重新实现了该方法，同样需要加上virtual关键字，或者在C++11标准中不使用virtual关键字，而在函数定义后边加上override关键字。使用虚函数可以使得程序有更好的<strong>扩展性</strong>，并且虚函数是实现多态的一种方法（另外重载也是，但是是静态实现）。</p>
+<p>虚函数实现了<strong>动态绑定</strong>，在编译阶段无法确定当前调用对象使用的是哪个版本的虚函数，只有到运行阶段才能够得知。实现方法是使用<strong>虚函数表</strong>和<strong>虚函数表指针</strong>。其中在类中声明虚函数时，类会产生一个虚函数表，将所有虚函数的地址都放入其中，当需要的时候可以查表得到当前虚函数的地址，实现调用。而虚函数指针是每一个对象会隐式保存一个，如果父类的指针指向子类的时候，在调用虚函数时会首先查找虚函数指针，找到对应类的虚函数表，再调用对应类的虚函数，这样就可以确切知道是调用哪一个版本了。另外虚函数指针是一个确实的指针，因此在sizeof的时候，对象会多4字节（存放虚函数表地址）用来存放虚函数表指针。</p>
+<p>内联函数、构造函数和静态成员函数无法声明为虚函数，其中内联函数是在编译时确定的，和动态绑定冲突；构造函数在调用的时候，父类和子类的概念还没有出现，因此不能声明为虚函数；静态成员函数只与类有关系，和对象绑定给谁无关，因此不行。</p>
+<p>当多次继承时，虚函数每次都会被继承，如果不想继续让其子类继续继承当前的虚函数，可以使用final声明，之后再继承的类就无法继续重新实现该函数了。</p>
+<h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><pre><code class="lang-c++">//C++ primer中的例子
+class Quote {
+public:
+    Quote() = default;
+    Quote(const std::string &amp;book, double sales_price):bookNo(book), price(sales_price){}
+    std::string isbn() const { return bookNo;}
+    virtual double net_price(std::size_t n) const { return n * price;}
+    virtual ~Quote() = default; //继承关系的根节点一般会声明一个虚的析构函数
+private:
+    std::string bookNo;
+protected:
+    double price = 0.0;
+};
+
+class Bulk_quote : public Quote {
+public:
+    Bulk_quote() = default;
+    Bulk_quote(const std::string&amp;, double, std::size_t, double);
+    //这里是虚函数的C++11规范继承
+    double net_price(std::size_t) const override;
+    //这样写也可以
+    //virtual net_price(std::size_t) const;
+private:
+    std::size_t min_qty = 0;
+    double discount = 0.0;
+};
+</code></pre>
+<p><a href="https://www.cnblogs.com/forcheryl/p/4705848.html" target="_blank" rel="noopener">Blog.Ryan C++虚函数原理</a></p>
+<p><a href="https://www.cnblogs.com/zkfopen/p/11061414.html" target="_blank" rel="noopener">Blog.zkfopen C++虚函数的作用和多态</a></p>
+<h2 id="new和malloc的区别"><a href="#new和malloc的区别" class="headerlink" title="new和malloc的区别"></a>new和malloc的区别</h2><ol>
+<li>new从<strong>自由存储区</strong>上为对象动态分配内存空间，而malloc从<strong>堆</strong>上分配。自由存储区是个更高一层抽象的概念，是一块计算机中的内部存储空间，有可能是堆，也可能是静态存储区，需要具体看operator new的具体实现。new甚至可以不分配空间，比如传入指针参数的new实现。事实上，new的实现可以基于malloc。</li>
+<li>new分配成功时，返回对象类型的指针，不用转换类型。malloc只是给了一块内存，类型是void*，大小是传入的参数，需要强制转换一下。</li>
+<li>new分类失败时，抛出bac_alloc异常，而malloc失败时，返回NULL。</li>
+<li>new运行时，先分配内存，之后调用构造函数，最后返回一个该对象指针。delete时先调用析构函数，之后再释放内存。而malloc更加底层，没有这样规范的全部操作。</li>
+<li>new和delete是运算符，可以进行重载。malloc和free不允许被重载。</li>
+<li>new支持数组类型的分配，比如如下代码段：</li>
+</ol>
+<pre><code class="lang-c++">//new
+A *ptr = new A[10]; //分配10个A对象
+delete [] ptr;
+
+//malloc
+int *ptr = (int *) malloc(sizeof(int) * 10);
+</code></pre>
+<p><a href="https://www.cnblogs.com/shilinnpu/p/8945637.html" target="_blank" rel="noopener">Blog.林嵩 new与malloc有什么区别</a></p>
+<h2 id="复制构造函数"><a href="#复制构造函数" class="headerlink" title="复制构造函数"></a>复制构造函数</h2><p>当使用类创建对象时，如果我们也希望可以用一个已有的类对象初始化一个新的类对象，就如同简单类型直接赋值一样，这时就会调用复制构造函数。如果没有显式定义复制构造函数，编译器会自动隐式定义一个<strong>缺省的复制构造函数</strong>，一个inline+public的成员函数，形式是类名::类名（const 类名&amp;）。</p>
+<pre><code class="lang-c++">//基础类型的直接赋值初始化
+double x = 5.0;
+double y = x;
+
+//类对象的复制构造函数
+point pt1(2, 3);
+point pt2 = pt1;
+point pt2(pt1);
+</code></pre>
+<p>复制构造函数的三个被使用场景：</p>
+<ol>
+<li>当把一个已经存在的对象赋值给另一个新的对象时；</li>
+<li>实参和形参都是对象，进行形参和实参的结合时；</li>
+<li>当函数返回值是对象，函数调用完成返回时；</li>
+</ol>
+<p>另外对于复制构造函数，要注意深拷贝和浅拷贝的关系。当一个类中有指针时，如果仅仅使用默认的复制构造函数，会导致新创建的对象中的指针也指向对应内存。这样会导致两次析构函数调用，如果有delete语句，则会delete两次，引发错误。正确做法应该显式定义复制拷贝函数，这样可以在拷贝函数内部重新分配内存，并且重新赋值指针。</p>
+<p><a href="https://www.cnblogs.com/cthon/p/9147526.html" target="_blank" rel="noopener">Blog.C++拷贝构造 函数详解</a></p>
+<h2 id="C-11新特性：右值引用"><a href="#C-11新特性：右值引用" class="headerlink" title="C++11新特性：右值引用"></a>C++11新特性：右值引用</h2><h3 id="什么是左值和右值？"><a href="#什么是左值和右值？" class="headerlink" title="什么是左值和右值？"></a>什么是左值和右值？</h3><p>左值和右值原本是C语言用来区别“=”左右两边操作数的一个说法，但是在C++中引入了const关键字，从而某些位于等号左侧的量也无法被赋值，因此左值和右值被重新定义，左值代表能在系统中<strong>占据某一块内存空间</strong>，<strong>有地址</strong>的变量和数值；右值代表在计算过程中的<strong>临时量</strong>，无法得到对应内存地址。其中对于持久的左值来说，C语言中就已经定义对于其的引用使用方法，相当于别名，即<strong>左值引用</strong>。但是对于右值，因为没有地址，无法持久保持当前值，所以没有右值引用的概念。</p>
+<p><a href="https://blog.csdn.net/xuwqiang1994/article/details/79924310" target="_blank" rel="noopener">Blog.CSDN 理解C和C++中的左值和右值</a></p>
+<h3 id="右值引用"><a href="#右值引用" class="headerlink" title="右值引用"></a>右值引用</h3><p>C++11的新标准中，引入了<strong>右值引用</strong>这一强大的特性，主要为了解决类对象的复制与移动的关系。C++11中使用语法&amp;&amp;来定义右值引用，可以对右值进行引用操作，具体实现不明。右值引用的其中一个意义是，可以实现“<strong>移动语义</strong>”，通过向移动赋值运算符重载的参数中直接传入右值引用，可以避免一次无意义的对象构造和析构过程。</p>
+
+        </div>
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/donate/AliPayQR.jpg"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/donate/WeChanQR.jpg"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+        <footer class="post-footer">
+          <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow"><i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+          <div class="post-tags">
+          </div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+          
+            <div class="post-nepre half previous">
+          
+            <a href="/2020/08/23/算法/位运算/" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/29/iYJcZs7BmIy48Sz.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/08/29/iYJcZs7BmIy48Sz.jpg">
+              </div>
+              <span class="label">
+              Previous Post</span>
+              <div class="info">
+                <h3>
+                位运算</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+        
+          
+            <div class="post-nepre half next">
+          
+            <a href="/2020/07/23/算法/博弈论/" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/16/Gvz9dAnLIJQKTXZ.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/08/16/Gvz9dAnLIJQKTXZ.jpg">
+              </div>
+              <span class="label">
+              Next Post</span>
+              <div class="info">
+                <h3>
+                博弈论</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
+      
+<div id="vcomments"></div>
+<script>
+  window.onload = function(){
+      var valine = new Valine();
+      valine.init({
+        el: '#vcomments',
+        appId: "Eg4LiBqPfNMfvhhF7RBt3YdV-gzGzoHsz",
+        appKey: "f5OCYpX4S5HM1oOfq90Yo91S",
+        path: window.location.pathname,
+        placeholder: "你是我一生只会遇见一次的惊喜 ..."
+      })
+  }
+</script>
+
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+          <a href="https://scarofsky.github.io" class="profile gravatar"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.1/img/custom/avatar.jpg" itemprop="image" alt="天の痕" height="70" width="70"></a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+            <a href="https://scarofsky.github.io" itemprop="url" rel="author">天の痕</a>
+            </h3>
+          </div>
+        </div>
+        <hr>
+        <p><i class="iconfont icon-write"></i>庄敬日强，功不唐捐。</p>
+      </section>
+    </main><!-- #main -->
+  </div><!-- #primary -->
+</div>
+
+
+
+    </div>    
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            // PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+    <!-- <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 天の痕<br>
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer> -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+  <div class="site-info">
+    <div class="footertext">
+      <div class="img-preload">
+        <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/other/wordpress-rotating-ball-o.svg">
+        <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/other/disqus-preloader.svg">
+      </div>
+      <p style="color: #666666;">&copy 2020</p>
+    </div>
+    <div class="footer-device">
+    <p style="font-family: 'Ubuntu', sans-serif;">
+        <span style="color: #b9b9b9;">Theme <a href="https://github.com/honjun/hexo-theme-sakura" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a href="https://2heng.xin/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Mashiro</a>&<a href="https://www.hojun.cn/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Hojun</a>, Powered by Hexo, Hosted by Coding Pages</a>
+        </span>
+      </p>
+    </div>
+  </div><!-- .site-info -->
+</footer>
+
+
+
+<!-- <script src="/js/tocbot.js"></script> -->
+<script type="text/javascript" src="/js/lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/InsightSearch.js"></script>
+<script type="text/javascript" src="/js/jquery.fancybox.min.js"></script>
+<script type="text/javascript" src="/js/zoom.min.js"></script>
+<script type="text/javascript" src="/js/sakura-app.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine@1.3.4/dist/Valine.min.js'></script>
+<script src="/js/botui.js"></script>
+<!-- 不蒜子 网页计数器 -->
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script> -->
+<script type="text/javascript">
+/* <![CDATA[ */
+if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/scarofsky/blogVideo@1.2/","name":"op.mp4","live":"close"},"windowheight":"fixed","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+} else {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/scarofsky/blogVideo@1.2/","name":"op.mp4","live":"open"},"windowheight":"auto","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+}
+/* ]]> */
+
+</script>
+<script>
+$(document).ready(function() {
+  if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+    if ($(".pattern-center").length > 0) { //有图的情况
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -400,
+          scrollSmoothOffset: -85
+      });
+    } else {
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -85,
+          scrollSmoothOffset: -85
+      });
+    }
+    var offsetTop = $('.toc').offset().top - 95;
+    window.onscroll = function() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop >= offsetTop) {
+        $('.toc').addClass('toc-fixed');
+      } else {
+        $('.toc').removeClass('toc-fixed');
+      }
+    }
+  }
+});
+</script>
+
+    <div class="openNav no-select" style="height: 50px;">
+      <div class="iconflat no-select" style="width: 50px; height: 50px;">
+        <div class="icon"></div>
+      </div>
+      <div class="site-branding search-form-submit">
+        <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+      </div>
+    </div>
+  </section>
+  <div id="mo-nav" class="">
+  <div class="m-avatar">
+    <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/avatar.jpg">
+  </div>
+  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">天痕の轨迹线</p>
+  <p style="text-align: center; word-spacing: 20px;">
+    
+      
+        <a href="http://github.com/ScarofSky" class="fa fa-github" target="_blank" style="color: #333; margin-left:20px"></a>
+      
+        <a href="/#" class="fa " target="_blank" style="color: #; margin-left:20px"></a>
+      
+    
+  </p>
+  <ul id="menu-new-1" class="menu">
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+            首页
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/archives">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+            归档
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/categories/技术/">
+                  <i class="fa fa-code" aria-hidden="true"></i>
+                  技术
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/随笔/">
+                  <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                  随笔
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/读书/">
+                  <i class="fa fa-book" aria-hidden="true"></i>
+                  读书
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/生活/">
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  生活
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="javascript:;">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+            清单
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/bangumi/">
+                  <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                  番组
+                </a>
+              </li>
+            
+              <li>
+                <a href="/music/">
+                  <i class="fa fa-headphones" aria-hidden="true"></i>
+                  歌单
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/comment/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+            留言板
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/links/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+            友人帐
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/donate/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+            赞赏
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+            关于
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/about/">
+                  <i class="fa fa-meetup" aria-hidden="true"></i>
+                  我？
+                </a>
+              </li>
+            
+              <li>
+                <a href="/theme-sakura/">
+                  <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                  主题
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+  </ul>
+  <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+</div>
+<button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<style>
+  .aplayer .aplayer-lrc {
+    height: 35px;
+  }
+  .aplayer .aplayer-lrc p{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px !important;
+  }
+  .aplayer .aplayer-lrc p.aplayer-lrc-current{
+    color: #FF1493;
+  }
+  .aplayer.aplayer-narrow .aplayer-body{
+    left: -66px !important;
+  }
+  .aplayer.aplayer-fixed .aplayer-lrc {
+    display: none;
+  }
+  .aplayer .aplayer-lrc.aplayer-lrc-hide {
+      display:none !important;
+  }
+  .aplayer.aplayer-fixed .lrc-show {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+  }
+</style>
+<meting-js
+
+    id="5047109214"
+
+    server="netease"
+
+    type="playlist"
+
+    fixed="true"
+
+    autoplay="false"
+
+    loop="all"
+
+    order="random"
+
+    preload="auto"
+
+    volume="0.7"
+
+    mutex="true"
+
+</meting-js>
+<script>
+  $(function(){
+    $('body').on('click', '.aplayer', function(){
+      if($('.aplayer-button').hasClass('aplayer-play')) {
+        $('.aplayer-lrc').removeClass('lrc-show');
+      } else {
+        $('.aplayer-lrc').addClass('lrc-show');
+      }
+    })
+  });
+</script>
+</body>
+</html>

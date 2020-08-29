@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  
+  <title itemprop="name">链表 | 天の痕的博客</title>
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="stylesheet" id="saukra_css-css" href="/css/style.css" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/lib.min.css" media="all">
+  <link rel="stylesheet" href="/css/font.css" media="all">
+  <link rel="stylesheet" href="/css/insight.css" media="all">
+  <link rel="stylesheet" href="/css/jquery.fancybox.min.css" media="all">
+  <link rel="stylesheet" href="/css/zoom.css" media="all">
+  <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<!--   <link rel="stylesheet" id="saukra_css-css" href="https://2heng.xin/wp-content/cache/autoptimize/css/autoptimize_ad42a61f4c7d4bdd9f91afcff6b5dda5.css
+" type="text/css" media="all"> -->
+  <script>
+  /*Initial Variables*/
+  var mashiro_option = new Object();
+  var mashiro_global = new Object();
+  mashiro_option.NProgressON = true;
+  /* 
+   * 邮箱信息之类的东西可以填在这里，这些js变量基本都作用于sakura-app.js
+   * 这样的设置仅是为了方便在基于PHP开发的主题中设置js变量，既然移植到了Node上，我想或许可以精简这一逻辑吧
+   */
+  mashiro_option.email_domain = "";
+  mashiro_option.email_name = "";
+  mashiro_option.cookie_version_control = "";
+  mashiro_option.qzone_autocomplete = false;
+  mashiro_option.site_name = "天痕の轨迹线";
+  mashiro_option.author_name = "の轨迹线";
+  mashiro_option.site_url = "https://scarofsky.github.io";
+  mashiro_option.v_appId = "Eg4LiBqPfNMfvhhF7RBt3YdV-gzGzoHsz";
+  mashiro_option.v_appKey = "f5OCYpX4S5HM1oOfq90Yo91S";
+  mashiro_option.mathjax = "1";
+  mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/"; 
+  mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
+
+  // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+  // mashiro_option.float_player_on = true;
+
+  /*End of Initial Variables*/
+  </script>
+  <script type="text/javascript">
+  var bg = "https://cdn.jsdelivr.net/gh/ScarofSky/blogAssets@2.3/img/cover/cover0.jpg,https://cdn.jsdelivr.net/gh/ScarofSky/blogAssets@2.3/img/cover/cover1.jpg,https://cdn.jsdelivr.net/gh/ScarofSky/blogAssets@2.3/img/cover/cover2.jpg,https://cdn.jsdelivr.net/gh/ScarofSky/blogAssets@2.3/img/cover/cover3.jpg,https://cdn.jsdelivr.net/gh/ScarofSky/blogAssets@2.3/img/cover/cover4.jpg,https://cdn.jsdelivr.net/gh/ScarofSky/blogAssets@2.3/img/cover/cover5.jpg,https://cdn.jsdelivr.net/gh/ScarofSky/blogAssets@2.3/img/cover/cover6.jpg".split(",");
+  var bgindex = Math.floor(Math.random()*bg.length);
+  if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+    alert('朋友，IE浏览器未适配哦~');
+  }
+  </script>
+  <style type="text/css">
+  .hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}
+  </style>
+  <style type="text/css">.site-top .lower nav{display:block !important;}.author-profile i,.post-like a,.post-share .show-share,.sub-text,.we-info a,span.sitename,.post-more i:hover,#pagination a:hover,.post-content a:hover,.float-content i:hover{color:#FE9600}.feature i,.download,.navigator i:hover,.links ul li:before,.ar-time i,span.ar-circle,.object,.comment .comment-reply-link,.siren-checkbox-radio:checked + .siren-checkbox-radioInput:after{background:#FE9600}::-webkit-scrollbar-thumb{background:#FE9600}.download,.navigator i:hover,.link-title,.links ul li:hover,#pagination a:hover,.comment-respond input[type='submit']:hover{border-color:#FE9600}.entry-content a:hover,.site-info a:hover,.comment h4 a,#comments-navi a.prev,#comments-navi a.next,.comment h4 a:hover,.site-top ul li a:hover,.entry-title a:hover,#archives-temp h3,span.page-numbers.current,.sorry li a:hover,.site-title a:hover,i.iconfont.js-toggle-search.iconsearch:hover,.comment-respond input[type='submit']:hover{color:#FE9600}.comments .comments-main{display:block !important;}.comments .comments-hidden{display:none !important;}background-position:center center;background-attachment:inherit;}
+  </style>
+</head>
+</html>
+<body class="page-template page-template-user page-template-page-analytics page-template-userpage-analytics-php page page-id-1297 chinese-font serif isWebKit">
+  <div class="scrollbar" id="bar">
+  </div>
+  <a href="#" class="cd-top faa-float animated"></a>
+  <section id="main-container">
+    <div class="headertop ">
+  <div id="banner_wave_1"></div>
+  <div id="banner_wave_2"></div>
+  <figure id="centerbg" class="centerbg">
+    <div class="focusinfo no-select">
+      <div class="header-tou">
+        <a href="https://scarofsky.github.io">
+          <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/avatar.jpg">
+        </a>
+      </div>
+      <div class="header-info">
+        <p>庄敬日强、功不唐捐。</p>
+        <div class="top-social_v2">
+          <li id="bg-pre">
+            <img class="flipx" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/other/next-b.svg">
+          </li>
+          
+            
+              
+                <li>
+                  <a href="http://github.com/ScarofSky" target="_blank" class="social-github" title="github">
+                    <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/social/github.png">
+                  </a>
+                </li>
+              
+            
+              
+                <li class="wechat">
+                  <a href="/#">
+                    <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/social/wechat.png">
+                  </a>
+                  <div class="wechatInner">
+                    <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/wechat.jpg">
+                  </div>
+                </li>
+              
+            
+          
+          <li id="bg-next">
+            <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/other/next-b.svg">
+          </li>
+        </div>
+      </div>
+    </div>
+  </figure>
+  <div id="video-container" style="">
+    <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+    </video>
+    <div id="video-btn" class="loadvideo videolive">
+    </div>
+    <div id="video-add">
+    </div>
+    <div class="video-stu">
+    </div>
+  </div>
+  <div class="headertop-down faa-float animated" onclick="headertop_down()">
+    <span>
+      <i class="fa fa-chevron-down" aria-hidden="true">
+      </i>
+    </span>
+  </div>
+</div>
+    <div id="page" class="site wrapper">
+      <header class="site-header no-select gizle sabit" role="banner">
+  <div class="site-top">
+    <div class="site-branding">
+      <span class="site-title">
+        <span class="logolink moe-mashiro">
+          <a href="/">
+            <span class="sakurasono">天痕</span>
+            <span class="shironeko">の轨迹线</span>
+          </a>
+        </span>
+      </span>
+    </div>
+    <div class="searchbox search-form-submit">
+      <i class="iconfont js-toggle-search iconsearch icon-search">
+      </i>
+    </div>
+    <div id="show-nav" class="showNav mobile-fit">
+      <div class="line line1">
+      </div>
+      <div class="line line2">
+      </div>
+      <div class="line line3">
+      </div>
+    </div>
+    <div class="lower-cantiner">
+      <div class="lower">
+        <nav class="mobile-fit-control hide">
+          <ul id="menu-new" class="menu">
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+                    首页
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+                    归档
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/categories/技术/">
+                          <i class="fa fa-code" aria-hidden="true"></i>
+                          技术
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/随笔/">
+                          <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                          随笔
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/读书/">
+                          <i class="fa fa-book" aria-hidden="true"></i>
+                          读书
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/生活/">
+                          <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                          生活
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="javascript:;">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+                    清单
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/bangumi/">
+                          <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                          番组
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/music/">
+                          <i class="fa fa-headphones" aria-hidden="true"></i>
+                          歌单
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/comment/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+                    留言板
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/links/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+                    友人帐
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/donate/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+                    赞赏
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+                    关于
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/about/">
+                          <i class="fa fa-meetup" aria-hidden="true"></i>
+                          我？
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/theme-sakura/">
+                          <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                          主题
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+  <div class="pattern-center single-center">
+    <!-- 有配图默认渲染第一张 -->
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://i.loli.net/2020/08/16/vrjsHtauP16WX75.jpg);" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/16/vrjsHtauP16WX75.jpg">
+    </div>
+    <header class="pattern-header single-header">
+      <h1 class="entry-title">
+      链表</h1>
+      <p class="entry-census">
+        <span>
+          <a href="https://scarofsky.github.io">
+            <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.1/img/custom/avatar.jpg">
+          </a>
+        </span>
+        <span>
+          <a href="https://scarofsky.github.io">天の痕</a>
+        </span>
+        <span class="bull">
+        ·</span>
+        2020-7-20<span class="bull">
+        ·</span>
+      <span id="busuanzi_value_page_pv"></span>次阅读</p>
+    </header>
+  </div>
+
+<div id="content" class="site-content">
+  <div id="primary" class="content-area">
+    <main id="main" class="site-main" role="main">
+      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
+        
+        <div class="entry-content">
+          <h1 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h1><h2 id="链表的构建"><a href="#链表的构建" class="headerlink" title="链表的构建"></a>链表的构建</h2><p>链表主要有两种实现方式，第一种是Leetcode上的实现方式，使用new创建新节点，速度慢，使用指针操作。第二种是数组模拟链表，速度较快，但是面试中一般不会使用这种。</p>
+<h2 id="链表的基本操作"><a href="#链表的基本操作" class="headerlink" title="链表的基本操作"></a>链表的基本操作</h2><p>链表的基本操作有：在头结点之前插入节点、在头结点之后的某个节点之前插入数据、删除某个节点。</p>
+<pre><code class="lang-c++">//Leetcode的节点定义
+struct ListNode{
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+
+//删除某个节点
+class Solution {
+public:
+    ListNode* deleteNode(ListNode* head, int val) {
+        //使用有哑节点处理删除头结点的情况
+        ListNode *h = new ListNode(-1);
+        h -&gt; next = head;
+        ListNode *pre = h, *p = pre -&gt; next;
+        //使用pre节点可以减少一次遍历，直接将两个指针到应有的位置
+        while (p &amp;&amp; p -&gt; val != val) p = p -&gt; next, pre = pre -&gt; next;
+        //判断一下边界情况，如果没有要查找的值就返回
+        if (p == nullptr) return head;
+        //核心语句，将pre的下一个指向p的下一个，相当于跳过了p
+        pre -&gt; next = p -&gt; next;
+        return h -&gt; next;
+    }
+};
+
+//在链表头插入节点
+ListNode * add(ListNode *head, int x)
+{
+    ListNode *t = new ListNode(x);
+    t -&gt; next = head;
+    return t;
+}
+
+//在链表中按照大小顺序插入节点
+ListNode * addPos(ListNode* head, int x)
+{
+    //哑节点
+    ListNode *h = new ListNode(-1);
+    h -&gt; next = head;
+    ListNode *p = h;
+    //遍历到某个节点的下一个如果值还是大于当前节点，并且不为空就继续
+    while (p -&gt; next &amp;&amp; p -&gt; next -&gt; val &lt; x) p = p -&gt; next;
+    //新建一个节点，赋值
+    ListNode *t = new ListNode(x);
+    //核心语句，将p的后边插入当前新节点t，以为有哑结点，所以相当于在head之前插入也是可以的
+    t -&gt; next = p -&gt; next;
+    p -&gt; next = t;
+
+    return h -&gt; next;
+}
+
+//Acwing中使用数组模拟链表的模板
+const int N = 100010;
+//单链表定义，h = -1
+int e[N], ne[N], idx;
+int h = -1;
+//双向链表定义
+int e[N], r[N], l[N], idx;
+int head = 0, tail = 1;
+
+//单链表添加元素到链表头
+void add_to_head(int x)
+{
+    e[idx] = x, ne[idx] = h, h = idx ++ ;
+}
+//单链表删除插入时的第k + 1个元素,需要特殊判断头节点删除的情况
+void remove(int k)
+{
+    ne[k] = ne[ne[k]];
+}
+
+//双向链表初始化
+void init()
+{
+    r[0] = 1, l[1] = 0;
+    idx = 2;
+}
+
+//双向链表添加元素第k个元素右边
+void insert(int k, x)
+{
+    e[idx] = x;
+    //将idx元素左边就是第k个，右边元素是k原来右边的元素
+    l[idx] = k, r[idx] = r[k];
+    //右边元素是r[k],其向左的指针l[r[k]]是现在的idx
+    //k现在右边的是idx
+    l[r[k]] = idx, r[k] = idx ++ ;
+}
+
+//删除输入的第k个数
+void remove(int k)
+{
+    l[r[k]] = l[k];
+    r[l[k]] = r[k];
+}
+</code></pre>
+<h2 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h2><p><a href="https://leetcode-cn.com/problems/insertion-sort-list/" target="_blank" rel="noopener">LC.147 对链表进行插入排序（中等）</a></p>
+<pre><code class="lang-c++">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+//不带哑结点的原地插入
+class Solution {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        if (!head || !head -&gt; next) return head;
+
+        ListNode* p = head -&gt; next;
+        while (p)
+        {
+            ListNode* t = p;
+            p = p -&gt; next;
+            ListNode* pre = head;
+            while (pre -&gt; next != t) pre = pre -&gt; next;
+            pre -&gt; next = t -&gt; next;
+            //要判断一下是否要插入到头节点之前
+            if (t -&gt; val &lt;= head -&gt; val)
+            {
+                t -&gt; next = head;
+                head = t;
+            }
+            //如果需要插入到头结点之后，判断当前节点的下一个值是否还是小于当前插入节点值，如果小于则还需要再向前走一个位置
+            else
+            {
+                ListNode* s = head;
+                while (s -&gt; next != p &amp;&amp; s -&gt; next -&gt; val &lt; t -&gt; val) s = s -&gt; next;
+                t -&gt; next = s -&gt; next;
+                s -&gt; next = t;
+            }
+        }
+
+        return head;
+    }
+};
+
+//带哑结点的插入，省去的判断是否是链表头的操作
+class Solution {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        if (!head || !head -&gt; next) return head;
+
+        ListNode *h = new ListNode(-1);
+        ListNode *p = head -&gt; next;
+        h -&gt; next = head;
+        head = h;
+
+        //因为有哑结点存在，所以不需要判断头结点
+        while (p)
+        {
+            ListNode *t = p;
+            p = p -&gt; next;
+            ListNode *pre = head;
+            while (pre -&gt; next != t) pre = pre -&gt; next;
+            pre -&gt; next = t -&gt; next;
+
+            ListNode *s = head;
+            while (s -&gt; next != p &amp;&amp; s -&gt; next -&gt; val &lt; t -&gt; val) s = s -&gt; next;
+            t -&gt; next = s -&gt; next;
+            s -&gt; next = t;
+        }
+
+        return head -&gt; next;
+    }
+};
+
+//直接新建链表，挨个插入，省去删除操作
+class Solution {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        if (!head || !head -&gt; next) return head;
+
+        ListNode *h = new ListNode(-1);
+        ListNode *p = head;
+        while (p)
+        {
+            ListNode *t = p;
+            p = p -&gt; next;
+
+            ListNode *s = h;
+            while (s -&gt; next &amp;&amp; s -&gt; next -&gt; val &lt; t -&gt; val) s = s -&gt; next;
+            t -&gt; next = s -&gt; next;
+            s -&gt; next = t;
+        }
+
+        return h -&gt; next;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof/" target="_blank" rel="noopener">LC.剑指offer24.反转链表（简单）</a></p>
+<p>反转链表要熟悉递归和迭代两种方式，递归写起来很优美，但是有些复杂，迭代需要更多的指针。</p>
+<pre><code class="lang-c++">//递归方式，简洁但是得稍微思考一下边界条件和每一步所做的修改顺序
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !head -&gt; next) return head;
+        ListNode *h = reverseList(head -&gt; next);
+        head -&gt; next -&gt; next = head;
+        head -&gt; next = nullptr;
+        return h;
+    }
+};
+//迭代方式（哑节点），最简单无脑的方式，新建一个链表，每次头插
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !head -&gt; next) return head;
+        ListNode *h = new ListNode(-1);
+        while (head)
+        {
+            ListNode *t = head;
+            head = head -&gt; next;
+            t -&gt; next = h -&gt; next;
+            h -&gt; next = t;
+        }
+
+        return h -&gt; next;
+    }
+};
+//迭代方式（原地修改），效率比较低，每次使用三个指针，认为第一个指针pre最开始指向nullptr
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head || !head -&gt; next) return head;
+
+        ListNode * pre = nullptr, *cur = head;
+        while (cur)
+        {
+            ListNode * nxt = cur -&gt; next;
+            cur -&gt; next = pre;
+            pre = cur;
+            cur = nxt;
+        }
+
+        return pre;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists-lcci/" target="_blank" rel="noopener">LC.相交链表（简单）</a></p>
+<pre><code class="lang-c++">//基础方法，将长的加到短的长度，再去判断
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if (!headA || !headB) return nullptr;
+        int lena = 0, lenb = 0;
+        ListNode *p = headA, *q = headB;
+        while (p) p = p -&gt; next, lena ++ ;
+        while (q) q = q -&gt; next, lenb ++ ;
+
+        while (lena &gt; lenb) headA = headA -&gt; next, lena --;
+        while (lena &lt; lenb) headB = headB -&gt; next, lenb --;
+
+        while (headA &amp;&amp; headA != headB) headA = headA -&gt; next, headB = headB -&gt; next;
+        return headA;
+    }
+};
+
+//双指针算法，要将空指针看做两个链表一定相交的地方，并且空指针是真实能走到可停留的位置
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if (!headA || !headB) return nullptr;
+        ListNode *a = headA, *b = headB;
+        while (a != b)
+        {
+            if (!a) a = headB;
+            else a = a -&gt; next;
+            if (!b) b = headA;
+            else b = b -&gt; next;
+        }
+
+        return a;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/middle-of-the-linked-list/" target="_blank" rel="noopener">LC.876 链表的中间节点（简单）</a></p>
+<pre><code class="lang-c++">//快慢指针经典应用
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        ListNode *fast = head, *slow = head;
+        while (fast &amp;&amp; fast -&gt; next)
+        {
+            slow = slow -&gt; next;
+            fast = fast -&gt; next -&gt; next;
+        }
+
+        return slow;
+    }
+};
+</code></pre>
+<p><a href="https://leetcode-cn.com/problems/palindrome-linked-list-lcci/" target="_blank" rel="noopener">LC.回文链表（简单）</a></p>
+<pre><code class="lang-c++">class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        ListNode *fast = head, *slow = head;
+        //快慢指针寻找链表中点
+        while (fast &amp;&amp; fast -&gt; next)
+        {
+            slow = slow -&gt; next;
+            fast = fast -&gt; next;
+            if (fast) fast = fast -&gt; next;
+        }
+
+        ListNode *r = reverse(slow);
+
+        //从两端开始依次比较，如果有一个方向的指针空了，表示两指针已经相遇
+        ListNode *l = head;
+        while (l &amp;&amp; r)
+        {
+            if (l -&gt; val != r -&gt; val) return false;
+            l = l -&gt; next, r = r -&gt; next;
+        }
+
+        return true;
+    }
+
+    //反转链表
+    ListNode *reverse(ListNode *head)
+    {
+        if (!head || !head -&gt; next) return head;
+        ListNode *h = reverse(head -&gt; next);
+        head -&gt; next -&gt; next = head;
+        head -&gt; next = nullptr;
+
+        return h;
+    }
+};
+</code></pre>
+
+        </div>
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/donate/AliPayQR.jpg"></li>
+                <li class="wechat-code"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/donate/WeChanQR.jpg"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+        <footer class="post-footer">
+          <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow"><i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+          <div class="post-tags">
+          </div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+          
+            <div class="post-nepre half previous">
+          
+            <a href="/2020/07/23/算法/博弈论/" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/16/Gvz9dAnLIJQKTXZ.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/08/16/Gvz9dAnLIJQKTXZ.jpg">
+              </div>
+              <span class="label">
+              Previous Post</span>
+              <div class="info">
+                <h3>
+                博弈论</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+        
+          
+            <div class="post-nepre half next">
+          
+            <a href="/2020/07/20/计算机基础知识/sprintf和sscanf/" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://i.loli.net/2020/08/16/BElNxnMeh5Ofp9I.jpg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://i.loli.net/2020/08/16/BElNxnMeh5Ofp9I.jpg">
+              </div>
+              <span class="label">
+              Next Post</span>
+              <div class="info">
+                <h3>
+                sprintf和sscanf</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
+      
+<div id="vcomments"></div>
+<script>
+  window.onload = function(){
+      var valine = new Valine();
+      valine.init({
+        el: '#vcomments',
+        appId: "Eg4LiBqPfNMfvhhF7RBt3YdV-gzGzoHsz",
+        appKey: "f5OCYpX4S5HM1oOfq90Yo91S",
+        path: window.location.pathname,
+        placeholder: "你是我一生只会遇见一次的惊喜 ..."
+      })
+  }
+</script>
+
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="https://schema.org/Person">
+          <a href="https://scarofsky.github.io" class="profile gravatar"><img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.1/img/custom/avatar.jpg" itemprop="image" alt="天の痕" height="70" width="70"></a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+            <a href="https://scarofsky.github.io" itemprop="url" rel="author">天の痕</a>
+            </h3>
+          </div>
+        </div>
+        <hr>
+        <p><i class="iconfont icon-write"></i>庄敬日强，功不唐捐。</p>
+      </section>
+    </main><!-- #main -->
+  </div><!-- #primary -->
+</div>
+
+
+
+    </div>    
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            // PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+    <!-- <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 天の痕<br>
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer> -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+  <div class="site-info">
+    <div class="footertext">
+      <div class="img-preload">
+        <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/other/wordpress-rotating-ball-o.svg">
+        <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.3/img/other/disqus-preloader.svg">
+      </div>
+      <p style="color: #666666;">&copy 2020</p>
+    </div>
+    <div class="footer-device">
+    <p style="font-family: 'Ubuntu', sans-serif;">
+        <span style="color: #b9b9b9;">Theme <a href="https://github.com/honjun/hexo-theme-sakura" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a href="https://2heng.xin/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Mashiro</a>&<a href="https://www.hojun.cn/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Hojun</a>, Powered by Hexo, Hosted by Coding Pages</a>
+        </span>
+      </p>
+    </div>
+  </div><!-- .site-info -->
+</footer>
+
+
+
+<!-- <script src="/js/tocbot.js"></script> -->
+<script type="text/javascript" src="/js/lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/InsightSearch.js"></script>
+<script type="text/javascript" src="/js/jquery.fancybox.min.js"></script>
+<script type="text/javascript" src="/js/zoom.min.js"></script>
+<script type="text/javascript" src="/js/sakura-app.js"></script>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine@1.3.4/dist/Valine.min.js'></script>
+<script src="/js/botui.js"></script>
+<!-- 不蒜子 网页计数器 -->
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script> -->
+<script type="text/javascript">
+/* <![CDATA[ */
+if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/scarofsky/blogVideo@1.2/","name":"op.mp4","live":"close"},"windowheight":"fixed","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+} else {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/scarofsky/blogVideo@1.2/","name":"op.mp4","live":"open"},"windowheight":"auto","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+}
+/* ]]> */
+
+</script>
+<script>
+$(document).ready(function() {
+  if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+    if ($(".pattern-center").length > 0) { //有图的情况
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -400,
+          scrollSmoothOffset: -85
+      });
+    } else {
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -85,
+          scrollSmoothOffset: -85
+      });
+    }
+    var offsetTop = $('.toc').offset().top - 95;
+    window.onscroll = function() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop >= offsetTop) {
+        $('.toc').addClass('toc-fixed');
+      } else {
+        $('.toc').removeClass('toc-fixed');
+      }
+    }
+  }
+});
+</script>
+
+    <div class="openNav no-select" style="height: 50px;">
+      <div class="iconflat no-select" style="width: 50px; height: 50px;">
+        <div class="icon"></div>
+      </div>
+      <div class="site-branding search-form-submit">
+        <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+      </div>
+    </div>
+  </section>
+  <div id="mo-nav" class="">
+  <div class="m-avatar">
+    <img src="https://cdn.jsdelivr.net/gh/scarofsky/blogAssets@2.4/img/custom/avatar.jpg">
+  </div>
+  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">天痕の轨迹线</p>
+  <p style="text-align: center; word-spacing: 20px;">
+    
+      
+        <a href="http://github.com/ScarofSky" class="fa fa-github" target="_blank" style="color: #333; margin-left:20px"></a>
+      
+        <a href="/#" class="fa " target="_blank" style="color: #; margin-left:20px"></a>
+      
+    
+  </p>
+  <ul id="menu-new-1" class="menu">
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+            首页
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/archives">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+            归档
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/categories/技术/">
+                  <i class="fa fa-code" aria-hidden="true"></i>
+                  技术
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/随笔/">
+                  <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                  随笔
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/读书/">
+                  <i class="fa fa-book" aria-hidden="true"></i>
+                  读书
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/生活/">
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  生活
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="javascript:;">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+            清单
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/bangumi/">
+                  <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                  番组
+                </a>
+              </li>
+            
+              <li>
+                <a href="/music/">
+                  <i class="fa fa-headphones" aria-hidden="true"></i>
+                  歌单
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/comment/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+            留言板
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/links/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+            友人帐
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/donate/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+            赞赏
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+            关于
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/about/">
+                  <i class="fa fa-meetup" aria-hidden="true"></i>
+                  我？
+                </a>
+              </li>
+            
+              <li>
+                <a href="/theme-sakura/">
+                  <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                  主题
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+  </ul>
+  <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+</div>
+<button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<style>
+  .aplayer .aplayer-lrc {
+    height: 35px;
+  }
+  .aplayer .aplayer-lrc p{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px !important;
+  }
+  .aplayer .aplayer-lrc p.aplayer-lrc-current{
+    color: #FF1493;
+  }
+  .aplayer.aplayer-narrow .aplayer-body{
+    left: -66px !important;
+  }
+  .aplayer.aplayer-fixed .aplayer-lrc {
+    display: none;
+  }
+  .aplayer .aplayer-lrc.aplayer-lrc-hide {
+      display:none !important;
+  }
+  .aplayer.aplayer-fixed .lrc-show {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+  }
+</style>
+<meting-js
+
+    id="5047109214"
+
+    server="netease"
+
+    type="playlist"
+
+    fixed="true"
+
+    autoplay="false"
+
+    loop="all"
+
+    order="random"
+
+    preload="auto"
+
+    volume="0.7"
+
+    mutex="true"
+
+</meting-js>
+<script>
+  $(function(){
+    $('body').on('click', '.aplayer', function(){
+      if($('.aplayer-button').hasClass('aplayer-play')) {
+        $('.aplayer-lrc').removeClass('lrc-show');
+      } else {
+        $('.aplayer-lrc').addClass('lrc-show');
+      }
+    })
+  });
+</script>
+</body>
+</html>
